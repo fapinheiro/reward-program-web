@@ -1,2 +1,3 @@
-# reward-program-web
-The frontend of the reward project
+# Reward Program Web
+
+This is the front end of the reward program using Angular 7
