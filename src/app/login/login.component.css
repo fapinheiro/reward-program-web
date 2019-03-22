@@ -1,0 +1,25 @@
+.my-card {
+    width: 400px;
+    height: 250px;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container > * {
+    width: 100%;
+}
+  
+button {
+    margin-left: 5px;
+}
+
+.center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -200px;
+    margin-top: -125px;
+}
