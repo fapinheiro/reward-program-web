@@ -14,7 +14,10 @@ import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Materials Modules
-import { MatCardModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatCardModule, MatFormFieldModule, MatInputModule, MatIconModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from './shared/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,11 +30,14 @@ import { MatCardModule, MatFormFieldModule, MatInputModule } from '@angular/mate
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
+    HttpClientModule,
     MatCardModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

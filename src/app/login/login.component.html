@@ -1,24 +1,41 @@
 <div class="container">
-    <mat-card class="my-card center">
-        <mat-card-header>
-            <div mat-card-avatar><i class="material-icons">account_circle</i></div>
-            <mat-card-title style="margin-left: -20px;">User Authentication</mat-card-title>
-            <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
-        </mat-card-header>
-        <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-        <mat-card-content>
-            <div class="login-container">
-                <mat-form-field>
-                    <input matInput placeholder="Login">
-                </mat-form-field>
-                <mat-form-field>
-                    <input type="password" matInput placeholder="Senha">
-                </mat-form-field>
-            </div>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-button class="btn btn-primary">Log in</button>
-            <button mat-button class="btn btn-secondary">Clear</button>
-        </mat-card-actions>
-    </mat-card>
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <mat-card class="my-card center">
+            <mat-card-header>
+                <div mat-card-avatar>
+                    <i class="material-icons">account_circle</i>
+                </div>
+                <mat-card-title class="my-card-title">User Authentication</mat-card-title>
+                <!-- <mat-card-subtitle class="my-card-title">Usuario e senha invalido</mat-card-subtitle> -->
+            </mat-card-header>
+            <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+            <mat-card-content>
+                <div class="login-container">
+                    <mat-form-field>
+                        <input matInput placeholder="Login" id="login" name="login" ngModel required>
+                        <!-- <input matInput placeholder="Email" [formControl]="emailFormControl" [errorStateMatcher]="matcher"> -->
+                        <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                        <!-- <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                            Please enter a valid email address
+                        </mat-error> -->
+                        <mat-error *ngIf="!isFormValid()">
+                            Login is
+                            <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Password" [type]="hidePassword ? 'password' : 'text'" id="password" name="password" ngModel required>
+                        <mat-error *ngIf="!isFormValid()">Password is
+                            <strong>required</strong>
+                        </mat-error>
+                        <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button type="submit" class="btn btn-primary" [disabled]="!isFormValid()">Log in</button>
+                <button mat-button class="btn btn-secondary">Clear</button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
 </div>
