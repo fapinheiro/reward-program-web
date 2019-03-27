@@ -35,9 +35,6 @@ export class LoginComponent implements OnInit {
         } else {
           console.log('Invalid user or password');
         }
-      },
-      (error) => { 
-        console.error(error);
       }
     );
   }

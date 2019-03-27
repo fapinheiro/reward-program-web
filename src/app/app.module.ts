@@ -18,6 +18,8 @@ import { MatCardModule, MatFormFieldModule, MatInputModule, MatIconModule } from
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './shared/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
