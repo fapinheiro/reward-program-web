@@ -9,6 +9,8 @@ import { User } from '../model/user.model';
 @Injectable()
 export class AuthService {
 
+    // private token: string;
+
     constructor(
         private router: Router,
         private http: HttpClient) { }
@@ -30,6 +32,7 @@ export class AuthService {
 
                 if (resp.body.token) {
                     localStorage.setItem('token', resp.body.token);
+                    // this.token = resp.body.token;
                     // this.userAuthenticatedEvent.next(user);
                 } else {
                     console.log('Not found token field in the response body');
@@ -47,7 +50,10 @@ export class AuthService {
         localStorage.removeItem('token');
     }
 
-    
+    getToken() {
+        return localStorage.getItem('token');
+    }
+
     /**
     * Handle Http operation that failed.
     * Let the app continue.

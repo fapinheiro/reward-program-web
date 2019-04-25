@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<hr>
+<div mat-dialog-content>
+  <div *ngIf="data.dialogType === 'primary'" class="alert alert-primary" role="alert">
+    {{data.message}}
+  </div>
+  <div *ngIf="data.dialogType === 'success'" class="alert alert-success" role="alert">
+    {{data.message}}
+  </div>
+  <div *ngIf="data.dialogType === 'danger'" class="alert alert-danger" role="alert">
+    {{data.message}}
+  </div>
+  <div *ngIf="data.dialogType === 'warning'" class="alert alert-warning" role="alert">
+    {{data.message}}
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onBtnOkClick()" class="btn btn-primary">Ok</button>
+</div>

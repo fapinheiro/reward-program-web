@@ -1,11 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
 
 // Disable Materials animations
 // import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -13,34 +11,43 @@ import { LoginComponent } from './login/login.component';
 // Active Materials animations
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-// Materials Modules
-import { MatCardModule, MatFormFieldModule, MatInputModule, MatIconModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
+// Application Components
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
+import { HomeComponent } from './home/home.component';
+
+// Application Services
 import { AuthService } from './shared/auth.service';
-import { HttpClientModule } from '@angular/common/http';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+
+// Application Interceptors
+import { AuthInterceptor } from './shared/auth.interceptor';
+import { MessageService } from './shared/message/message.service';
+import { MatDialogModule } from '@angular/material';
+import { MessageDialogComponent } from './shared/message/message-dialog/message-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    LoginComponent
+    MessageDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    FormsModule,
     HttpClientModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
+    MatDialogModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [AuthService],
+  entryComponents: [
+    MessageDialogComponent
+  ],
+  providers: [
+    AuthService,
+    MessageService,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

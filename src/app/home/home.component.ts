@@ -3,6 +3,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from '../model/user.model';
 import { AuthService } from '../shared/auth.service';
+import { MessageService } from '../shared/message/message.service';
 
 @Component({
   selector: 'app-home',
@@ -11,31 +12,44 @@ import { AuthService } from '../shared/auth.service';
 })
 export class HomeComponent implements OnInit {
 
-  users: User[] = [];
+  private users: User[] = [];
 
   text: string = 'teste';
 
   constructor( 
     private authService: AuthService,
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private messageService: MessageService
+  ) { 
+    // Ok, nothing here
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    // Ok, nothing here
+  }
 
   onShowUsers() {
     const apiUrl = 'http://localhost:8080/api/users';
 
-    this.http.get<User[]>(
-            apiUrl,
-            {
-                // observe: 'response',
-                // params: new HttpParams(),
-                headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' :  localStorage.getItem('token') })
-            },
-        ).subscribe(
-           (users: User[]) => {
-             this.users = users;
-           }
-        );
+    this.http.get<User[]>(apiUrl)
+    .subscribe(
+      (users: User[]) => {
+        this.setUsers(users);
+      }
+    );
+
+    // this.http.get<User[]>(
+    //         apiUrl,
+    //         {
+    //             // observe: 'response',
+    //             // params: new HttpParams(),
+    //             headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' :  localStorage.getItem('token') }),
+    //         },
+    //     ).subscribe(
+    //        (users: User[]) => {
+    //           this.setUsers(users);
+    //        }
+    //     );
   }
 
   onClearUsers() {
@@ -47,4 +61,15 @@ export class HomeComponent implements OnInit {
     return this.authService.isAuthenticated();
   }
 
+  getUsers() {
+    return this.users.slice();
+  }
+
+  setUsers(users: User[]) {
+    this.users = users;
+  }
+
+  openDialog(): void {
+    this.messageService.showTokenExpirationMessage();
+  }
 }
