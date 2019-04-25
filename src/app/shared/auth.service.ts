@@ -13,7 +13,10 @@ export class AuthService {
 
     constructor(
         private router: Router,
-        private http: HttpClient) { }
+        private http: HttpClient
+    ) { 
+        // Ok, nothing here
+    }
 
     loginUser(user: User): Observable<any> {
         const apiUrl = 'http://localhost:8080/api/login';
