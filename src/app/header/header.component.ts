@@ -11,9 +11,13 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router
+  ) { 
+    // Ok, nothing here
+  }
 
   ngOnInit() {
+    // Ok, nothing here
   }
 
   isAuthenticated() {
