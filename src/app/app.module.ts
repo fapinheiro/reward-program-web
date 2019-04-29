@@ -30,7 +30,7 @@ import { MessageDialogComponent } from './shared/message/message-dialog/message-
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    MessageDialogComponent
+    MessageDialogComponent,
   ],
   imports: [
     BrowserModule,
