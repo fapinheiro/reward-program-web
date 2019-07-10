@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 
 import { RegisterComponent } from './register.component';
 
-import { CommonModule } from '@angular/common';
+import { MatFormFieldModule, MatInputModule, MatIconModule, MatSelectModule } from '@angular/material';
 
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RegisterRoutingModule } from './register-routing.module';
 
 @NgModule({
@@ -12,7 +14,12 @@ import { RegisterRoutingModule } from './register-routing.module';
     ],
     imports: [
         CommonModule,
+        FormsModule,
         RegisterRoutingModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatSelectModule
     ]
 })
 export class RegisterModule {

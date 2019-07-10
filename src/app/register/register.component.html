@@ -1,53 +1,103 @@
 <div class="register-container">
     <h2>User Registration</h2>
-    <form>
+    <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="inputEmail4">Email</label>
-                <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                <mat-form-field class="form-full-width">
+                    <label for="inputEmail">Email</label>
+                    <input matInput type="email" class="form-control" id="inputEmail" name="inputEmail" ngModel required autofocus>
+                    <mat-error *ngIf="!isFormValid()">
+                        Email is
+                        <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
             </div>
             <div class="form-group col-md-6">
-                <label for="inputPassword4">Password</label>
-                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                <mat-form-field class="form-full-width">
+                    <label for="inputPassword">Password</label>
+                    <input matInput type="password" class="form-control" id="inputPassword" name="inputPassword" ngModel
+                        required>
+                    <mat-error *ngIf="!isFormValid()">
+                        Email is
+                        <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
             </div>
         </div>
         <div class="form-group">
-            <label for="inputName">Name</label>
-            <input type="text" class="form-control" id="inputName" placeholder="Your full name">
+            <mat-form-field class="form-full-width">
+                <label for="inputName">Name</label>
+                <input matInput type="text" class="form-control" id="inputName" name="inputName" ngModel required>
+                <mat-error *ngIf="!isFormValid()">
+                    Name is
+                    <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="inputCPF">CPF</label>
-                <input type="text" class="form-control" id="inputCPF" placeholder="Only numbers">
+                <mat-form-field class="form-full-width">
+                    <label for="inputNIF">NIF</label>
+                    <input matInput type="text" class="form-control" id="inputNIF" name="inputNIF" ngModel required>
+                    <mat-error *ngIf="!isFormValid()">
+                        NIF is
+                        <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
             </div>
             <div class="form-group col-md-6">
-                <label for="inputRG">RG</label>
-                <input type="text" class="form-control" id="inputRG">
+                <mat-form-field class="form-full-width">
+                    <label for="inputCode">Postal Code</label>
+                    <input matInput type="text" class="form-control" id="inputCode" name="inputCode" ngModel required>
+                    <mat-error *ngIf="!isFormValid()">
+                        PostalCode is
+                        <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
             </div>
         </div>
         <div class="form-group">
-            <label for="inputAddress">Address</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="Your full address">
+            <mat-form-field class="form-full-width">
+                <label for="inputAddress">Address</label>
+                <input matInput type="text" class="form-control" id="inputAddress" name="inputAddress" ngModel
+                    required>
+                <mat-error *ngIf="!isFormValid()">
+                    Address is
+                    <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
         </div>
         <div class="form-row">
-            <div class="form-group col-md-4">
-                <label for="inputState">State</label>
-                <select id="inputState" class="form-control">
-                    <option selected>Choose...</option>
-                    <option>...</option>
-                </select>
+            <div class="form-group col-md-6">
+                <mat-form-field class="form-full-width">
+                    <label for="inputDistrict">District</label>
+                    <input matInput type="text" class="form-control" id="inputDistrict" name="inputDistrict" ngModel required>
+                    <mat-error *ngIf="!isFormValid()">
+                        District is
+                        <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
             </div>
             <div class="form-group col-md-6">
-                <label for="inputCity">City</label>
-                <input type="text" class="form-control" id="inputCity">
-            </div>
-            <div class="form-group col-md-2">
-                <label for="inputCEP">CEP</label>
-                <input type="text" class="form-control" id="inputCEP">
+                <mat-form-field class="form-full-width">
+                    <label for="inputConsoul">Consoul</label>
+                    <mat-select id="inputConsoul" class="form-control" name="inputConsoul" ngModel required>
+                        <mat-option value="option">Choose...</mat-option>
+                    </mat-select>
+                    <!-- <select matInput id="inputConsoul" class="form-control" name="inputConsoul" ngModel required>
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select> -->
+                    <mat-error *ngIf="!isFormValid()">
+                        Consoul is
+                        <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
             </div>
         </div>
         <div class="form-row justify-content-end">
-            <button type="submit" class="btn btn-primary">Sign in</button>
+            <button mat-button class="btn btn-secondary">Clear</button>
+            <button type="submit" class="btn btn-primary ml-1" [disabled]="!isFormValid()">Sign in</button>
         </div>
     </form>
 </div>

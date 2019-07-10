@@ -4,6 +4,8 @@ import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
+import { environment } from '../../environments/environment';
+
 import { User } from '../model/user.model';
 
 @Injectable()
@@ -19,7 +21,7 @@ export class AuthService {
     }
 
     loginUser(user: User): Observable<any> {
-        const apiUrl = 'http://localhost:8080/api/login';
+        const apiUrl = `${environment.apiUrl}/login`;
 
         return this.http.post(
             apiUrl,

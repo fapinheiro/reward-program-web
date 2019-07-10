@@ -4,6 +4,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { User } from '../model/user.model';
 import { AuthService } from '../shared/auth.service';
 import { MessageService } from '../shared/message/message.service';
+import { environment } from '../../environments/environment'
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomeComponent implements OnInit {
 
   private users: User[] = [];
 
-  text: string = 'teste';
+  // text: string = 'teste';
 
   constructor( 
     private authService: AuthService,
@@ -29,7 +30,7 @@ export class HomeComponent implements OnInit {
   }
 
   onShowUsers() {
-    const apiUrl = 'http://localhost:8080/api/users';
+    const apiUrl = `${environment.apiUrl}/users`;
 
     this.http.get<User[]>(apiUrl)
     .subscribe(
