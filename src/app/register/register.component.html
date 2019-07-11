@@ -15,8 +15,7 @@
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
                     <label for="inputPassword">Password</label>
-                    <input matInput type="password" class="form-control" id="inputPassword" name="inputPassword" ngModel
-                        required>
+                    <input matInput type="password" class="form-control" id="inputPassword" name="inputPassword" ngModel required>
                     <mat-error *ngIf="!isFormValid()">
                         Email is
                         <strong>required</strong>
@@ -48,7 +47,15 @@
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
                     <label for="inputCode">Postal Code</label>
-                    <input matInput type="text" class="form-control" id="inputCode" name="inputCode" ngModel required>
+                    <input  #searchPostalCode 
+                            matInput 
+                            type="text" 
+                            class="form-control" 
+                            id="inputCode" 
+                            name="inputCode" 
+                            (keyup)="onPostalCodeKeyUp(searchPostalCode.value)" 
+                            [(ngModel)]="postalCodeSelected.codigoPostal" 
+                            required>
                     <mat-error *ngIf="!isFormValid()">
                         PostalCode is
                         <strong>required</strong>
@@ -59,8 +66,15 @@
         <div class="form-group">
             <mat-form-field class="form-full-width">
                 <label for="inputAddress">Address</label>
-                <input matInput type="text" class="form-control" id="inputAddress" name="inputAddress" ngModel
+                <mat-select 
+                    id="inputAddress" 
+                    class="form-control" 
+                    name="inputAddress" 
+                    ngModel
                     required>
+                    <mat-option value="option">Choose...</mat-option>
+                    <mat-option *ngFor="let postalCode of postalCodesList$ | async" value="option" (click)="onPostalCodeSelected(postalCode)">{{postalCode.localidade}}</mat-option>
+                </mat-select>
                 <mat-error *ngIf="!isFormValid()">
                     Address is
                     <strong>required</strong>
@@ -71,7 +85,13 @@
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
                     <label for="inputDistrict">District</label>
-                    <input matInput type="text" class="form-control" id="inputDistrict" name="inputDistrict" ngModel required>
+                    <input  matInput 
+                            type="text" 
+                            class="form-control" 
+                            id="inputDistrict" 
+                            name="inputDistrict" 
+                            [(ngModel)]="postalCodeSelected.codigoDistrito"
+                            required>
                     <mat-error *ngIf="!isFormValid()">
                         District is
                         <strong>required</strong>
@@ -81,13 +101,13 @@
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
                     <label for="inputConsoul">Consoul</label>
-                    <mat-select id="inputConsoul" class="form-control" name="inputConsoul" ngModel required>
-                        <mat-option value="option">Choose...</mat-option>
-                    </mat-select>
-                    <!-- <select matInput id="inputConsoul" class="form-control" name="inputConsoul" ngModel required>
-                        <option selected>Choose...</option>
-                        <option>...</option>
-                    </select> -->
+                    <input  matInput 
+                            type="text" 
+                            class="form-control" 
+                            id="inputConsoul" 
+                            name="inputConsoul"
+                            [(ngModel)]="postalCodeSelected.codigoConcelho"
+                            required>
                     <mat-error *ngIf="!isFormValid()">
                         Consoul is
                         <strong>required</strong>

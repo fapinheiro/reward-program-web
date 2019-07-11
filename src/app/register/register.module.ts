@@ -7,6 +7,7 @@ import { MatFormFieldModule, MatInputModule, MatIconModule, MatSelectModule } fr
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RegisterRoutingModule } from './register-routing.module';
+import { PostalCodeService } from '../shared/postal-code.service';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,10 @@ import { RegisterRoutingModule } from './register-routing.module';
         MatInputModule,
         MatIconModule,
         MatSelectModule
-    ]
+    ],
+    providers: [
+        PostalCodeService
+    ],
 })
 export class RegisterModule {
 }
