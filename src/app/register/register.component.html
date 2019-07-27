@@ -90,7 +90,7 @@
                             class="form-control" 
                             id="inputDistrict" 
                             name="inputDistrict" 
-                            [(ngModel)]="postalCodeSelected.codigoDistrito"
+                            [(ngModel)]="postalCodeSelected.concelho.distrito.nomeDistrito"
                             required>
                     <mat-error *ngIf="!isFormValid()">
                         District is
@@ -106,7 +106,7 @@
                             class="form-control" 
                             id="inputConsoul" 
                             name="inputConsoul"
-                            [(ngModel)]="postalCodeSelected.codigoConcelho"
+                            [(ngModel)]="postalCodeSelected.concelho.nomeConcelho"
                             required>
                     <mat-error *ngIf="!isFormValid()">
                         Consoul is
