@@ -1,4 +1,4 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
@@ -58,11 +58,23 @@ export class AuthInterceptor implements HttpInterceptor {
    private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
+        console.error('My auth.interceptor error');
+
         // TODO: send the error to remote logging infrastructure
         console.error(error); // log to console instead
 
-        if (error instanceof HttpErrorResponse && error.status === 403) {
-            this.messageService.showTokenExpirationMessage();
+        if (error instanceof HttpErrorResponse) {
+            if (error.status === 403) {
+                this.messageService.showTokenExpirationMessage();
+            // } else if (error.status <= 200) {
+            //     this.messageService.showSuccessMessage();
+            // 
+            } else if (error.status >= 400 && error.status < 500) {
+                this.messageService.showWarningMessage();
+            } else {
+                this.messageService.showErrorMessage();
+            }
+            
             // this.authService.logout();
             // this.router.navigate(['/login']);
         }

@@ -41,23 +41,68 @@ export class MessageService {
         );
     }
 
-    /**
-    * Handle Http operation that failed.
-    * Let the app continue.
-    * @param operation - name of the operation that failed
-    * @param result - optional value to return as the observable result
-    */
-    private handleError<T>(operation = 'operation', result?: T) {
-        return (error: any): Observable<T> => {
+    showSuccessMessage(): void {
+        this.dialog.open(
+            MessageDialogComponent, 
+            {
+                // width: '250px'
+                data: {
+                    title: 'Success Message', 
+                    message: 'Operation has been completed successfully',
+                    dialogType: 'success'
+                } 
+            }
+        );
+    }
 
-            // TODO: send the error to remote logging infrastructure
-            console.error(error); // log to console instead
+    showSuccessMessageToURL(urlToGo: string): void {
+        const dialogRef = this.dialog.open(
+            MessageDialogComponent, 
+            {
+                // width: '250px'
+                data: {
+                    title: 'Success Message', 
+                    message: 'Operation has been completed successfully',
+                    dialogType: 'success'
+                } 
+            }
+        );
 
-            // TODO: better job of transforming error for user consumption
-            //this.log(`${operation} failed: ${error.message}`);
+        if (urlToGo != null) {
+            dialogRef.afterClosed().subscribe(
+                result => {
+                    this.authService.logout();
+                    this.router.navigate([urlToGo]);
+                }
+            );
+        }
+    }
 
-            // Let the app keep running by returning an empty result.
-            return of(result as T);
-        };
+    showWarningMessage(): void {
+        this.dialog.open(
+            MessageDialogComponent, 
+            {
+                // width: '250px'
+                data: {
+                    title: 'Warning Message', 
+                    message: 'Operation could not be completed, check required fields and try again later.',
+                    dialogType: 'warning'
+                } 
+            }
+        );
+    }
+
+    showErrorMessage(): void {
+        this.dialog.open(
+            MessageDialogComponent, 
+            {
+                // width: '250px'
+                data: {
+                    title: 'Error Message', 
+                    message: 'Operation could not be completed. Contact the administrator.',
+                    dialogType: 'danger'
+                } 
+            }
+        );
     }
 }

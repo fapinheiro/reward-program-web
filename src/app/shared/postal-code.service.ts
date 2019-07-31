@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-// import { Router } from '@angular/router';
-import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
@@ -16,10 +15,15 @@ export class PostalCodeService {
     }
 
     getPostalCodesByCodeNumber(code: string): Observable<PostalCode[]> {
+        console.log(`Searching hero: ${code}`);
+        if (!code.trim()) {
+            // if not search term, return empty hero array.
+            return of([]);
+        }
         return this.http
             .get<PostalCode[]>(`${environment.apiUrl}/postal-codes?code=${code}&offset=0&limit=10`)
             .pipe(
-                tap(_ => console.log('PostalCodeService: returned postal codes'),
+                tap( _ => console.log('PostalCodeService: returned postal codes'),
                     catchError(this.handleError('getPostalCodesByCodeNumber', [])) 
                 )
             );

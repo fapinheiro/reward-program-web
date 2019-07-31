@@ -7,6 +7,9 @@ import { debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import { Client } from '../model/client.model';
 import { PostalCode } from '../model/postal-code.model';
 import { PostalCodeService } from '../shared/postal-code.service';
+import { ClientService } from '../shared/client.service';
+import { Router } from '@angular/router';
+import { MessageService } from '../shared/message/message.service';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +23,10 @@ export class RegisterComponent  {
   private searchTerms = new Subject<string>();
   private postalCodeSelected: PostalCode;
 
-  constructor(private postalCodeService: PostalCodeService) { 
+  constructor(
+    private postalCodeService: PostalCodeService,
+    private clientService: ClientService,
+    private messageService: MessageService) { 
     // Ok, nothing here
   }
 
@@ -43,6 +49,16 @@ export class RegisterComponent  {
 
   onSubmit() {
     const client = new Client();
+    client.postalCode = this.postalCodeSelected;
+    client.email = this.registerForm.value.inputEmail;
+    client.name = this.registerForm.value.inputName;
+    client.nif = this.registerForm.value.inputNIF;
+    client.password = this.registerForm.value.inputPassword;
+    this.clientService.addClient(client).subscribe(
+      _ => {
+        this.messageService.showSuccessMessageToURL('/');
+      }
+    );
   }
 
   isFormValid(): boolean {

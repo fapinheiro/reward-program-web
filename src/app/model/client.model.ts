@@ -1,12 +1,14 @@
+import { PostalCode } from './postal-code.model';
+
 export class Client {
     
-    cod_cliente: number; 
+    codCliente: number; 
     email: string;
     password: string;
     name: string;
     nif: string;
-    cod_codigo_postal: number;
-    creation_at: string;
-    updated_at: string;
+    postalCode: PostalCode;
+    creationAt: string;
+    updatedAt: string;
     
 }
