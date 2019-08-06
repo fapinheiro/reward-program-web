@@ -1,0 +1,16 @@
+.register-container {
+    display: flex;
+    flex-direction: column;
+}
+  
+.register-container > * {
+    width: 100%;
+}
+
+.form-full-width {
+    width:100%;
+}
+
+.my-form {
+  width: 30%;
+}
