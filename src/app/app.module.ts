@@ -24,6 +24,7 @@ import { AuthInterceptor } from './shared/auth.interceptor';
 import { MessageService } from './shared/message/message.service';
 import { MatDialogModule } from '@angular/material';
 import { MessageDialogComponent } from './shared/message/message-dialog/message-dialog.component';
+import { IndicationService } from './shared/indication.service';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { MessageDialogComponent } from './shared/message/message-dialog/message-
   providers: [
     AuthService,
     MessageService,
+    IndicationService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
