@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
 // import { User } from '../model/user.model';
@@ -55,7 +55,7 @@ export class MessageService {
         );
     }
 
-    showSuccessMessageToURL(urlToGo: string): void {
+    showSuccessMessageToURL(url: string): void {
         const dialogRef = this.dialog.open(
             MessageDialogComponent, 
             {
@@ -68,11 +68,10 @@ export class MessageService {
             }
         );
 
-        if (urlToGo != null) {
+        if (url != null) {
             dialogRef.afterClosed().subscribe(
                 result => {
-                    this.authService.logout();
-                    this.router.navigate([urlToGo]);
+                    this.router.navigate([url]);
                 }
             );
         }

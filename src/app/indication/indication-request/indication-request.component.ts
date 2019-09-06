@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+
 import * as jwt_decode from 'jwt-decode';
 
 import { Indication } from '../../model/indication.model';
@@ -40,7 +41,8 @@ export class IndicationRequestComponent {
       this.indicationService.addIndication(indication)
         .subscribe(
           _ => {
-            this.messageService.showSuccessMessageToURL('/');
+            this.messageService.showSuccessMessageToURL('/indication-form');
+            this.indicationForm.resetForm();
           }
         );
     } else {
@@ -52,4 +54,5 @@ export class IndicationRequestComponent {
   isFormValid(): boolean {
     return this.indicationForm.valid;
   }
+
 }

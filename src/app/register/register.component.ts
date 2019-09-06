@@ -19,8 +19,11 @@ import { MessageService } from '../shared/message/message.service';
 export class RegisterComponent  {
 
   @ViewChild('registerForm') registerForm: NgForm;
+  
   postalCodesList$: Observable<PostalCode[]>;
+  
   private searchTerms = new Subject<string>();
+  
   private postalCodeSelected: PostalCode;
 
   constructor(

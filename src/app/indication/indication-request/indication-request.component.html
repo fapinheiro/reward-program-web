@@ -7,8 +7,13 @@
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
                     <label for="inputName">Name</label>
-                    <input matInput type="text" class="form-control" id="inputName" name="inputName" maxlength="100" pattern="[a-zA-Z]+" ngModel
-                        required>
+                    <input matInput type="text" class="form-control" id="inputName" name="inputName" 
+                        maxlength="100" 
+                        pattern="[a-zA-Z\s]+" 
+                        ngModel
+                        required
+                        autofocus
+                        cdkFocusInitial>
                     <mat-error *ngIf="!isFormValid()">
                         Name is
                         <strong>required. </strong>
@@ -21,7 +26,10 @@
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
                     <label for="inputEmail">Email</label>
-                    <input matInput type="email" class="form-control" id="inputEmail" name="inputEmail" maxlength="100" ngModel required autofocus
+                    <input matInput type="email" class="form-control" id="inputEmail" name="inputEmail" 
+                        maxlength="100" 
+                        ngModel
+                        required
                         email>
                     <mat-error *ngIf="!isFormValid()">
                         Email is
@@ -34,7 +42,10 @@
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
                     <label for="inputPhone">Cellphone</label>
-                    <input matInput type="text" class="form-control" id="inputPhone" name="inputPhone" maxlength="10" pattern="[0-9]+" ngModel
+                    <input matInput type="text" class="form-control" id="inputPhone" name="inputPhone" 
+                        maxlength="10" 
+                        pattern="[0-9]+" 
+                        ngModel
                         required>
                     <mat-error *ngIf="!isFormValid()">
                         Phone is
