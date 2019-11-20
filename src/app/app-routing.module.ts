@@ -8,7 +8,7 @@ const routes: Routes = [
   // { path: 'login', component: LoginComponent},
   { path: 'login', loadChildren: './login/login.module#LoginModule'},
   { path: 'register', loadChildren: './register/register.module#RegisterModule'},
-  { path: 'indication-form', loadChildren: './indication/indication-request/indication-request.module#IndicationRequestModule'}
+  { path: 'indications', loadChildren: './indication/indication.module#IndicationModule'}
 ];
 
 @NgModule({

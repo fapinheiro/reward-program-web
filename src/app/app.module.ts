@@ -27,12 +27,16 @@ import { MessageDialogComponent } from './shared/message/message-dialog/message-
 import { IndicationService } from './shared/indication.service';
 
 @NgModule({
+
+  // Components, Pipes, Directives, ...
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
     MessageDialogComponent,
   ],
+
+  // Modules and Routing
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -41,15 +45,20 @@ import { IndicationService } from './shared/indication.service';
     MatDialogModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
+
+  // Components loaded dinamically
   entryComponents: [
     MessageDialogComponent
   ],
+
+  // Services, Interceptors, Guards, to be used application-wide
   providers: [
     AuthService,
     MessageService,
     IndicationService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
   ],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }

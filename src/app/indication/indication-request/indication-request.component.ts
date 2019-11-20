@@ -41,7 +41,7 @@ export class IndicationRequestComponent {
       this.indicationService.addIndication(indication)
         .subscribe(
           _ => {
-            this.messageService.showSuccessMessageToURL('/indication-form');
+            this.messageService.showSuccessMessageToURL('/indication-request');
             this.indicationForm.resetForm();
           }
         );
