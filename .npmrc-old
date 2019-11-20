@@ -1,0 +1,6 @@
+proxy=null
+https-proxy=null
+http-proxy=null
+registry = "https://nexus-proxy.almuk.santanderuk.corp/repository/npm-group/"
+strict-ssl = false
+no-proxy = ".corp"
