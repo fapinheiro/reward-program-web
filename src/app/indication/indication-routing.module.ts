@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { IndicationRequestComponent } from './indication-request/indication-request.component';
-import { IndicationViewComponent } from './indication-view/indication-view.component';
+import { IndicationListComponent } from './indication-list/indication-list.component';
 
 const appRoutes: Routes = [
-  { path: '', component: IndicationViewComponent},
+  { path: '', component: IndicationListComponent},
   { path: 'new', component: IndicationRequestComponent}
-  // { path: '', component: IndicationViewComponent},
+  // { path: '', component: IndicationlistComponent},
   // { path: 'new', component: IndicationRequestComponent}
 ]
 @NgModule({

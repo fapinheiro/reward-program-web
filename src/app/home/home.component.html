@@ -1,19 +1,24 @@
-<p>Reward project</p>
+<div class="row justify-content-center">
+    <h2>Reward Program</h2>
+</div>
 <div *ngIf="isAuthenticated()">
-    <button class="btn btn-primary" type="button" (click)="onShowUsers()">Show Users</button>
-    <button class="btn btn-secondary" type="button" (click)="onClearUsers()">Clear Users</button>
+    <div class="div">
+        <button class="btn btn-primary" type="button" (click)="onShowUsers()">Show Users</button>
+        <button class="btn btn-secondary" type="button" (click)="onClearUsers()">Clear Users</button>
+    </div>
     <div>
-        <table class="table">
+        <table class="table table-hover">
+                <caption>List of users</caption>
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Login</th>
-                    <th scope="col">Created At</th>
+                    <th class="w-25">#</th>
+                    <th class="w-25">Login</th>
+                    <th class="w-25">Created At</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let user of getUsers(); let i = index">
-                    <th scope="row">{{i+1}}</th>
+                    <td>{{i+1}}</td>
                     <td>{{user.login}}</td>
                     <td>{{user.creationAt}}</td>
                 </tr>

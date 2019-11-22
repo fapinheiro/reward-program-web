@@ -16,7 +16,7 @@ import { AuthService } from '../../shared/auth.service';
 })
 export class IndicationRequestComponent {
 
-  @ViewChild('indicationForm') indicationForm: NgForm;
+  @ViewChild('indicationForm', {static: true}) indicationForm: NgForm;
 
   constructor(
     private indicationService: IndicationService,
@@ -41,7 +41,7 @@ export class IndicationRequestComponent {
       this.indicationService.addIndication(indication)
         .subscribe(
           _ => {
-            this.messageService.showSuccessMessageToURL('/indication-request');
+            this.messageService.showSuccessMessageToURL('/indications');
             this.indicationForm.resetForm();
           }
         );

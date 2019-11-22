@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   hidePassword = true;
 
-  @ViewChild('loginForm') loginForm: NgForm;
+  @ViewChild('loginForm', {static: true}) loginForm: NgForm;
 
   constructor(
     private authService: AuthService,

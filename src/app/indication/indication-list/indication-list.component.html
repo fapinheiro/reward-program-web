@@ -1,0 +1,99 @@
+<div class="row justify-content-center">
+    <h2>My Indications</h2>
+</div>
+<div class="div">
+    <div class="div">
+        <form (ngSubmit)="onSubmit()" #searchForm="ngForm">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="w-50">
+                        <input matInput 
+                            id="inputSearch" 
+                            name="inputSearch" 
+                            type="text" 
+                            maxlength="100"
+                            pattern="[a-zA-Z\s]+" 
+                            placeholder="Search for name or email"
+                            ngModel 
+                            required 
+                            autofocus 
+                            cdkFocusInitial>
+                        <mat-error *ngIf="!isFormValid()">
+                            Search Bar is
+                            <strong>required. </strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field>
+                        <input matInput 
+                            id="inputBeginDate" 
+                            name="inputBeginDate" 
+                            type="text"
+                            [matDatepicker]="inputBeginDate" 
+                            placeholder="Choose begin date"
+                            ngModel
+                            required>
+                        <mat-datepicker-toggle matSuffix [for]="inputBeginDate"></mat-datepicker-toggle>
+                        <mat-datepicker #inputBeginDate></mat-datepicker>
+                        <mat-error *ngIf="!isFormValid()">
+                            Begin date is
+                            <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput 
+                            id="inputEndDate"
+                            name="inputEndDate" 
+                            type="text"
+                            [matDatepicker]="inputEndDate" 
+                            placeholder="Choose end date" 
+                            ngModel
+                            required>
+                        <mat-datepicker-toggle matSuffix [for]="inputEndDate"></mat-datepicker-toggle>
+                        <mat-datepicker #inputEndDate></mat-datepicker>
+                        <mat-error *ngIf="!isFormValid()">
+                            End date is
+                            <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary" 
+                        [disabled]="!isFormValid()"
+                        (click)="onBtnSearch()">Search</button>
+                    <button type="reset" 
+                        mat-button 
+                        class="btn btn-secondary"
+                        (click)="onBtnClear()">Clear</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <table class="table table-hover table-responsive">
+            <caption>List of indications</caption>
+            <thead>
+                <tr>
+                    <th class="w-10">#</th>
+                    <th class="w-25">Name</th>
+                    <th class="w-25">Email</th>
+                    <th class="w-25">Cellphone</th>
+                    <th class="w-25">Status</th>
+                    <th class="w-25">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <tr *ngFor="let user of getUsers(); let i = index">
+                    <td>{{i+1}}</td>
+                    <td>{{user.login}}</td>
+                    <td>{{user.creationAt}}</td>
+                </tr> -->
+            </tbody>
+        </table>
+    </div>
+</div>

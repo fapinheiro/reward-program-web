@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 
-import { MatFormFieldModule, MatInputModule, MatIconModule, MatSelectModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatIconModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IndicationRoutingModule } from './indication-routing.module';
 import { IndicationRequestComponent } from './indication-request/indication-request.component';
-import { IndicationViewComponent } from './indication-view/indication-view.component';
+import { IndicationListComponent } from './indication-list/indication-list.component';
 
 @NgModule({
     declarations: [
-        IndicationViewComponent,
+        IndicationListComponent,
         IndicationRequestComponent
     ],
     imports: [
@@ -20,7 +20,9 @@ import { IndicationViewComponent } from './indication-view/indication-view.compo
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
-        MatSelectModule
+        MatSelectModule,
+        MatNativeDateModule,
+        MatDatepickerModule,
     ],
     providers: [
         // PostalCodeService,

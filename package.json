@@ -28,13 +28,14 @@
     "jquery": "^3.4.1",
     "jwt-decode": "^2.2.0",
     "material-design-icons": "^3.0.1",
+    "popper.js": "^1.16.0",
     "rxjs": "~6.5.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.19",
-    "@angular/cli": "~8.3.19",
+    "@angular/cli": "^8.3.19",
     "@angular/compiler-cli": "^8.2.14",
     "@angular/language-service": "~8.2.14",
     "@types/jasmine": "~2.8.8",

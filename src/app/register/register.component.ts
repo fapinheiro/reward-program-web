@@ -18,7 +18,7 @@ import { MessageService } from '../shared/message/message.service';
 })
 export class RegisterComponent  {
 
-  @ViewChild('registerForm') registerForm: NgForm;
+  @ViewChild('registerForm', {static: true}) registerForm: NgForm;
   
   postalCodesList$: Observable<PostalCode[]>;
   
