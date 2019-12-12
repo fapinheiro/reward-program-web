@@ -21,11 +21,17 @@ export class IndicationListComponent {
   constructor(
     private indicationService: IndicationService,
     private messageService: MessageService,
-    private authService: AuthService) {
+    private authService: AuthService) 
+  {
     // Ok, nothing here
   }
 
   ngOnInit() {
+    this.indicationService.getIndications().subscribe(
+      (indications: Indication[]) => {
+        this.setIndications(indications);
+      }
+    );
   }
 
   isFormValid(): boolean {
@@ -38,7 +44,7 @@ export class IndicationListComponent {
     return this.indications.slice();
   }
 
-  setUsers(indications: Indication[]) {
+  setIndications(indications: Indication[]) {
     this.indications = indications;
   }
 

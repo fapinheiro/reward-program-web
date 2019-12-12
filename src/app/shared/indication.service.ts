@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, tap } from 'rxjs/operators';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { catchError, tap, map} from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { Indication } from '../model/indication.model';
+import { Constant } from './constant';
 
 @Injectable()
 export class IndicationService {
@@ -13,16 +14,85 @@ export class IndicationService {
         // Ok, nothing here
     }
 
-    getIndications(offset: number, limit: number): Observable<Indication[]> {
+    getIndications(codClient?: number, startCreationAt?: string, endCreationAt?: string, 
+        offset: number = 0, limit: number = Constant.MAX_RECORDS): Observable<Indication[]> {
+
+        let httpParams = new HttpParams();
+
+        if (codClient) {
+            httpParams.append("codClient", codClient.toString());
+        }
+
+        if (startCreationAt) {
+            httpParams.append("startCreationAt", startCreationAt.toString());
+        }
+
+        if (endCreationAt) {
+            httpParams.append("endCreationAt", endCreationAt.toString());
+        }
+
+        if (offset) {
+            httpParams.append("offset", offset.toString());
+        }
+
+        if (limit) {
+            httpParams.append("limit", limit.toString());
+        }
 
         return this.http
-            .get<Indication[]>(`${environment.apiUrl}/indications?offset=${offset}&limit=${limit}`)
+            .get(
+                `${environment.apiUrl}/indications`, 
+                {
+                    observe: 'response',
+                    params: httpParams
+                })
             .pipe(
-                tap( _ => console.log('IndicationService: fetched Indications'),
+                map( (res: any) => {
+                    return res.body.content as Indication[];
+                }),
                 catchError(this.handleError('getIndications', []))
-            )
-        );
+            );
+
     }
+
+    // getIndications(codClient?: number, startCreationAt?: string, endCreationAt?: string, 
+    //     offset: number = 0, limit: number = Constant.MAX_RECORDS): Observable<Indication[]> {
+
+    //     let httpParams = new HttpParams();
+
+    //     if (codClient) {
+    //         httpParams.append("codClient", codClient.toString());
+    //     }
+
+    //     if (startCreationAt) {
+    //         httpParams.append("startCreationAt", startCreationAt.toString());
+    //     }
+
+    //     if (endCreationAt) {
+    //         httpParams.append("endCreationAt", endCreationAt.toString());
+    //     }
+
+    //     if (offset) {
+    //         httpParams.append("offset", offset.toString());
+    //     }
+
+    //     if (limit) {
+    //         httpParams.append("limit", limit.toString());
+    //     }
+
+    //     return this.http
+    //         .get<Indication[]>(
+    //             `${environment.apiUrl}/indications`, 
+    //             {
+    //                 params: httpParams
+    //             })
+    //         .pipe(
+    //             tap( _ => console.log('IndicationService: fetched Indications'),
+    //             catchError(this.handleError('getIndications', []))
+    //         )
+    //     );
+
+    // }
 
     getIndicationById(id: number): Observable<Indication> {
         return this.http

@@ -6,7 +6,7 @@
         <form (ngSubmit)="onSubmit()" #searchForm="ngForm">
             <div class="row">
                 <div class="col">
-                    <mat-form-field class="w-50">
+                    <mat-form-field id="inputSearch">
                         <input matInput 
                             id="inputSearch" 
                             name="inputSearch" 
@@ -88,11 +88,14 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- <tr *ngFor="let user of getUsers(); let i = index">
+                <tr *ngFor="let indication of getIndications(); let i = index">
                     <td>{{i+1}}</td>
-                    <td>{{user.login}}</td>
-                    <td>{{user.creationAt}}</td>
-                </tr> -->
+                    <td>{{indication.name}}</td>
+                    <td>{{indication.email}}</td>
+                    <td>{{indication.phone}}</td>
+                    <td>TODO</td>
+                    <td>TODO</td>
+                </tr>
             </tbody>
         </table>
     </div>

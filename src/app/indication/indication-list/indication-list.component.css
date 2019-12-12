@@ -1,11 +1,20 @@
-button {
+
+button,
+mat-form-field {
     margin: 5px;
+}
+
+#inputSearch {
+    width: 415px;
 }
 
 table {
-    margin-top: 10px;
+    margin: 10px;
 }
 
-mat-form-field {
-    margin: 5px;
+/* Small Devices */
+@media only screen and (max-width: 768px) {
+    mat-form-field {
+        width: 100% !important;
+    }
 }
