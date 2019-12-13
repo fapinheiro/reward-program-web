@@ -14,39 +14,37 @@ export class IndicationService {
         // Ok, nothing here
     }
 
-    getIndications(codClient?: number, startCreationAt?: string, endCreationAt?: string, 
+    getIndications(codClient?: number, searchTerm?: string, startCreationAt?: string, endCreationAt?: string, 
         offset: number = 0, limit: number = Constant.MAX_RECORDS): Observable<Indication[]> {
 
         let httpParams = new HttpParams();
 
         if (codClient) {
-            httpParams.append("codClient", codClient.toString());
+            httpParams = httpParams.set("codClient", codClient.toString());
+        }
+
+        if (searchTerm) {
+            httpParams = httpParams.set("searchTerm", searchTerm);
         }
 
         if (startCreationAt) {
-            httpParams.append("startCreationAt", startCreationAt.toString());
+            httpParams = httpParams.set("startCreationAt", startCreationAt);
         }
 
         if (endCreationAt) {
-            httpParams.append("endCreationAt", endCreationAt.toString());
+            httpParams = httpParams.set("endCreationAt", endCreationAt);
         }
 
-        if (offset) {
-            httpParams.append("offset", offset.toString());
-        }
+        httpParams = httpParams.set("offset", offset.toString());
+        httpParams = httpParams.set("limit", limit.toString());
 
-        if (limit) {
-            httpParams.append("limit", limit.toString());
-        }
-
-        return this.http
-            .get(
+        return this.http.get(
                 `${environment.apiUrl}/indications`, 
                 {
                     observe: 'response',
                     params: httpParams
-                })
-            .pipe(
+                }
+            ).pipe(
                 map( (res: any) => {
                     return res.body.content as Indication[];
                 }),
@@ -54,45 +52,6 @@ export class IndicationService {
             );
 
     }
-
-    // getIndications(codClient?: number, startCreationAt?: string, endCreationAt?: string, 
-    //     offset: number = 0, limit: number = Constant.MAX_RECORDS): Observable<Indication[]> {
-
-    //     let httpParams = new HttpParams();
-
-    //     if (codClient) {
-    //         httpParams.append("codClient", codClient.toString());
-    //     }
-
-    //     if (startCreationAt) {
-    //         httpParams.append("startCreationAt", startCreationAt.toString());
-    //     }
-
-    //     if (endCreationAt) {
-    //         httpParams.append("endCreationAt", endCreationAt.toString());
-    //     }
-
-    //     if (offset) {
-    //         httpParams.append("offset", offset.toString());
-    //     }
-
-    //     if (limit) {
-    //         httpParams.append("limit", limit.toString());
-    //     }
-
-    //     return this.http
-    //         .get<Indication[]>(
-    //             `${environment.apiUrl}/indications`, 
-    //             {
-    //                 params: httpParams
-    //             })
-    //         .pipe(
-    //             tap( _ => console.log('IndicationService: fetched Indications'),
-    //             catchError(this.handleError('getIndications', []))
-    //         )
-    //     );
-
-    // }
 
     getIndicationById(id: number): Observable<Indication> {
         return this.http
