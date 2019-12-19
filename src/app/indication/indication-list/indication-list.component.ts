@@ -6,7 +6,7 @@ import * as jwt_decode from 'jwt-decode';
 import { IndicationService } from '../../shared/indication.service';
 import { MessageService } from '../../shared/message/message.service';
 import { AuthService } from '../../shared/auth.service';
-import { Indication } from 'src/app/model/indication.model';
+import { Indication, IndicationStatusEnum } from 'src/app/model/indication.model';
 import { Client } from 'src/app/model/client.model';
 
 @Component({
@@ -67,10 +67,12 @@ export class IndicationListComponent {
 
       let searchTerm: string = this.searchForm.value.inputSearch;
       
+      // Define startDate
       let startDate: Date = (this.searchForm.value.inputBeginDate as Date);
       startDate.setSeconds(1);
       let startCreationAt: string = startDate.toISOString();
 
+      // Define endDate
       let endDate: Date = (this.searchForm.value.inputEndDate as Date);
       endDate.setHours(23);
       endDate.setMinutes(59);
@@ -104,17 +106,20 @@ export class IndicationListComponent {
         );
 
       } else {
-
         this.messageService.showWarningMessage();
-
       }
       
     } else {
-
       this.messageService.showErrorMessage();
-
     }
     
+  }
+
+  getStatusClass(indication: Indication) {
+    if (indication.status === IndicationStatusEnum.CREATED) {
+      return IndicationStatusEnum.CREATED.toLocaleLowerCase();
+    }
+    return "";
   }
 
   onSubmit() {

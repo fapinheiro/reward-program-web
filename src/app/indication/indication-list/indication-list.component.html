@@ -93,7 +93,7 @@
                     <td>{{indication.name}}</td>
                     <td>{{indication.email}}</td>
                     <td>{{indication.phone}}</td>
-                    <td>TODO</td>
+                    <td [class]="getStatusClass(indication)">{{indication.status}}</td>
                     <td>TODO</td>
                 </tr>
             </tbody>

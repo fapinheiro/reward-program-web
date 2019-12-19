@@ -12,6 +12,10 @@ table {
     margin: 10px;
 }
 
+.created {
+    color: blue;
+}
+
 /* Small Devices */
 @media only screen and (max-width: 768px) {
     mat-form-field {

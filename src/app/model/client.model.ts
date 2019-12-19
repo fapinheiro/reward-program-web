@@ -6,6 +6,7 @@ export class Client {
     email: string;
     password: string;
     name: string;
+    phone: string;
     nif: string;
     postalCode: PostalCode;
     creationAt: string;

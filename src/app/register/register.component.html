@@ -31,20 +31,37 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="form-group">
-            <mat-form-field class="form-full-width">
-                <label for="inputName">Name</label>
-                <input matInput type="text" class="form-control" id="inputName" name="inputName" 
-                    maxlength="100" 
-                    pattern="[a-zA-Z\s]+" 
-                    ngModel
-                    required>
-                <mat-error *ngIf="!isFormValid()">
-                    Name is
-                    <strong>required. </strong>
-                    Numbers is not permited.
-                </mat-error>
-            </mat-form-field>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <mat-form-field class="form-full-width">
+                    <label for="inputName">Name</label>
+                    <input matInput type="text" class="form-control" id="inputName" name="inputName" 
+                        maxlength="100" 
+                        pattern="[a-zA-Z\s]+" 
+                        ngModel
+                        required>
+                    <mat-error *ngIf="!isFormValid()">
+                        Name is
+                        <strong>required. </strong>
+                        Numbers is not permited.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-group col-md-6">
+                <mat-form-field class="form-full-width">
+                    <label for="inputPhone">Phone</label>
+                    <input matInput type="text" class="form-control" id="inputPhone" name="inputPhone" 
+                        maxlength="20"
+                        pattern="\+?[0-9]+" 
+                        ngModel 
+                        required>
+                    <mat-error *ngIf="!isFormValid()">
+                        Phone is
+                        <strong>required. </strong>
+                        Only numbers is permited.
+                    </mat-error>
+                </mat-form-field>
+            </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
