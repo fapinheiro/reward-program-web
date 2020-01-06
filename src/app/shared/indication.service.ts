@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { catchError, tap, map} from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { Indication } from '../model/indication.model';
@@ -9,6 +9,8 @@ import { Constant } from './constant';
 
 @Injectable()
 export class IndicationService {
+
+    indicationSelectedEvent = new BehaviorSubject<Indication>(new Indication());
 
     constructor(private http: HttpClient) {
         // Ok, nothing here

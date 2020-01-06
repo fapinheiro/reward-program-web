@@ -83,18 +83,18 @@
                     <th class="w-25">Name</th>
                     <th class="w-25">Email</th>
                     <th class="w-25">Cellphone</th>
+                    <th class="w-25">Date</th>
                     <th class="w-25">Status</th>
-                    <th class="w-25">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let indication of getIndications(); let i = index">
+                <tr *ngFor="let indication of getIndications(); let i = index" (click)="onSelectedRow(indication)">
                     <td>{{i+1}}</td>
                     <td>{{indication.name}}</td>
                     <td>{{indication.email}}</td>
                     <td>{{indication.phone}}</td>
-                    <td [class]="getStatusClass(indication)">{{indication.status}}</td>
-                    <td>TODO</td>
+                    <td>{{indication.creationAt | slice:0:10 }}</td>
+                    <td [class]="indication.status | lowercase">{{indication.status | lowercase}}</td>
                 </tr>
             </tbody>
         </table>

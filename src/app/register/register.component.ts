@@ -48,6 +48,10 @@ export class RegisterComponent  {
     );
   }
 
+  ngOnDetroy() {
+    this.searchTerms.unsubscribe();
+  }
+
   onPostalCodeKeyUp(code: string) {
     this.searchTerms.next(code);
   }

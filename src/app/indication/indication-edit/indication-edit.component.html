@@ -1,0 +1,70 @@
+<div class="register-container">
+    <div class="row justify-content-center">
+        <h2>Indication Update</h2>
+    </div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="editForm">
+        <div class="row justify-content-center">
+            <div class="form-group col-md-6">
+                <mat-form-field class="form-full-width">
+                    <label for="inputName">Name</label>
+                    <input matInput type="text" class="form-control" id="inputName" 
+                        name="inputName" 
+                        formControlName="inputName"
+                        maxlength="100" 
+                        pattern="[a-zA-Z\s]+" 
+                        required
+                        autofocus
+                        cdkFocusInitial>
+                    <mat-error *ngIf="!isFormValid()">
+                        Name is
+                        <strong>required. </strong>
+                        Numbers is not permited.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="form-group col-md-6">
+                <mat-form-field class="form-full-width">
+                    <label for="inputEmail">Email</label>
+                    <input matInput type="email" class="form-control" id="inputEmail" 
+                        name="inputEmail" 
+                        formControlName="inputEmail"
+                        maxlength="100" 
+                        required
+                        email>
+                    <mat-error *ngIf="!isFormValid()">
+                        Email is
+                        <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="form-group col-md-6">
+                <mat-form-field class="form-full-width">
+                    <label for="inputPhone">Cellphone</label>
+                    <input matInput type="text" class="form-control" id="inputPhone" 
+                        name="inputPhone" 
+                        formControlName="inputPhone"
+                        maxlength="10" 
+                        pattern="[0-9]+" 
+                        required>
+                    <mat-error *ngIf="!isFormValid()">
+                        Phone is
+                        <strong>required. </strong>
+                        Only numbers is permited.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="form-group col-md-6">
+                <button type="submit" class="btn btn-link" (click)="onBtnVoltar()">Voltar</button>
+                <button type="submit" class="btn btn-primary ml-1" [disabled]="!isFormValid()">Update</button>
+                <button type="reset" mat-button class="btn btn-secondary ml-1">Clear</button>
+            </div>
+
+        </div>
+    </form>
+</div>

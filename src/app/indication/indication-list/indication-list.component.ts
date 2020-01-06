@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import * as jwt_decode from 'jwt-decode';
@@ -6,27 +6,31 @@ import * as jwt_decode from 'jwt-decode';
 import { IndicationService } from '../../shared/indication.service';
 import { MessageService } from '../../shared/message/message.service';
 import { AuthService } from '../../shared/auth.service';
-import { Indication, IndicationStatusEnum } from 'src/app/model/indication.model';
+import { Indication } from 'src/app/model/indication.model';
 import { Client } from 'src/app/model/client.model';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-indication-list',
   templateUrl: './indication-list.component.html',
   styleUrls: ['./indication-list.component.css']
 })
-export class IndicationListComponent {
+export class IndicationListComponent implements OnInit {
 
   @ViewChild('searchForm', {static: true}) searchForm: NgForm;
 
   private indications: Indication[];
-  private client: Client ;
+  private client: Client;
 
   constructor(
     private indicationService: IndicationService,
     private messageService: MessageService,
-    private authService: AuthService) {
+    private authService: AuthService, 
+    private router: Router,
+    private activatedRoute: ActivatedRoute) {
     this.indications = [];
     this.client = new Client();
+    console.log('list');
   }
 
   ngOnInit() {
@@ -98,8 +102,10 @@ export class IndicationListComponent {
 
       } else if (startCreationAt != null && endCreationAt != null) {
 
-        this.indicationService.getIndications(this.client.codCliente, startCreationAt, 
-          endCreationAt).subscribe(
+        this.indicationService.getIndications(
+            this.client.codCliente, 
+            startCreationAt, 
+            endCreationAt).subscribe(
           (indications: Indication[]) => {
             this.setIndications(indications);
           }
@@ -115,15 +121,12 @@ export class IndicationListComponent {
     
   }
 
-  getStatusClass(indication: Indication) {
-    if (indication.status === IndicationStatusEnum.CREATED) {
-      return IndicationStatusEnum.CREATED.toLocaleLowerCase();
-    }
-    return "";
-  }
-
   onSubmit() {
     // Ok, nothing here
   }
   
+  onSelectedRow(selectedIndication: Indication) {
+    this.indicationService.indicationSelectedEvent.next(selectedIndication);
+    this.router.navigate(['update'], {relativeTo: this.activatedRoute});
+  }
 }
