@@ -7,7 +7,7 @@ import { IndicationEditComponent } from './indication-edit/indication-edit.compo
 const appRoutes: Routes = [
   { path: '', component: IndicationListComponent},
   { path: 'new', component: IndicationRequestComponent},
-  { path: 'update', component: IndicationEditComponent},
+  { path: ':id/edit', component: IndicationEditComponent},
   // { path: 'new', component: IndicationRequestComponent}
 ]
 @NgModule({
