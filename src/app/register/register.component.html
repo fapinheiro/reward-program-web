@@ -7,7 +7,7 @@
                     <label for="inputEmail">Email</label>
                     <input matInput type="email" class="form-control" id="inputEmail" name="inputEmail" 
                         maxlength="100" 
-                        ngModel 
+                        [(ngModel)]="client.email" 
                         required
                         autofocus
                         cdkFocusInitial>
@@ -22,7 +22,7 @@
                     <label for="inputPassword">Password</label>
                     <input matInput type="password" class="form-control" id="inputPassword" name="inputPassword" 
                         maxlength="10" 
-                        ngModel 
+                        [(ngModel)]="client.password"  
                         required>
                     <mat-error *ngIf="!isFormValid()">
                         Password is
@@ -38,7 +38,7 @@
                     <input matInput type="text" class="form-control" id="inputName" name="inputName" 
                         maxlength="100" 
                         pattern="[a-zA-Z\s]+" 
-                        ngModel
+                        [(ngModel)]="client.name" 
                         required>
                     <mat-error *ngIf="!isFormValid()">
                         Name is
@@ -53,7 +53,7 @@
                     <input matInput type="text" class="form-control" id="inputPhone" name="inputPhone" 
                         maxlength="20"
                         pattern="\+?[0-9]+" 
-                        ngModel 
+                        [(ngModel)]="client.phone"  
                         required>
                     <mat-error *ngIf="!isFormValid()">
                         Phone is
@@ -70,7 +70,7 @@
                     <input matInput type="text" class="form-control" id="inputNIF" name="inputNIF" 
                         maxlength="10"
                         pattern="[0-9]+" 
-                        ngModel 
+                        [(ngModel)]="client.nif"  
                         required>
                     <mat-error *ngIf="!isFormValid()">
                         NIF is
@@ -108,7 +108,6 @@
                     id="inputAddress" 
                     class="form-control" 
                     name="inputAddress" 
-                    ngModel
                     required>
                     <mat-option value="option">Choose...</mat-option>
                     <mat-option *ngFor="let postalCode of postalCodesList$ | async" value="option" 

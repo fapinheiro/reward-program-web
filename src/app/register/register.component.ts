@@ -10,6 +10,8 @@ import { PostalCodeService } from '../shared/postal-code.service';
 import { ClientService } from '../shared/client.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MessageService } from '../shared/message/message.service';
+import { IndicationService } from '../shared/indication.service';
+import Indication, { IndicationStatusEnum } from '../model/indication.model';
 
 @Component({
   selector: 'app-register',
@@ -23,28 +25,43 @@ export class RegisterComponent  {
   private postalCodesList$: Observable<PostalCode[]>;
   private searchTerms = new Subject<string>();
   private postalCodeSelected: PostalCode;
-  private indicationToken: string;
+  private client: Client;
 
   constructor(
     private postalCodeService: PostalCodeService,
     private clientService: ClientService,
+    private indicationService: IndicationService,
     private messageService: MessageService,
     private activatedRoute: ActivatedRoute) { 
     // Ok, nothing here
   }
 
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe(
-      (params: Params) => {
-        this.indicationToken = params['indToken'];
-        console.log('IndicationToken', this.indicationToken);
+    this.client = new Client();
+    this.activatedRoute.queryParams
+      .subscribe(
+        (params: Params) => {
+          // Process indication token
+          if (params['indToken']) {
+           const indToken = +params['indToken'];
+            this.indicationService.getIndicationById(indToken)
+              .subscribe( 
+                (ind: Indication) => {
+                this.client.email = ind.email;
+                this.client.name = ind.name;
+                this.client.phone = ind.phone;
+            });
+          }
       }
     );
+
+    // Create asynch search pipe for postal code
     this.postalCodeSelected = new PostalCode();
     this.postalCodesList$ = this.searchTerms.pipe(
       debounceTime(2000),
       distinctUntilChanged(),
-      switchMap((code: string) => this.postalCodeService.getPostalCodesByCodeNumber(code)),
+      switchMap((code: string) => 
+        this.postalCodeService.getPostalCodesByCodeNumber(code)),
     );
   }
 
@@ -61,14 +78,13 @@ export class RegisterComponent  {
   }
 
   onSubmit() {
-    const client = new Client();
-    client.postalCode = this.postalCodeSelected;
-    client.email = this.registerForm.value.inputEmail;
-    client.name = this.registerForm.value.inputName;
-    client.phone = this.registerForm.value.inputPhone;
-    client.nif = this.registerForm.value.inputNIF;
-    client.password = this.registerForm.value.inputPassword;
-    this.clientService.addClient(client)
+    this.client.postalCode = this.postalCodeSelected;
+    this.client.email = this.registerForm.value.inputEmail;
+    this.client.name = this.registerForm.value.inputName;
+    this.client.phone = this.registerForm.value.inputPhone;
+    this.client.nif = this.registerForm.value.inputNIF;
+    this.client.password = this.registerForm.value.inputPassword;
+    this.clientService.addClient(this.client)
     .subscribe(
       _ => {
         this.messageService.showSuccessMessageToURL('/');

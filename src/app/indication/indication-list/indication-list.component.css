@@ -14,6 +14,12 @@ table {
 
 .created {
     color: blue;
+    text-transform: capitalize;
+}
+
+.accepted {
+    color: green;
+    text-transform: capitalize;
 }
 
 /* Small Devices */

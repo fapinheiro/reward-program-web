@@ -27,3 +27,18 @@ button {
 .my-card-title {
     margin-left: -20px;
 }
+
+/* Small Devices */
+@media only screen and (max-width: 768px) {
+    .my-card {
+        width: 100%;
+    }
+
+    .center {
+        position: relative;
+        top: 0%;
+        left: 0%;
+        margin: 0;
+    }
+
+}
