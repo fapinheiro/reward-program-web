@@ -8,34 +8,38 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home
+        <a class="nav-link" href="#">
+          <i class="material-icons md-18">house</i>
+          Home
           <span class="sr-only">(current)</span>
         </a>
       </li>
       <li class="nav-item dropdown" *ngIf="isAuthenticated()">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownInd" role="button" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
+          <i class="material-icons md-18">how_to_reg</i>
           Indications
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownInd">
-          <a class="dropdown-item" routerLink="indications/new">Indication Form</a>
-          <a class="dropdown-item" routerLink="indications">My Indications</a>
-          <a class="dropdown-item" href="#">My Scores</a>
-          <a class="dropdown-item" href="#">Request Withdrawn</a>
+          <a class="dropdown-item" routerLink="indications/new"><i class="material-icons md-18">assignment</i>Indication Form</a>
+          <a class="dropdown-item" routerLink="indications"><i class="material-icons md-18">toc</i>My Indications</a>
+          <a class="dropdown-item" href="#"><i class="material-icons md-18">score</i>My Scores</a>
+          <a class="dropdown-item" href="#"><i class="material-icons md-18">local_atm</i>Request Withdrawn</a>
         </div>
       </li>
       <li class="nav-item dropdown" *ngIf="isAuthenticated()">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAdm" role="button" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
+          <i class="material-icons md-18">apps</i>
           Admin
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownAdm">
-          <a class="dropdown-item" href="#">Manage Parameters</a>
-          <a class="dropdown-item" href="#">Manage Score</a>
-          <a class="dropdown-item" href="#">Manage Reward</a>
-          <a class="dropdown-item" href="#">Manage Clients</a>
+          <a class="dropdown-item" href="#"><i class="material-icons md-18">tune</i>Manage Parameters</a>
+          <a class="dropdown-item" href="#"><i class="material-icons md-18">account_balance</i>Manage Score</a>
+          <a class="dropdown-item" href="#"><i class="material-icons md-18">card_giftcard</i>Manage Reward</a>
+          <a class="dropdown-item" href="#"><i class="material-icons md-18">perm_identity</i>Manage Clients</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Indications Monitor</a>
+          <a class="dropdown-item" href="#"><i class="material-icons md-18">insert_chart_outlined</i>Indications Monitor</a>
         </div>
       </li>
       <!-- <li class="nav-item">
@@ -45,14 +49,14 @@
     <ul class="navbar-nav">
       <ng-template [ngIf]="!isAuthenticated()">
         <li class="nav-item">
-          <a class="nav-link active" routerLink="login">Login</a>
+          <a class="nav-link active" routerLink="login"><i class="material-icons md-18">input</i>Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="register">Register</a>
+          <a class="nav-link" routerLink="register"><i class="material-icons md-18">assignment_ind</i>Register</a>
         </li>
       </ng-template>
       <li class="nav-item" *ngIf="isAuthenticated()">
-        <a class="nav-link" (click)="onLogout()">Logout</a>
+        <a class="nav-link" (click)="onLogout()"><i class="material-icons md-18">exit_to_app</i>Logout</a>
       </li>
       <!-- <li class="nav-item">
         <a class="nav-link" href="#">Link</a>

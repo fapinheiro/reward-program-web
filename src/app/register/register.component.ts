@@ -47,9 +47,16 @@ export class RegisterComponent  {
             this.indicationService.getIndicationById(indToken)
               .subscribe( 
                 (ind: Indication) => {
-                this.client.email = ind.email;
-                this.client.name = ind.name;
-                this.client.phone = ind.phone;
+                  
+                  // Check indication status
+                  if (ind.status == IndicationStatusEnum.CREATED || 
+                      ind.status == IndicationStatusEnum.SENT || 
+                      ind.status == IndicationStatusEnum.RESENT) {
+                      this.client.email = ind.email;
+                      this.client.name = ind.name;
+                      this.client.phone = ind.phone;
+                  }
+                  
             });
           }
       }

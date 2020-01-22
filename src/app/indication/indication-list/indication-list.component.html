@@ -65,11 +65,14 @@
                 <div class="col">
                     <button type="submit" class="btn btn-primary" 
                         [disabled]="!isFormValid()"
-                        (click)="onBtnSearch()">Search</button>
+                        (click)="onBtnSearch()">
+                        <i class="material-icons md-18">search</i>
+                        Search</button>
                     <button type="reset" 
                         mat-button 
                         class="btn btn-secondary"
-                        (click)="onBtnClear()">Clear</button>
+                        (click)="onBtnClear()">
+                        <i class="material-icons md-18">clear</i>Clear</button>
                 </div>
             </div>
         </form>
