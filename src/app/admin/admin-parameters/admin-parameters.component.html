@@ -1,0 +1,59 @@
+<div class="register-container">
+    <div class="row">
+        <h2>Manage Parameters</h2>
+    </div>
+    <form (ngSubmit)="onSubmit()" #parametersForm="ngForm">
+        <!-- <div class="form-row"> -->
+            <!-- <div class="form-group"> -->
+                <mat-form-field class="form-full-width-mobile">
+                    <!-- <label for="inputIndicationExpiration">Indication Expiration (in days):</label> -->
+                    <input matInput type="number" 
+                        id="inputIndicationExpiration" 
+                        name="inputIndicationExpiration" 
+                        class="form-control" 
+                        maxlength="3" 
+                        pattern="[0-9]+"  
+                        required
+                        autofocus
+                        cdkFocusInitial
+                        placeholder="Indication Expiration (in days):"
+                        ngModel>
+                    <mat-error *ngIf="!isFormValid()">
+                        Indication Expiration is
+                        <strong>required. </strong>
+                        Only positive numbers is permited.
+                    </mat-error>
+                </mat-form-field>
+            <!-- </div> -->
+            <!-- <div class="form-row"> -->
+            <!-- <div class="form-group col-md-6"> -->
+                <mat-form-field class="form-full-width-mobile">
+                    <!-- <label for="inputScoreExpiration">Score Expiration since last indication (in days):</label> -->
+                    <input matInput 
+                        placeholder="Score Expiration since last indication (in days):"
+                        type="number" 
+                        id="inputScoreExpiration" 
+                        name="inputScoreExpiration" 
+                        class="form-control" 
+                        maxlength="3" 
+                        pattern="[0-9]+"  
+                        required
+                        autofocus
+                        cdkFocusInitial
+                        ngModel>
+                    <mat-error *ngIf="!isFormValid()">
+                        Score Expiration is
+                        <strong>required. </strong>
+                        Only positive numbers is permited.
+                    </mat-error>
+                </mat-form-field>
+            <!-- </div> -->
+        <!-- </div> -->
+        <!-- <div class="row justify-content-center"> -->
+            <!-- <div class="form-group col-md-6"> -->
+                <button type="button" class="btn btn-primary form-full-width-mobile" [disabled]="!isFormValid()">Save</button>
+                <button type="submit" class="btn btn-danger form-full-width-mobile">Reset</button>
+            <!-- </div> -->
+        <!-- </div> -->
+    </form>
+</div>

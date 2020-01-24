@@ -25,6 +25,7 @@ export class RegisterComponent  {
   private postalCodesList$: Observable<PostalCode[]>;
   private searchTerms = new Subject<string>();
   private postalCodeSelected: PostalCode;
+  private isAddressSet: boolean;
   private client: Client;
 
   constructor(
@@ -82,6 +83,7 @@ export class RegisterComponent  {
 
   onPostalCodeSelected(selected: PostalCode) {
     this.postalCodeSelected = selected;
+    this.isAddressSet = true;
   }
 
   onSubmit() {
@@ -100,7 +102,7 @@ export class RegisterComponent  {
   }
 
   isFormValid(): boolean {
-    // console.log(this.loginForm.valid);
-    return this.registerForm.valid;
+    // console.log(this.registerForm.value.inputAddress);
+    return this.registerForm.valid && this.isAddressSet;
   }
 }

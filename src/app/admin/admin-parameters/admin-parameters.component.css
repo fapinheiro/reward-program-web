@@ -1,0 +1,27 @@
+.register-container {
+    display: flex;
+    flex-direction: column;
+}
+  
+.register-container > * {
+    width: 100%;
+}
+
+.form-full-width {
+    width:100%;
+}
+
+.my-form {
+  width: 30%;
+}
+
+button {
+    margin: 2px;
+}
+
+@media (max-width: 650.00px) {
+
+    .form-full-width-mobile {
+        width:100%;
+    }
+}

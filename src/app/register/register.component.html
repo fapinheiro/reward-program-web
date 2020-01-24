@@ -4,13 +4,14 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
-                    <label for="inputEmail">Email</label>
+                    <!-- <label for="inputEmail">Email</label> -->
                     <input matInput type="email" class="form-control" id="inputEmail" name="inputEmail" 
                         maxlength="100" 
                         [(ngModel)]="client.email" 
                         required
                         autofocus
-                        cdkFocusInitial>
+                        cdkFocusInitial
+                        placeholder="Email">
                     <mat-error *ngIf="!isFormValid()">
                         Email is
                         <strong>required</strong>
@@ -19,8 +20,12 @@
             </div>
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
-                    <label for="inputPassword">Password</label>
-                    <input matInput type="password" class="form-control" id="inputPassword" name="inputPassword" 
+                    <!-- <label for="inputPassword">Password</label> -->
+                    <input matInput type="password" 
+                        class="form-control" 
+                        id="inputPassword" 
+                        name="inputPassword" 
+                        placeholder="Password"
                         maxlength="10" 
                         [(ngModel)]="client.password"  
                         required>
@@ -34,12 +39,16 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
-                    <label for="inputName">Name</label>
-                    <input matInput type="text" class="form-control" id="inputName" name="inputName" 
+                    <!-- <label for="inputName">Name</label> -->
+                    <input matInput type="text" 
+                        class="form-control" 
+                        id="inputName" 
+                        name="inputName" 
                         maxlength="100" 
                         pattern="[a-zA-Z\s]+" 
                         [(ngModel)]="client.name" 
-                        required>
+                        required
+                        placeholder="Name">
                     <mat-error *ngIf="!isFormValid()">
                         Name is
                         <strong>required. </strong>
@@ -49,12 +58,16 @@
             </div>
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
-                    <label for="inputPhone">Phone</label>
-                    <input matInput type="text" class="form-control" id="inputPhone" name="inputPhone" 
+                    <!-- <label for="inputPhone">Phone</label> -->
+                    <input matInput type="text" 
+                        class="form-control" 
+                        id="inputPhone" 
+                        name="inputPhone" 
                         maxlength="20"
                         pattern="\+?[0-9]+" 
                         [(ngModel)]="client.phone"  
-                        required>
+                        required
+                        placeholder="Phone">
                     <mat-error *ngIf="!isFormValid()">
                         Phone is
                         <strong>required. </strong>
@@ -66,12 +79,16 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
-                    <label for="inputNIF">NIF</label>
-                    <input matInput type="text" class="form-control" id="inputNIF" name="inputNIF" 
+                    <!-- <label for="inputNIF">NIF</label> -->
+                    <input matInput type="text" 
+                        class="form-control" 
+                        id="inputNIF" 
+                        name="inputNIF" 
                         maxlength="10"
                         pattern="[0-9]+" 
                         [(ngModel)]="client.nif"  
-                        required>
+                        required
+                        placeholder="NIF">
                     <mat-error *ngIf="!isFormValid()">
                         NIF is
                         <strong>required. </strong>
@@ -81,7 +98,7 @@
             </div>
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
-                    <label for="inputCode">Postal Code</label>
+                    <!-- <label for="inputCode">Postal Code</label> -->
                     <input  #searchPostalCode 
                             matInput 
                             type="text" 
@@ -92,7 +109,8 @@
                             pattern="[0-9]+"
                             (keyup)="onPostalCodeKeyUp(searchPostalCode.value)" 
                             [(ngModel)]="postalCodeSelected.codigoPostal" 
-                            required>
+                            required
+                            placeholder="PostalCode">
                     <mat-error *ngIf="!isFormValid()">
                         PostalCode is
                         <strong>required. </strong>
@@ -103,7 +121,8 @@
         </div>
         <div class="form-group">
             <mat-form-field class="form-full-width">
-                <label for="inputAddress">Address</label>
+                <!-- <label for="inputAddress">Address</label> -->
+                <mat-label>Address</mat-label>
                 <mat-select 
                     id="inputAddress" 
                     class="form-control" 
@@ -122,7 +141,7 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
-                    <label for="inputDistrict">District</label>
+                    <!-- <label for="inputDistrict">District</label> -->
                     <input  matInput 
                             type="text" 
                             class="form-control" 
@@ -130,7 +149,8 @@
                             name="inputDistrict"
                             disabled 
                             [(ngModel)]="postalCodeSelected.concelho.distrito.nomeDistrito"
-                            required>
+                            required
+                            placeholder="District">
                     <mat-error *ngIf="!isFormValid()">
                         District is
                         <strong>required</strong>
@@ -139,17 +159,18 @@
             </div>
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
-                    <label for="inputConsoul">Consoul</label>
+                    <!-- <label for="inputConsoul">County</label> -->
                     <input  matInput 
                             type="text" 
                             class="form-control" 
-                            id="inputConsoul" 
-                            name="inputConsoul"
+                            id="inputCounty" 
+                            name="inputCounty"
                             disabled
                             [(ngModel)]="postalCodeSelected.concelho.nomeConcelho"
-                            required>
+                            required
+                            placeholder="County">
                     <mat-error *ngIf="!isFormValid()">
-                        Consoul is
+                        County is
                         <strong>required</strong>
                     </mat-error>
                 </mat-form-field>
