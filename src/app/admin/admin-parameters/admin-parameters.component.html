@@ -1,11 +1,11 @@
-<div class="register-container">
-    <div class="row">
+<div class="container">
+    <div class="row justify-content-center">
         <h2>Manage Parameters</h2>
     </div>
     <form (ngSubmit)="onSubmit()" #parametersForm="ngForm">
-        <!-- <div class="form-row"> -->
-            <!-- <div class="form-group"> -->
-                <mat-form-field class="form-full-width-mobile">
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-6">
+                <mat-form-field class="form-full-width">
                     <!-- <label for="inputIndicationExpiration">Indication Expiration (in days):</label> -->
                     <input matInput type="number" 
                         id="inputIndicationExpiration" 
@@ -24,10 +24,11 @@
                         Only positive numbers is permited.
                     </mat-error>
                 </mat-form-field>
-            <!-- </div> -->
-            <!-- <div class="form-row"> -->
-            <!-- <div class="form-group col-md-6"> -->
-                <mat-form-field class="form-full-width-mobile">
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-6">
+                <mat-form-field class="form-full-width">
                     <!-- <label for="inputScoreExpiration">Score Expiration since last indication (in days):</label> -->
                     <input matInput 
                         placeholder="Score Expiration since last indication (in days):"
@@ -47,13 +48,13 @@
                         Only positive numbers is permited.
                     </mat-error>
                 </mat-form-field>
-            <!-- </div> -->
-        <!-- </div> -->
-        <!-- <div class="row justify-content-center"> -->
-            <!-- <div class="form-group col-md-6"> -->
-                <button type="button" class="btn btn-primary form-full-width-mobile" [disabled]="!isFormValid()">Save</button>
-                <button type="submit" class="btn btn-danger form-full-width-mobile">Reset</button>
-            <!-- </div> -->
-        <!-- </div> -->
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-6">
+                <button type="button" class="btn btn-primary" [disabled]="!isFormValid()">Save</button>
+                <button type="submit" class="btn btn-danger">Reset</button>
+            </div>
+        </div>
     </form>
 </div>

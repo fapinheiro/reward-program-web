@@ -1,105 +1,105 @@
-<div class="row justify-content-center">
-    <h2>My Indications</h2>
-</div>
-<div class="div">
-    <div class="div">
-        <form (ngSubmit)="onSubmit()" #searchForm="ngForm">
-            <div class="row">
-                <div class="col">
-                    <mat-form-field id="inputSearch">
-                        <input matInput 
-                            id="inputSearch" 
-                            name="inputSearch" 
-                            type="text" 
-                            maxlength="100"
-                            pattern="[a-zA-Z\s]+" 
-                            placeholder="Search for name or email"
-                            ngModel 
-                            required 
-                            autofocus 
-                            cdkFocusInitial>
-                        <mat-error *ngIf="!isFormValid()">
-                            Search Bar is
-                            <strong>required. </strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <mat-form-field>
-                        <input matInput 
-                            id="inputBeginDate" 
-                            name="inputBeginDate" 
-                            type="text"
-                            [matDatepicker]="inputBeginDate" 
-                            placeholder="Choose begin date"
-                            ngModel
-                            required>
-                        <mat-datepicker-toggle matSuffix [for]="inputBeginDate"></mat-datepicker-toggle>
-                        <mat-datepicker #inputBeginDate></mat-datepicker>
-                        <mat-error *ngIf="!isFormValid()">
-                            Begin date is
-                            <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput 
-                            id="inputEndDate"
-                            name="inputEndDate" 
-                            type="text"
-                            [matDatepicker]="inputEndDate" 
-                            placeholder="Choose end date" 
-                            ngModel
-                            required>
-                        <mat-datepicker-toggle matSuffix [for]="inputEndDate"></mat-datepicker-toggle>
-                        <mat-datepicker #inputEndDate></mat-datepicker>
-                        <mat-error *ngIf="!isFormValid()">
-                            End date is
-                            <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <button type="submit" class="btn btn-primary" 
-                        [disabled]="!isFormValid()"
-                        (click)="onBtnSearch()">
-                        <i class="material-icons align-bottom">search</i>
-                        Search</button>
-                    <button type="reset" 
-                        mat-button 
-                        class="btn btn-secondary"
-                        (click)="onBtnClear()">
-                        <i class="material-icons align-bottom">clear</i>Clear</button>
-                </div>
-            </div>
-        </form>
+<div class="container">
+    <div class="row justify-content-center">
+        <h2>My Indications</h2>
     </div>
-    <div class="row">
-        <table class="table table-hover table-responsive">
-            <caption>List of Indications</caption>
-            <thead>
-                <tr>
-                    <th class="w-10">#</th>
-                    <th class="w-25">Name</th>
-                    <th class="w-25">Email</th>
-                    <th class="w-25">Cellphone</th>
-                    <th class="w-25">Date</th>
-                    <th class="w-25">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let indication of getIndications(); let i = index" (click)="onSelectedRow(indication)">
-                    <td>{{i+1}}</td>
-                    <td>{{indication.name}}</td>
-                    <td>{{indication.email}}</td>
-                    <td>{{indication.phone}}</td>
-                    <td>{{indication.creationAt | slice:0:19 }}</td>
-                    <td [class]="indication.status | lowercase">{{indication.status | lowercase}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <form (ngSubmit)="onSubmit()" #searchForm="ngForm">
+        <div class="row">
+            <div class="col">
+                <mat-form-field id="inputSearch">
+                    <input matInput 
+                        id="inputSearch" 
+                        name="inputSearch" 
+                        type="text" 
+                        maxlength="100"
+                        pattern="[a-zA-Z\s]+" 
+                        placeholder="Search for name or email"
+                        ngModel 
+                        required 
+                        autofocus 
+                        cdkFocusInitial>
+                    <mat-error *ngIf="!isFormValid()">
+                        Search Bar is
+                        <strong>required. </strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field class="form-full-width">
+                    <input matInput 
+                        id="inputBeginDate" 
+                        name="inputBeginDate" 
+                        type="text"
+                        [matDatepicker]="inputBeginDate" 
+                        placeholder="Choose begin date"
+                        ngModel
+                        required>
+                    <mat-datepicker-toggle matSuffix [for]="inputBeginDate"></mat-datepicker-toggle>
+                    <mat-datepicker #inputBeginDate></mat-datepicker>
+                    <mat-error *ngIf="!isFormValid()">
+                        Begin date is
+                        <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field class="form-full-width">
+                    <input matInput 
+                        id="inputEndDate"
+                        name="inputEndDate" 
+                        type="text"
+                        [matDatepicker]="inputEndDate" 
+                        placeholder="Choose end date" 
+                        ngModel
+                        required>
+                    <mat-datepicker-toggle matSuffix [for]="inputEndDate"></mat-datepicker-toggle>
+                    <mat-datepicker #inputEndDate></mat-datepicker>
+                    <mat-error *ngIf="!isFormValid()">
+                        End date is
+                        <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary" 
+                    [disabled]="!isFormValid()"
+                    (click)="onBtnSearch()">
+                    <i class="material-icons align-bottom">search</i>
+                    Search</button>
+                <button type="reset" 
+                    mat-button 
+                    class="btn btn-secondary"
+                    (click)="onBtnClear()">
+                    <i class="material-icons align-bottom">clear</i>Clear</button>
+            </div>
+        </div>
+    </form>
+    <table class="table table-hover table-responsive">
+        <caption>List of Indications</caption>
+        <thead>
+            <tr>
+                <th class="w-10">#</th>
+                <th class="w-25">Name</th>
+                <th class="w-25">Email</th>
+                <th class="w-25">Cellphone</th>
+                <th class="w-25">Date</th>
+                <th class="w-25">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let indication of getIndications(); let i = index" (click)="onSelectedRow(indication)">
+                <td>{{i+1}}</td>
+                <td>{{indication.name}}</td>
+                <td>{{indication.email}}</td>
+                <td>{{indication.phone}}</td>
+                <td>{{indication.creationAt | slice:0:19 }}</td>
+                <td [class]="indication.status | lowercase">{{indication.status | lowercase}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

@@ -59,6 +59,7 @@
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
                     <!-- <label for="inputPhone">Phone</label> -->
+                    <span matPrefix>+351 &nbsp;</span>
                     <input matInput type="text" 
                         class="form-control" 
                         id="inputPhone" 
@@ -108,7 +109,7 @@
                             maxlength="10" 
                             pattern="[0-9]+"
                             (keyup)="onPostalCodeKeyUp(searchPostalCode.value)" 
-                            [(ngModel)]="postalCodeSelected.codigoPostal" 
+                            [(ngModel)]="inputCodeValue" 
                             required
                             placeholder="PostalCode">
                     <mat-error *ngIf="!isFormValid()">
@@ -127,9 +128,10 @@
                     id="inputAddress" 
                     class="form-control" 
                     name="inputAddress" 
-                    required>
-                    <mat-option value="option">Choose...</mat-option>
-                    <mat-option *ngFor="let postalCode of postalCodesList$ | async" value="option" 
+                    required
+                    [(ngModel)]="inputAddressValue">
+                    <mat-option value="">Choose...</mat-option>
+                    <mat-option *ngFor="let postalCode of postalCodesList$ | async" value="postalCode.localidade" 
                         (click)="onPostalCodeSelected(postalCode)">{{postalCode.localidade}}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="!isFormValid()">
@@ -148,7 +150,7 @@
                             id="inputDistrict" 
                             name="inputDistrict"
                             disabled 
-                            [(ngModel)]="postalCodeSelected.concelho.distrito.nomeDistrito"
+                            [(ngModel)]="inputDistrictValue"
                             required
                             placeholder="District">
                     <mat-error *ngIf="!isFormValid()">
@@ -166,7 +168,7 @@
                             id="inputCounty" 
                             name="inputCounty"
                             disabled
-                            [(ngModel)]="postalCodeSelected.concelho.nomeConcelho"
+                            [(ngModel)]="inputCountyValue"
                             required
                             placeholder="County">
                     <mat-error *ngIf="!isFormValid()">
@@ -178,7 +180,7 @@
         </div>
         <div class="form-row">
             <button type="submit" class="btn btn-primary" [disabled]="!isFormValid()"><i class="material-icons align-bottom">input</i>Sign in</button>
-            <button type="reset" mat-button class="btn btn-secondary ml-1"><i class="material-icons align-bottom">clear</i>Clear</button>
+            <button type="reset" mat-button class="btn btn-secondary ml-1" (click)="onBtnClear()"><i class="material-icons align-bottom">clear</i>Clear</button>
         </div>
     </form>
 </div>

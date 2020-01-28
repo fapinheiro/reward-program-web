@@ -40,7 +40,7 @@ export class AuthService {
                     // this.token = resp.body.token;
                     // this.userAuthenticatedEvent.next(user);
                 } else {
-                    console.log('Not found token field in the response body');
+                    console.log('Not found field `token` in the response body');
                 }
             }),
             catchError(this.handleError<any>('loginUser'))
@@ -48,7 +48,7 @@ export class AuthService {
     }
 
     isAuthenticated() {
-        return true; //this.getToken() != null;
+        return this.getToken() != null;
     }
 
     logout() {
@@ -69,7 +69,7 @@ export class AuthService {
         return (error: any): Observable<T> => {
 
             // TODO: send the error to remote logging infrastructure
-            console.error(error); // log to console instead
+            console.error('AuthorizationService error', error); // log to console instead
 
             // TODO: better job of transforming error for user consumption
             //this.log(`${operation} failed: ${error.message}`);

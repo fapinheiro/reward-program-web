@@ -24,9 +24,15 @@ export class RegisterComponent  {
   
   private postalCodesList$: Observable<PostalCode[]>;
   private searchTerms = new Subject<string>();
-  private postalCodeSelected: PostalCode;
   private isAddressSet: boolean;
   private client: Client;
+  
+  postalCodeSelected: PostalCode;
+
+  inputAddressValue: string = "";
+  inputDistrictValue: string;
+  inputCountyValue: string;
+  inputCodeValue: string;
 
   constructor(
     private postalCodeService: PostalCodeService,
@@ -34,7 +40,7 @@ export class RegisterComponent  {
     private indicationService: IndicationService,
     private messageService: MessageService,
     private activatedRoute: ActivatedRoute) { 
-    // Ok, nothing here
+    console.log('Register constructor');
   }
 
   ngOnInit() {
@@ -71,6 +77,8 @@ export class RegisterComponent  {
       switchMap((code: string) => 
         this.postalCodeService.getPostalCodesByCodeNumber(code)),
     );
+
+    console.log(this.inputAddressValue);
   }
 
   ngOnDetroy() {
@@ -84,6 +92,10 @@ export class RegisterComponent  {
   onPostalCodeSelected(selected: PostalCode) {
     this.postalCodeSelected = selected;
     this.isAddressSet = true;
+    this.inputDistrictValue = selected.concelho.distrito.nomeDistrito;
+    this.inputCountyValue = selected.concelho.nomeConcelho;
+    this.inputCodeValue = selected.codigoPostal;
+    // this.inputAddressValue = selected.localidade;
   }
 
   onSubmit() {
@@ -104,5 +116,9 @@ export class RegisterComponent  {
   isFormValid(): boolean {
     // console.log(this.registerForm.value.inputAddress);
     return this.registerForm.valid && this.isAddressSet;
+  }
+
+  onBtnClear(): void {
+    this.inputAddressValue = "";
   }
 }

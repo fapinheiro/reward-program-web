@@ -48,7 +48,11 @@ export class IndicationService {
                 }
             ).pipe(
                 map( (res: any) => {
-                    return res.body.content as Indication[];
+                    if (res.body && res.body.content) {
+                        return res.body.content as Indication[];
+                    }
+                    const indArray: Indication[] = [];
+                    return indArray;
                 }),
                 catchError(this.handleError('getIndications', []))
             );
@@ -117,10 +121,8 @@ export class IndicationService {
     private handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
 
-            console.log('meu erro');
-
             // TODO: send the error to remote logging infrastructure
-            console.error(error); // log to console instead
+            console.error('IndicationService error', error); // log to console instead
 
             // TODO: better job of transforming error for user consumption
             //this.log(`${operation} failed: ${error.message}`);

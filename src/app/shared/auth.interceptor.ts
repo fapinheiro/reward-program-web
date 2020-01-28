@@ -42,7 +42,7 @@ export class AuthInterceptor implements HttpInterceptor {
             }
         );
 
-        console.log('Intercepted!', request);
+        console.log('Applying authorization filter', request);
         
         return next.handle(request).pipe(
             map( resp => {
@@ -75,7 +75,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return (error: any): Observable<T> => {
 
         // TODO: send the error to remote logging infrastructure
-        console.error(error); // log to console instead
+        console.error('Authorization filter error', error); // log to console instead
 
         if (error instanceof HttpErrorResponse) {
             if (error.status === 403) {

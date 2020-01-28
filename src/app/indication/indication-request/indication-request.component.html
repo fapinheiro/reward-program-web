@@ -1,19 +1,23 @@
-<div class="register-container">
+<div class="container">
     <div class="row justify-content-center">
         <h2>Indication Form</h2>
     </div>
     <form (ngSubmit)="onSubmit()" #indicationForm="ngForm">
-        <div class="row justify-content-center">
+        <div class="form-row justify-content-center">
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
-                    <label for="inputName">Name</label>
-                    <input matInput type="text" class="form-control" id="inputName" name="inputName" 
+                    <!-- <label for="inputName">Name</label> -->
+                    <input matInput type="text" 
+                        class="form-control" 
+                        id="inputName" 
+                        name="inputName" 
                         maxlength="100" 
                         pattern="[a-zA-Z\s]+" 
                         ngModel
                         required
                         autofocus
-                        cdkFocusInitial>
+                        cdkFocusInitial
+                        placeholder="Name">
                     <mat-error *ngIf="!isFormValid()">
                         Name is
                         <strong>required. </strong>
@@ -22,15 +26,16 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="form-row justify-content-center">
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
-                    <label for="inputEmail">Email</label>
+                    <!-- <label for="inputEmail">Email</label> -->
                     <input matInput type="email" class="form-control" id="inputEmail" name="inputEmail" 
                         maxlength="100" 
                         ngModel
                         required
-                        email>
+                        email
+                        placeholder="Email">
                     <mat-error *ngIf="!isFormValid()">
                         Email is
                         <strong>required</strong>
@@ -38,15 +43,17 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="form-row justify-content-center">
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
-                    <label for="inputPhone">Cellphone</label>
+                    <!-- <label for="inputPhone">Cellphone</label> -->
+                    <span matPrefix>+351 &nbsp;</span>
                     <input matInput type="text" class="form-control" id="inputPhone" name="inputPhone" 
                         maxlength="10" 
                         pattern="[0-9]+" 
                         ngModel
-                        required>
+                        required
+                        placeholder="Phone">
                     <mat-error *ngIf="!isFormValid()">
                         Phone is
                         <strong>required. </strong>
@@ -55,7 +62,7 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="form-row justify-content-center">
             <div class="form-group col-md-6">
                 <button type="submit" class="btn btn-primary" [disabled]="!isFormValid()"><i class="material-icons align-bottom">done</i>Send</button>
                 <button type="reset" mat-button class="btn btn-secondary ml-1"><i class="material-icons align-bottom">clear</i>Clear</button>

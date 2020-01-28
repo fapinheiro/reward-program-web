@@ -1,12 +1,12 @@
-<div class="register-container">
+<div class="container">
     <div class="row justify-content-center">
         <h2>Indication Update</h2>
     </div>
     <form (ngSubmit)="onSubmit()" [formGroup]="editForm">
-        <div class="row justify-content-center">
+        <div class="form-row justify-content-center">
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
-                    <label for="inputName">Name</label>
+                    <!-- <label for="inputName">Name</label> -->
                     <input matInput type="text" class="form-control" id="inputName" 
                         name="inputName" 
                         formControlName="inputName"
@@ -14,7 +14,8 @@
                         pattern="[a-zA-Z\s]+" 
                         required
                         autofocus
-                        cdkFocusInitial>
+                        cdkFocusInitial
+                        placeholder="Name">
                     <mat-error *ngIf="!isFormValid()">
                         Name is
                         <strong>required. </strong>
@@ -23,16 +24,17 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="form-row justify-content-center">
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
-                    <label for="inputEmail">Email</label>
+                    <!-- <label for="inputEmail">Email</label> -->
                     <input matInput type="email" class="form-control" id="inputEmail" 
                         name="inputEmail" 
                         formControlName="inputEmail"
                         maxlength="100" 
                         required
-                        email>
+                        email
+                        placeholder="Email">
                     <mat-error *ngIf="!isFormValid()">
                         Email is
                         <strong>required</strong>
@@ -40,16 +42,18 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="form-row justify-content-center">
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
-                    <label for="inputPhone">Cellphone</label>
+                    <!-- <label for="inputPhone">Cellphone</label> -->
+                    <span matPrefix>+351 &nbsp;</span>
                     <input matInput type="text" class="form-control" id="inputPhone" 
                         name="inputPhone" 
                         formControlName="inputPhone"
                         maxlength="10" 
                         pattern="[0-9]+" 
-                        required>
+                        required
+                        placeholder="Phone">
                     <mat-error *ngIf="!isFormValid()">
                         Phone is
                         <strong>required. </strong>
@@ -58,11 +62,10 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="form-row justify-content-center">
             <div class="form-group col-md-6">
-                <button type="button" class="btn btn-light" (click)="onBtnVoltar()">Voltar</button>
-                <button type="submit" class="btn btn-primary ml-1" [disabled]="!isFormValid()">Update</button>
-                <button type="reset" mat-button class="btn btn-secondary ml-1">Clear</button>
+                <button type="button" class="btn btn-light" (click)="onBtnVoltar()"><i class="material-icons align-bottom">arrow_back</i>Voltar</button>
+                <button type="submit" class="btn btn-primary ml-1" [disabled]="!isFormValid()"><i class="material-icons align-bottom">update</i>Update</button>
             </div>
 
         </div>

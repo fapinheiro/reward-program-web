@@ -1,9 +1,9 @@
-.register-container {
+.container {
     display: flex;
     flex-direction: column;
 }
   
-.register-container > * {
+.container > * {
     width: 100%;
 }
 

@@ -15,6 +15,12 @@
   width: 30%;
 }
 
-button {
-    margin: 2px;
+button,
+mat-form-field {
+    margin: 5px;
+}
+
+.rm-label {
+    color: gray;
+    font-size: small;
 }

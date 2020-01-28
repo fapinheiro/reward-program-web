@@ -30,19 +30,24 @@ export class IndicationListComponent implements OnInit {
     private activatedRoute: ActivatedRoute) {
     this.indications = [];
     this.client = new Client();
-    console.log('list');
+    console.log('IndicationList constructor');
   }
 
   ngOnInit() {
 
-    let authInfo = jwt_decode(this.authService.getToken());
-    if (authInfo.clientId) {
-      this.client.codCliente = authInfo.clientId;
-      this.indicationService.getIndications(this.client.codCliente).subscribe(
-        (indications: Indication[]) => {
-          this.setIndications(indications);
-        }
-      );
+    const token = this.authService.getToken();
+    try {
+      let authInfo = jwt_decode(token);
+      if (authInfo && authInfo.clientId) {
+        this.client.codCliente = authInfo.clientId;
+        this.indicationService.getIndications(this.client.codCliente).subscribe(
+          (indications: Indication[]) => {
+            this.setIndications(indications);
+          }
+        );
+      }
+    } catch(err) {
+      console.error('Unable to process token', err);
     }
 
   }

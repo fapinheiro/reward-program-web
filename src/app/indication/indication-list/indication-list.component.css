@@ -1,4 +1,21 @@
 
+.container {
+    display: flex;
+    flex-direction: column;
+}
+  
+.container > * {
+    width: 100%;
+}
+
+.form-full-width {
+    width:100%;
+}
+
+.my-form {
+  width: 30%;
+}
+
 button,
 mat-form-field {
     margin: 5px;
@@ -20,11 +37,4 @@ table {
 .accepted {
     color: green;
     text-transform: capitalize;
-}
-
-/* Small Devices */
-@media only screen and (max-width: 768px) {
-    mat-form-field {
-        width: 100% !important;
-    }
 }
