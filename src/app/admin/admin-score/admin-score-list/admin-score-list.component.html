@@ -101,15 +101,17 @@
         <div class="form-row justify-content-center">
             <div class="form-group col-md-6">
                 <button type="submit" class="btn btn-primary" 
-                [disabled]="!isFormValid()"
-                (click)="onBtnSearch()">
-                <i class="material-icons align-bottom">search</i>
-                Search</button>
-            <button type="reset" 
-                mat-button 
-                class="btn btn-secondary"
-                (click)="onBtnClear()">
-                <i class="material-icons align-bottom">clear</i>Clear</button>
+                    [disabled]="!isFormValid()"
+                    (click)="onBtnSearch()">
+                    <i class="material-icons align-bottom">search</i>
+                    Search
+                </button>
+                <button type="reset" 
+                    mat-button 
+                    class="btn btn-secondary"
+                    (click)="onBtnClear()">
+                    <i class="material-icons align-bottom">clear</i>Clear
+                </button>
             </div>
         </div>
     </form>
