@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, AfterContentInit, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Options } from 'ng5-slider';
 import * as jwt_decode from 'jwt-decode';
@@ -12,43 +12,22 @@ import { Subscription } from 'rxjs';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Score } from 'src/app/model/score.model';
+import { AdminScoreFormComponent, AdminScoreFormModeEnum } from '../admin-score-form/admin-score-form.component';
 
 @Component({
   selector: 'app-admin-score-list',
   templateUrl: './admin-score-list.component.html',
   styleUrls: ['./admin-score-list.component.css']
 })
-export class AdminScoreListComponent implements OnInit, OnDestroy{
+export class AdminScoreListComponent implements OnInit, OnDestroy, AfterContentInit, AfterViewInit {
 
-  @ViewChild('scoreForm', {static: true}) scoreForm: NgForm;
+  
+  @ViewChild(AdminScoreFormComponent, {static: false}) 
+  private scoreFormComponent: AdminScoreFormComponent;
+  
+  modeList: AdminScoreFormModeEnum = AdminScoreFormModeEnum.LIST;
 
-  private scoresList: Score[];
-
-  score: Score;
-
-  creditMinValue: number = 100000;
-  creditMaxValue: number = 348000;
-  creditOptions: Options = {
-    floor: 0,
-    ceil: 500000,
-    step: 1000,
-    translate: (value: number): string => {
-      return value + '€';
-    }
-  };
-
-  instMinValue: number = 24;
-  instMaxValue: number = 84;
-  instOptions: Options = {
-    floor: 0,
-    ceil: 120,
-    step: 12,
-    translate: (value: number): string => {
-      if (value > 1)
-        return value + ' months';
-      return '1 month';
-    }
-  };
+  scoresList: Score[];
 
   constructor(
     // private indicationService: IndicationService,
@@ -61,14 +40,24 @@ export class AdminScoreListComponent implements OnInit, OnDestroy{
     
   ngOnInit() {
     this.scoresList = [];
-    this.score = new Score();
-    this.score.goodType = "";
+    // console.log(`InitForm: ${this.scoreFormComponent}`);
+    // console.log(`FormValide: ${this.scoreFormComponent.scoreForm.valid}`);
+    // this.scoreFormComponent.score = new Score();
+    // this.scoreFormComponent.score.goodType = "";
     // this.setEditFormFields();
     // this.indicationSubscription = this.indicationService.indicationSelectedEvent.subscribe(
     //   indication => {
     //       this.selectedIndication = indication;
     //       this.setEditFormFields(indication.name, indication.email, indication.phone, false);
     // });
+  }
+
+  ngAfterContentInit() {
+    // console.log(`ContentInitForm: ${this.scoreFormComponent}`);
+  }
+
+  ngAfterViewInit() {
+    console.log(`ViewInitForm: ${this.scoreFormComponent}`);
   }
 
   ngOnDestroy() {
@@ -102,11 +91,11 @@ export class AdminScoreListComponent implements OnInit, OnDestroy{
     
   }
 
-  isFormValid(): boolean {
-    return this.scoreForm.valid && 
-    this.scoreForm.value.inputBeginDate != null &&
-    this.scoreForm.value.inputEndDate != null;
-  }
+  // isFormValid(): boolean {
+  //   return this.scoreForm.valid && 
+  //   this.scoreForm.value.inputBeginDate != null &&
+  //   this.scoreForm.value.inputEndDate != null;
+  // }
 
   getScores() {
     return this.scoresList.slice();
@@ -121,10 +110,10 @@ export class AdminScoreListComponent implements OnInit, OnDestroy{
     this.scoresList.splice(0);
   }
 
-  onBtnSearch() {
+  btnSearch(form: NgForm) {
+    console.log(`List btnSearch: ${form}`);
   }
   
-
   onBtnVoltar() {
     // this.router.navigate(["indications"]);
   }

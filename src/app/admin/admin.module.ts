@@ -8,10 +8,12 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminParametersComponent } from './admin-parameters/admin-parameters.component';
 import { AdminScoreListComponent } from './admin-score/admin-score-list/admin-score-list.component';
 import { Ng5SliderModule } from 'ng5-slider';
+import { AdminScoreFormComponent } from './admin-score/admin-score-form/admin-score-form.component';
 
 @NgModule({
     declarations: [
         AdminParametersComponent,
+        AdminScoreFormComponent,
         AdminScoreListComponent
     ],
     imports: [

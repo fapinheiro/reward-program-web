@@ -56,7 +56,7 @@
             </mat-form-field>
         </div>
     </div>
-    <div class="form-row justify-content-center">
+    <div *ngIf="isListMode()" class="form-row justify-content-center">
         <div class="form-group col-md-6">
             <mat-form-field class="form-full-width">
                 <input matInput 
@@ -75,7 +75,7 @@
             </mat-form-field>
         </div>
     </div>
-    <div class="form-row justify-content-center">
+    <div *ngIf="isListMode()" class="form-row justify-content-center">
         <div class="form-group col-md-6">
             <mat-form-field class="form-full-width">
                 <input matInput 
@@ -96,18 +96,49 @@
     </div>
     <div class="form-row justify-content-center">
         <div class="form-group col-md-6">
-            <button type="submit" class="btn btn-primary" 
-                [disabled]="!isFormValid()"
-                (click)="onBtnSearch()">
-                <i class="material-icons align-bottom">search</i>
-                Search
-            </button>
-            <button type="reset" 
-                mat-button 
-                class="btn btn-secondary"
-                (click)="onBtnClear()">
-                <i class="material-icons align-bottom">clear</i>Clear
-            </button>
+            <div [ngSwitch]="adminScoreFormMode">
+
+                <button *ngSwitchCase="NEW" type="button" class="btn btn-success ml-1" 
+                    (click)="onBtnNew()">
+                    <i class="material-icons align-bottom">add</i>
+                    New
+                </button>
+
+                <button *ngSwitchCase="NEW" type="reset" mat-button 
+                    class="btn btn-secondary ml-1"
+                    (click)="onBtnClear()">
+                    <i class="material-icons align-bottom">clear</i>
+                    Clear
+                </button>
+
+                <button *ngSwitchCase="EDIT" type="button" class="btn btn-light ml-1" 
+                    (click)="onBtnBack()">
+                    <i class="material-icons align-bottom">arrow_back</i>
+                    Voltar
+                </button>
+
+                <button *ngSwitchCase="EDIT" type="submit" class="btn btn-primary ml-1"
+                    (click)="onBtnUpdate()">
+                    <i class="material-icons align-bottom">update</i>
+                    Update
+                </button>
+                
+                <button *ngSwitchDefault type="submit" class="btn btn-primary ml-1" 
+                    [disabled]="!isFormValid()"
+                    (click)="onBtnSearch()">
+                    <i class="material-icons align-bottom">search</i>
+                    Search
+                </button>
+
+                <button *ngSwitchDefault type="reset" mat-button 
+                    class="btn btn-secondary ml-1"
+                    (click)="onBtnClear()">
+                    <i class="material-icons align-bottom">clear</i>
+                    Clear
+                </button>
+                    
+            </div>            
+            
         </div>
     </div>
 </form>
