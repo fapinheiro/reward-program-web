@@ -39,7 +39,30 @@ export class AdminScoreListComponent implements OnInit, OnDestroy, AfterContentI
   }
     
   ngOnInit() {
-    this.scoresList = [];
+    let s1 = new Score();
+    s1.codScore = 1;
+    s1.goodType = "car";
+    s1.iniCredit = 120000;
+    s1.endCredit = 250000;
+    s1.iniInst = 12;
+    s1.endInst = 36;
+    s1.score = 100;
+    s1.creationAt = new Date().toUTCString();
+
+    let s2 = new Score();
+    s2.codScore = 2;
+    s2.goodType = "bike";
+    s2.iniCredit = 200000;
+    s2.endCredit = 300000;
+    s2.iniInst = 24;
+    s2.endInst = 48;
+    s2.score = 200;
+    s2.creationAt = new Date().toUTCString();
+
+    this.scoresList = [
+      s1, s2
+    ];
+
     // console.log(`InitForm: ${this.scoreFormComponent}`);
     // console.log(`FormValide: ${this.scoreFormComponent.scoreForm.valid}`);
     // this.scoreFormComponent.score = new Score();

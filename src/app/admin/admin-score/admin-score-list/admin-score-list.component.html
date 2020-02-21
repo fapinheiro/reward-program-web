@@ -20,8 +20,8 @@
                 <tr *ngFor="let score of getScores(); let i = index" (click)="onSelectedRow(score)">
                     <td>{{i+1}}</td>
                     <td>{{score.goodType}}</td>
-                    <td>{{score.iniCredit / score.endCredit}}</td>
-                    <td>{{score.iniInst / score.endInst}}</td>
+                    <td>{{score.iniCredit}}&#32;/&#32;{{score.endCredit}}</td>
+                    <td>{{score.iniInst}}&#32;/&#32;{{score.endInst}}</td>
                     <td>{{score.score}}</td>
                     <td>{{score.creationAt | slice:0:19 }}</td>
                 </tr>
