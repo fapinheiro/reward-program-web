@@ -10,10 +10,18 @@ import { Constant } from './constant';
 @Injectable()
 export class IndicationService {
 
-    indicationSelectedEvent = new BehaviorSubject<Indication>(new Indication());
+    private indicationSelectedEvent = new BehaviorSubject<Indication>(new Indication());
 
     constructor(private http: HttpClient) {
         // Ok, nothing here
+    }
+
+    notitySelectedIndication(indication: Indication): void {
+        this.indicationSelectedEvent.next(indication);
+    }
+
+    getIndicationSelectedEvent(): Observable<Indication> {
+        return this.indicationSelectedEvent;
     }
 
     getIndications(codClient?: number, searchTerm?: string, startCreationAt?: string, endCreationAt?: string, 

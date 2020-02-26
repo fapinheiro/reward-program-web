@@ -17,14 +17,14 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './indication-edit.component.html',
   styleUrls: ['./indication-edit.component.css']
 })
-export class IndicationEditComponent implements OnInit, OnDestroy{
+export class IndicationEditComponent implements OnInit, OnDestroy {
 
   private indicationSubscription: Subscription;
-  
+
   private selectedIndication: Indication;
 
   inputName = new FormControl('');
-  inputEmail =  new FormControl('');
+  inputEmail = new FormControl('');
   inputPhone = new FormControl('');
   editForm = new FormGroup({});
 
@@ -39,10 +39,10 @@ export class IndicationEditComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     this.setEditFormFields();
-    this.indicationSubscription = this.indicationService.indicationSelectedEvent.subscribe(
+    this.indicationSubscription = this.indicationService.getIndicationSelectedEvent().subscribe(
       indication => {
-          this.selectedIndication = indication;
-          this.setEditFormFields(indication.name, indication.email, indication.phone, false);
+        this.selectedIndication = indication;
+        this.setEditFormFields(indication.name, indication.email, indication.phone, false);
     });
   }
 
@@ -54,7 +54,7 @@ export class IndicationEditComponent implements OnInit, OnDestroy{
     let authInfo = jwt_decode(this.authService.getToken());
 
     if (authInfo.clientId) {
-      
+
       // Set indication fields
       let client = new Client();
       client.codCliente = authInfo.clientId;
@@ -66,15 +66,15 @@ export class IndicationEditComponent implements OnInit, OnDestroy{
       // Update indication
       this.indicationService
         .updateIndication(this.selectedIndication)
-        .subscribe( _ => {
-            this.messageService.showSuccessMessageToURL('/indications');
-            this.editForm.reset();
-          }
+        .subscribe(_ => {
+          this.messageService.showSuccessMessageToURL('/indications');
+          this.editForm.reset();
+        }
         );
     } else {
       this.messageService.showErrorMessage();
     }
-    
+
   }
 
   isFormValid(): boolean {

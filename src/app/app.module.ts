@@ -25,6 +25,7 @@ import { MessageService } from './shared/message/message.service';
 import { MatDialogModule } from '@angular/material';
 import { MessageDialogComponent } from './shared/message/message-dialog/message-dialog.component';
 import { IndicationService } from './shared/indication.service';
+import { ScoreService } from './shared/score.service';
 
 @NgModule({
 
@@ -56,6 +57,7 @@ import { IndicationService } from './shared/indication.service';
     AuthService,
     MessageService,
     IndicationService,
+    ScoreService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
   ],
   

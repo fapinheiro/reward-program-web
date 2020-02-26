@@ -131,7 +131,7 @@ export class IndicationListComponent implements OnInit {
   }
   
   onSelectedRow(selectedIndication: Indication) {
-    this.indicationService.indicationSelectedEvent.next(selectedIndication);
+    this.indicationService.notitySelectedIndication(selectedIndication);
     let urlEdit = `${selectedIndication.codIndication}/edit`;
     this.router.navigate([urlEdit], {relativeTo: this.activatedRoute});
   }

@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+  
+.container > * {
+    width: 100%;
+}
+
+.form-full-width {
+    width:100%;
+}
+
+.my-form {
+  width: 30%;
+}
+
+button,
+mat-form-field {
+    margin: 5px;
+}
+
+.rm-label {
+    color: gray;
+    font-size: small;
+}

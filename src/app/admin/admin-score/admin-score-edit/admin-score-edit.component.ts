@@ -16,65 +16,39 @@ import { AdminScoreFormComponent, AdminScoreFormModeEnum } from '../admin-score-
 import { ScoreService } from 'src/app/shared/score.service';
 
 @Component({
-  selector: 'app-admin-score-list',
-  templateUrl: './admin-score-list.component.html',
-  styleUrls: ['./admin-score-list.component.css']
+  selector: 'app-admin-score-edit',
+  templateUrl: './admin-score-edit.component.html',
+  styleUrls: ['./admin-score-edit.component.css']
 })
-export class AdminScoreListComponent implements OnInit, OnDestroy, AfterContentInit, AfterViewInit {
+export class AdminScoreEditComponent implements OnInit, OnDestroy, AfterContentInit, AfterViewInit {
 
-  
+  private scoreSelectedSubscription: Subscription;
+
   @ViewChild(AdminScoreFormComponent, {static: false}) 
   private scoreFormComponent: AdminScoreFormComponent;
   
-  modeList: AdminScoreFormModeEnum = AdminScoreFormModeEnum.LIST;
+  modeEdit: AdminScoreFormModeEnum = AdminScoreFormModeEnum.EDIT;
 
-  scoresList: Score[];
+  selectedScore: Score;
 
   constructor(
     // private indicationService: IndicationService,
-    private scoreService: ScoreService,
     private messageService: MessageService,
     private authService: AuthService,
     private router: Router,
+    private scoreService: ScoreService,
     private activatedRoute: ActivatedRoute) {
-      console.log('AdminScoreList constructor');
+      console.log('AdminScoreEdit constructor');
   }
     
   ngOnInit() {
-    let s1 = new Score();
-    s1.codScore = 1;
-    s1.goodType = "car";
-    s1.iniCredit = 120000;
-    s1.endCredit = 250000;
-    s1.iniInst = 12;
-    s1.endInst = 36;
-    s1.score = 100;
-    s1.creationAt = new Date().toUTCString();
-
-    let s2 = new Score();
-    s2.codScore = 2;
-    s2.goodType = "bike";
-    s2.iniCredit = 200000;
-    s2.endCredit = 300000;
-    s2.iniInst = 24;
-    s2.endInst = 48;
-    s2.score = 200;
-    s2.creationAt = new Date().toUTCString();
-
-    this.scoresList = [
-      s1, s2
-    ];
-
+    
     // console.log(`InitForm: ${this.scoreFormComponent}`);
     // console.log(`FormValide: ${this.scoreFormComponent.scoreForm.valid}`);
     // this.scoreFormComponent.score = new Score();
     // this.scoreFormComponent.score.goodType = "";
     // this.setEditFormFields();
-    // this.indicationSubscription = this.indicationService.indicationSelectedEvent.subscribe(
-    //   indication => {
-    //       this.selectedIndication = indication;
-    //       this.setEditFormFields(indication.name, indication.email, indication.phone, false);
-    // });
+    
   }
 
   ngAfterContentInit() {
@@ -83,10 +57,24 @@ export class AdminScoreListComponent implements OnInit, OnDestroy, AfterContentI
 
   ngAfterViewInit() {
     console.log(`ViewInitForm: ${this.scoreFormComponent}`);
+    // this.scoreFormComponent.setCreditMinValue(120000);
+    setTimeout(() => {
+      this.scoreSelectedSubscription = this.scoreService
+        .getScoreSelectedEvent()
+        .subscribe(
+          score => {
+            this.selectedScore = score;
+            this.scoreFormComponent.setFormValues(this.selectedScore);
+          }
+        );
+    });
+    
   }
 
   ngOnDestroy() {
-    // this.indicationSubscription.unsubscribe();
+    if (this.scoreSelectedSubscription != null) {
+      this.scoreSelectedSubscription.unsubscribe();
+    }
   }
 
   onSubmit() {
@@ -122,35 +110,29 @@ export class AdminScoreListComponent implements OnInit, OnDestroy, AfterContentI
   //   this.scoreForm.value.inputEndDate != null;
   // }
 
-  getScores() {
-    return this.scoresList.slice();
-  }
-
-  
-  setScores(scoresList: Score[]) {
-    this.scoresList = scoresList;
-  }
 
   onBtnClear() {
-    this.scoresList.splice(0);
+    // this.scoresEdit.splice(0);
   }
 
-  onBtnSearch(form: FormGroup) {
-    console.log(`List btnSearch: ${form}`);
+  // btnSearch(form: NgForm) {
+  //   console.log(`List btnSearch: ${form}`);
+  // }
+  
+  onBtnBack(form: FormGroup) {
+    console.log(`btnBack(): ${form}`)
+    this.router.navigate(["admin/scores"]);
   }
   
-  onBtnVoltar() {
-    // this.router.navigate(["indications"]);
-  }
-  
-  onSelectedRow(selectedScore: Score) {
-    this.scoreService.notifySelectedScore(selectedScore);
-    let urlEdit = `${selectedScore.codScore}/edit`;
-    this.router.navigate([urlEdit], {relativeTo: this.activatedRoute});
+  onBtnUpdate(form: FormGroup) {
+    console.log(`btnUpdate(): ${form}`)
   }
 
-  onBtnNew(form: FormGroup) {
-    console.log(`btnNew: ${form}`);
-    this.router.navigate(["new"], {relativeTo: this.activatedRoute});
-  }
+  // onSelectedRow(selectedScore: Score) {
+  //   // this.scoreService.scoreSelectedEvent.next(selectedScore);
+  //   let urlEdit = `${selectedScore.codScore}/edit`;
+  //   this.router.navigate([urlEdit], {relativeTo: this.activatedRoute});
+  // }
+
+
 }

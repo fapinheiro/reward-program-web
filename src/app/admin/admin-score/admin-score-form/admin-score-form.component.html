@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()" #scoreForm="ngForm">
+<form (ngSubmit)="onSubmit()" [formGroup]="scoreForm">
     <div class="form-row justify-content-center">
         <div class="form-group col-md-6">
             <mat-form-field class="form-full-width">
@@ -7,8 +7,8 @@
                     id="inputGoodType" 
                     class="form-control" 
                     name="inputGoodType"
-                    required
-                    [(ngModel)]="score.goodType">
+                    formControlName="inputGoodType"
+                    required>
                     <mat-option value="">Choose...</mat-option>
                     <mat-option value="car">Car</mat-option>
                     <mat-option value="bike">Bike</mat-option>
@@ -25,13 +25,23 @@
     <div class="form-row justify-content-center">
         <div class="form-group col-md-6">
                 <span class="rm-label">Credit Range *</span>
-                <ng5-slider [(value)]="creditMinValue" [(highValue)]="creditMaxValue" [options]="creditOptions" class="form-full-width"></ng5-slider>
+                <ng5-slider id="inputCreditRange"  
+                    name="inputCreditRange" 
+                    [(value)]="creditMinValue" 
+                    [(highValue)]="creditMaxValue" 
+                    [options]="creditOptions" 
+                    class="form-full-width form-control"></ng5-slider>
         </div>
     </div>
     <div class="form-row justify-content-center">
         <div class="form-group col-md-6">
                 <span class="rm-label">Installment Range *</span>
-                <ng5-slider [(value)]="instMinValue" [(highValue)]="instMaxValue" [options]="instOptions" class="form-full-width"></ng5-slider>
+                <ng5-slider id="inputInstRange"  
+                    name="inputInstRange"  
+                    [(value)]="instMinValue" 
+                    [(highValue)]="instMaxValue" 
+                    [options]="instOptions" 
+                    class="form-full-width form-control" ></ng5-slider>
         </div>
     </div>
     <div class="form-row justify-content-center">
@@ -40,10 +50,11 @@
                 <input matInput type="number" 
                     class="form-control" 
                     id="inputScore" 
-                    name="inputScore" 
-                    maxlength="100" 
+                    name="inputScore"
+                    formControlName="inputScore" 
+                    maxlength="100"
+                    min="1" 
                     pattern="[0-9]+" 
-                    ngModel
                     required
                     autofocus
                     cdkFocusInitial
@@ -56,16 +67,17 @@
             </mat-form-field>
         </div>
     </div>
+        
     <div *ngIf="isListMode()" class="form-row justify-content-center">
         <div class="form-group col-md-6">
             <mat-form-field class="form-full-width">
                 <input matInput 
                     id="inputBeginDate" 
                     name="inputBeginDate" 
+                    class="form-control" 
                     type="text"
                     [matDatepicker]="inputBeginDate" 
-                    placeholder="Choose begin date"
-                    ngModel>
+                    placeholder="Choose begin date">
                 <mat-datepicker-toggle matSuffix [for]="inputBeginDate"></mat-datepicker-toggle>
                 <mat-datepicker #inputBeginDate></mat-datepicker>
                 <mat-error *ngIf="!isFormValid()">
@@ -81,10 +93,10 @@
                 <input matInput 
                     id="inputEndDate"
                     name="inputEndDate" 
+                    class="form-control"  
                     type="text"
                     [matDatepicker]="inputEndDate" 
-                    placeholder="Choose end date" 
-                    ngModel>
+                    placeholder="Choose end date" >
                 <mat-datepicker-toggle matSuffix [for]="inputEndDate"></mat-datepicker-toggle>
                 <mat-datepicker #inputEndDate></mat-datepicker>
                 <mat-error *ngIf="!isFormValid()">
@@ -93,15 +105,21 @@
                 </mat-error>
             </mat-form-field>
         </div>
-    </div>
+    </div>  
     <div class="form-row justify-content-center">
         <div class="form-group col-md-6">
             <div [ngSwitch]="adminScoreFormMode">
 
-                <button *ngSwitchCase="NEW" type="button" class="btn btn-success ml-1" 
-                    (click)="onBtnNew()">
-                    <i class="material-icons align-bottom">add</i>
-                    New
+                <button *ngSwitchCase="NEW" type="button" class="btn btn-light ml-1" 
+                    (click)="onBtnBack()">
+                    <i class="material-icons align-bottom">arrow_back</i>
+                    Voltar
+                </button>
+
+                <button *ngSwitchCase="NEW" type="button" class="btn btn-primary ml-1" 
+                    (click)="onBtnSave()">
+                    <i class="material-icons align-bottom">done</i>
+                    Save
                 </button>
 
                 <button *ngSwitchCase="NEW" type="reset" mat-button 
@@ -137,6 +155,11 @@
                     Clear
                 </button>
                     
+                <button *ngSwitchDefault type="button" class="btn btn-success ml-1" 
+                    (click)="onBtnNew()">
+                    <i class="material-icons align-bottom">add</i>
+                    New
+                </button>
             </div>            
             
         </div>

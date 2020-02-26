@@ -26,19 +26,23 @@ export enum AdminScoreFormModeEnum {
 })
 export class AdminScoreFormComponent implements OnInit, OnDestroy, AfterContentInit, AfterViewInit {
 
-  @Output() onBtnSearchClicked = new EventEmitter<NgForm>();
-  @Output() onBtnNewClicked = new EventEmitter<NgForm>();
-  @Output() onBtnClearClicked = new EventEmitter<NgForm>();
-  @Output() onBtnBackClicked = new EventEmitter<NgForm>();
-  @Output() onBtnUpdateClicked = new EventEmitter<NgForm>();
+  @Output() onBtnSearchClicked = new EventEmitter<FormGroup>();
+  @Output() onBtnNewClicked = new EventEmitter<FormGroup>();
+  @Output() onBtnClearClicked = new EventEmitter<FormGroup>();
+  @Output() onBtnBackClicked = new EventEmitter<FormGroup>();
+  @Output() onBtnUpdateClicked = new EventEmitter<FormGroup>();
+  @Output() onBtnSaveClicked = new EventEmitter<FormGroup>();
   
-  @ViewChild('scoreForm', {static: true}) 
-  private scoreForm: NgForm;
+  inputGoodType = new FormControl('');
+  inputScore = new FormControl('');
+  inputBeginDate = new FormControl('');
+  inputEndDate = new FormControl('');
+  scoreForm = new FormGroup({});
 
   @Input('formMode') 
   private adminScoreFormMode: AdminScoreFormModeEnum = AdminScoreFormModeEnum.LIST; // Default to LIST
 
-  private score: Score;
+  // private score: Score;
 
   private creditMinValue: number = 100000;
   private creditMaxValue: number = 348000;
@@ -73,6 +77,42 @@ export class AdminScoreFormComponent implements OnInit, OnDestroy, AfterContentI
       console.log('AdminScoreForm constructor');
   }
     
+  setFormValues(selectedScore: Score) {
+
+    if (selectedScore == null) {
+
+      // Default values
+      this.inputGoodType.setValue("");
+      this.inputScore.setValue(1);
+
+    } else {
+
+      // Set values
+      this.inputGoodType.setValue(selectedScore.goodType);
+      this.inputScore.setValue(selectedScore.score);
+
+      // Set non-managed values
+      if (selectedScore.iniCredit != null && selectedScore.endCredit != null) {
+        this.creditMinValue = selectedScore.iniCredit;
+        this.creditMaxValue = selectedScore.endCredit;
+        this.instMinValue = selectedScore.iniInst;
+        this.instMaxValue = selectedScore.endInst;
+      }
+
+    } 
+
+    // Alter form values
+    if (this.adminScoreFormMode == AdminScoreFormModeEnum.EDIT) {
+      this.scoreForm.addControl('inputGoodType', this.inputGoodType);
+      this.scoreForm.addControl('inputScore', this.inputScore);
+    } else {
+      this.scoreForm.setControl('inputGoodType', this.inputGoodType);
+      this.scoreForm.setControl('inputScore', this.inputScore);
+    }
+
+  }
+
+
   // public get scoreForm() : NgForm {
   //   return this._scoreForm;
   // }
@@ -83,8 +123,8 @@ export class AdminScoreFormComponent implements OnInit, OnDestroy, AfterContentI
 
   ngOnInit() {
     // this.scoresList = [];
-    this.score = new Score();
-    this.score.goodType = "";
+    // this.score = new Score();
+    // this.score.goodType = "";
     console.log(`Mode: ${this.adminScoreFormMode}`);
     console.log(`FormValid: ${this.scoreForm.valid}`);
     // this.setEditFormFields();
@@ -93,6 +133,17 @@ export class AdminScoreFormComponent implements OnInit, OnDestroy, AfterContentI
     //       this.selectedIndication = indication;
     //       this.setEditFormFields(indication.name, indication.email, indication.phone, false);
     // });
+
+
+    // inputGoodType = new FormControl('');
+    // inputCreditRange = new FormControl('');
+    // inputInstRange = new FormControl('');
+    // inputScore = new FormControl('');
+    // inputBeginDate = new FormControl('');
+    // inputEndDate = new FormControl('');
+    // scoreForm = new FormGroup({});
+    
+    this.setFormValues(null);
   }
 
   ngAfterContentInit() {
@@ -151,9 +202,7 @@ export class AdminScoreFormComponent implements OnInit, OnDestroy, AfterContentI
   }
 
   isFormValid(): boolean {
-    return this.scoreForm.valid && 
-    this.scoreForm.value.inputBeginDate != null &&
-    this.scoreForm.value.inputEndDate != null;
+    return this.scoreForm.valid;
   }
 
   onBtnSearch() {
@@ -182,5 +231,9 @@ export class AdminScoreFormComponent implements OnInit, OnDestroy, AfterContentI
     this.onBtnUpdateClicked.emit(this.scoreForm);
   }
   
+  onBtnSave() {
+    console.log("Form onBtnSave");
+    this.onBtnSaveClicked.emit(this.scoreForm);
+  }
 }
 

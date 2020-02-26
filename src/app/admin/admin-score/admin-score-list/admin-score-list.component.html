@@ -2,7 +2,7 @@
     <div class="row justify-content-center">
         <h2>Manage Scores List</h2>
     </div>
-    <app-admin-score-form [formMode]="modeList" (onBtnSearchClicked)="btnSearch($event)"></app-admin-score-form>
+    <app-admin-score-form [formMode]="modeList" (onBtnSearchClicked)="onBtnSearch($event)" (onBtnNewClicked)="onBtnNew($event)"></app-admin-score-form>
     <div class="table-responsive">
         <table class="table table-hover">
             <caption>List of Score Configurations</caption>
