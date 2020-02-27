@@ -2,7 +2,7 @@
     <div class="row justify-content-center">
         <h2>Manage Parameters</h2>
     </div>
-    <form (ngSubmit)="onSubmit()" #parametersForm="ngForm">
+    <form (ngSubmit)="onSubmit()" [formGroup]="parametersForm">
         <div class="form-row justify-content-center">
             <div class="form-group col-md-6">
                 <mat-form-field class="form-full-width">
@@ -11,13 +11,14 @@
                         id="inputIndicationExpiration" 
                         name="inputIndicationExpiration" 
                         class="form-control" 
+                        formControlName="inputIndicationExpiration"
+                        min="1" 
                         maxlength="3" 
                         pattern="[0-9]+"  
                         required
                         autofocus
                         cdkFocusInitial
-                        placeholder="Indication Expiration (in days):"
-                        ngModel>
+                        placeholder="Indication Expiration (in days):">
                     <mat-error *ngIf="!isFormValid()">
                         Indication Expiration is
                         <strong>required. </strong>
@@ -35,13 +36,12 @@
                         type="number" 
                         id="inputScoreExpiration" 
                         name="inputScoreExpiration" 
-                        class="form-control" 
+                        formControlName="inputScoreExpiration"
+                        class="form-control"
+                        min="1" 
                         maxlength="3" 
                         pattern="[0-9]+"  
-                        required
-                        autofocus
-                        cdkFocusInitial
-                        ngModel>
+                        required>
                     <mat-error *ngIf="!isFormValid()">
                         Score Expiration is
                         <strong>required. </strong>
@@ -52,8 +52,38 @@
         </div>
         <div class="form-row justify-content-center">
             <div class="form-group col-md-6">
-                <button type="button" class="btn btn-primary" [disabled]="!isFormValid()">Save</button>
-                <button type="submit" class="btn btn-danger">Reset</button>
+                <mat-form-field class="form-full-width">
+                    <input matInput type="text" 
+                        id="inputCreatedAt" 
+                        name="inputCreatedAt" 
+                        class="form-control" 
+                        formControlName="inputCreatedAt"
+                        placeholder="Created At:">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-6">
+                <mat-form-field class="form-full-width">
+                    <input matInput type="text" 
+                        id="inputUpdatedAt" 
+                        name="inputUpdatedAt" 
+                        class="form-control" 
+                        formControlName="inputUpdatedAt"
+                        placeholder="Updated At:">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-6">
+                <button type="submit" class="btn btn-primary" [disabled]="!isFormValid()">
+                    <i class="material-icons align-bottom">save</i>
+                    Save
+                </button>
+                <button type="button" class="btn btn-danger" (click)="onBtnReset()">
+                    <i class="material-icons align-bottom">remove_circle_outline</i>
+                    Reset
+                </button>
             </div>
         </div>
     </form>

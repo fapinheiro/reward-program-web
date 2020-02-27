@@ -1,16 +1,13 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
-import * as jwt_decode from 'jwt-decode';
-
-import { Indication } from '../../model/indication.model';
-import { IndicationService } from '../../shared/indication.service';
 import { MessageService } from '../../shared/message/message.service';
-import { Client } from '../../model/client.model';
 import { AuthService } from '../../shared/auth.service';
-import { Subscription } from 'rxjs';
-import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ParameterService } from 'src/app/shared/parameter.service';
+import { Parameter } from 'src/app/model/parameter.model';
+
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-admin-parameters',
@@ -19,10 +16,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class AdminParametersComponent implements OnInit, OnDestroy{
 
-  @ViewChild('parametersForm', {static: true}) parametersForm: NgForm;
+  inputIndicationExpiration = new FormControl('');
+  inputScoreExpiration = new FormControl('');
+  inputUpdatedAt = new FormControl({value: '', disabled: true});
+  inputCreatedAt = new FormControl({value: '', disabled: true});
+  parametersForm = new FormGroup({});
+  parameterSelected: Parameter;
 
   constructor(
-    private indicationService: IndicationService,
+    private parameterService: ParameterService,
     private messageService: MessageService,
     private authService: AuthService,
     private router: Router) {
@@ -31,12 +33,13 @@ export class AdminParametersComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit() {
-    // this.setEditFormFields();
-    // this.indicationSubscription = this.indicationService.indicationSelectedEvent.subscribe(
-    //   indication => {
-    //       this.selectedIndication = indication;
-    //       this.setEditFormFields(indication.name, indication.email, indication.phone, false);
-    // });
+    this.setEditFormFields(null, true);
+    this.parameterService.getParameters().subscribe(
+      (params: Parameter[]) => {
+        this.parameterSelected = params[0];
+        this.setEditFormFields(this.parameterSelected, true);
+      }
+    );
   }
 
   ngOnDestroy() {
@@ -44,29 +47,20 @@ export class AdminParametersComponent implements OnInit, OnDestroy{
   }
 
   onSubmit() {
-    // let authInfo = jwt_decode(this.authService.getToken());
 
-    // if (authInfo.clientId) {
-      
-    //   // Set indication fields
-    //   let client = new Client();
-    //   client.codCliente = authInfo.clientId;
-    //   this.selectedIndication.client = client;
-    //   this.selectedIndication.name = this.inputName.value;
-    //   this.selectedIndication.email = this.inputEmail.value;
-    //   this.selectedIndication.phone = this.inputPhone.value;
+      // Set fields
+      this.parameterSelected.indicationExpiration = this.inputIndicationExpiration.value;
+      this.parameterSelected.scoreExpiration = this.inputScoreExpiration.value;
 
-    //   // Update indication
-    //   this.indicationService
-    //     .updateIndication(this.selectedIndication)
-    //     .subscribe( _ => {
-    //         this.messageService.showSuccessMessageToURL('/indications');
-    //         this.editForm.reset();
-    //       }
-    //     );
-    // } else {
-    //   this.messageService.showErrorMessage();
-    // }
+      // Update 
+      this.parameterService
+        .updateParameter(this.parameterSelected)
+        .subscribe( param => {
+            this.parameterSelected = param
+            this.setEditFormFields(this.parameterSelected, false);
+            this.messageService.showSuccessMessageToURL('/admin/parameters');
+          }
+        );
     
   }
 
@@ -74,25 +68,39 @@ export class AdminParametersComponent implements OnInit, OnDestroy{
     return this.parametersForm.valid;
   }
 
-  private setEditFormFields(name: string = '', email: string = '', phone: string = '', isCreation: boolean = true) {
+  private setEditFormFields(param: Parameter, isCreation: boolean = true) {
 
-    // this.inputName.setValue(name);
-    // this.inputEmail.setValue(email);
-    // this.inputPhone.setValue(phone);
+    if (param == null) {
+      this.inputIndicationExpiration.setValue(environment.defaultIndicationExpiration);
+      this.inputScoreExpiration.setValue(environment.defaultScoreExpiration);
+      this.inputCreatedAt.setValue('');
+      this.inputUpdatedAt.setValue('');
+    } else {
+      this.inputIndicationExpiration.setValue(param.indicationExpiration);
+      this.inputScoreExpiration.setValue(param.scoreExpiration);
+      this.inputCreatedAt.setValue(param.creationAt);
+      this.inputUpdatedAt.setValue(param.updatedAt);
+    }
 
-    // if (isCreation) {
-    //   this.editForm.addControl('inputName', this.inputName);
-    //   this.editForm.addControl('inputEmail', this.inputEmail);
-    //   this.editForm.addControl('inputPhone', this.inputPhone);
-    // } else {
-    //   this.editForm.setControl('inputName', this.inputName);
-    //   this.editForm.setControl('inputEmail', this.inputEmail);
-    //   this.editForm.setControl('inputPhone', this.inputPhone);
-    // }
+    if (isCreation) {
+      this.parametersForm.addControl('inputIndicationExpiration', this.inputIndicationExpiration);
+      this.parametersForm.addControl('inputScoreExpiration', this.inputScoreExpiration);
+      this.parametersForm.addControl('inputCreatedAt', this.inputCreatedAt);
+      this.parametersForm.addControl('inputUpdatedAt', this.inputUpdatedAt);
+    } else {
+      this.parametersForm.setControl('inputIndicationExpiration', this.inputIndicationExpiration);
+      this.parametersForm.setControl('inputScoreExpiration', this.inputScoreExpiration);
+      this.parametersForm.setControl('inputCreatedAt', this.inputCreatedAt);
+      this.parametersForm.setControl('inputUpdatedAt', this.inputUpdatedAt);
+    }
 
   }
-
-  onBtnVoltar() {
-    // this.router.navigate(["indications"]);
+ 
+  onBtnReset() {
+    if (this.parameterSelected != null) {
+      this.setEditFormFields(this.parameterSelected, true);
+    }
+    this.messageService.showSuccessMessage();
   }
+
 }
