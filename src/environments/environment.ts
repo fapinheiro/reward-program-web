@@ -4,9 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8089/api/v1',
-  defaultIndicationExpiration: 30,
-  defaultScoreExpiration: 60
+  apiUrl: 'http://localhost:8089/api/v1'
 };
 
 /*

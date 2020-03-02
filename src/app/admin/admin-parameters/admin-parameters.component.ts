@@ -16,6 +16,9 @@ import { environment } from '../../../environments/environment';
 })
 export class AdminParametersComponent implements OnInit, OnDestroy{
 
+  private defaultIndicationExpiration: number = 30;
+  private defaultScoreExpiration: number = 60;
+
   inputIndicationExpiration = new FormControl('');
   inputScoreExpiration = new FormControl('');
   inputUpdatedAt = new FormControl({value: '', disabled: true});
@@ -71,8 +74,8 @@ export class AdminParametersComponent implements OnInit, OnDestroy{
   private setEditFormFields(param: Parameter, isCreation: boolean = true) {
 
     if (param == null) {
-      this.inputIndicationExpiration.setValue(environment.defaultIndicationExpiration);
-      this.inputScoreExpiration.setValue(environment.defaultScoreExpiration);
+      this.inputIndicationExpiration.setValue(this.defaultIndicationExpiration);
+      this.inputScoreExpiration.setValue(this.defaultScoreExpiration);
       this.inputCreatedAt.setValue('');
       this.inputUpdatedAt.setValue('');
     } else {
