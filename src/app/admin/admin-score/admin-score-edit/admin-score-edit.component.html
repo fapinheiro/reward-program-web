@@ -3,6 +3,6 @@
         <h2>Edit Score</h2>
     </div>
     <app-admin-score-form [formMode]="modeEdit" (onBtnBackClicked)="onBtnBack($event)"
-        onBtnUpdateClicked="onBtnUpdate($event)">
+        (onBtnUpdateClicked)="onBtnUpdate($event)">
     </app-admin-score-form>
 </div>

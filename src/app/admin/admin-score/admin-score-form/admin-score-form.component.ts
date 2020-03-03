@@ -26,17 +26,20 @@ export enum AdminScoreFormModeEnum {
 })
 export class AdminScoreFormComponent implements OnInit, OnDestroy, AfterContentInit, AfterViewInit {
 
-  @Output() onBtnSearchClicked = new EventEmitter<FormGroup>();
-  @Output() onBtnNewClicked = new EventEmitter<FormGroup>();
-  @Output() onBtnClearClicked = new EventEmitter<FormGroup>();
-  @Output() onBtnBackClicked = new EventEmitter<FormGroup>();
-  @Output() onBtnUpdateClicked = new EventEmitter<FormGroup>();
-  @Output() onBtnSaveClicked = new EventEmitter<FormGroup>();
+  @Output() onBtnSearchClicked = new EventEmitter<Score>();
+  @Output() onBtnNewClicked = new EventEmitter<Score>();
+  @Output() onBtnClearClicked = new EventEmitter<Score>();
+  @Output() onBtnBackClicked = new EventEmitter<Score>();
+  @Output() onBtnUpdateClicked = new EventEmitter<Score>();
+  @Output() onBtnSaveClicked = new EventEmitter<Score>();
   
   inputGoodType = new FormControl('');
   inputScore = new FormControl('');
   inputBeginDate = new FormControl('');
   inputEndDate = new FormControl('');
+  inputUpdatedAt = new FormControl({value: '', disabled: true});
+  inputCreatedAt = new FormControl({value: '', disabled: true});
+
   scoreForm = new FormGroup({});
 
   @Input('formMode') 
@@ -92,11 +95,17 @@ export class AdminScoreFormComponent implements OnInit, OnDestroy, AfterContentI
       this.inputScore.setValue(selectedScore.score);
 
       // Set non-managed values
-      if (selectedScore.iniCredit != null && selectedScore.endCredit != null) {
-        this.creditMinValue = selectedScore.iniCredit;
-        this.creditMaxValue = selectedScore.endCredit;
-        this.instMinValue = selectedScore.iniInst;
-        this.instMaxValue = selectedScore.endInst;
+      if (selectedScore.creditMin != null && selectedScore.creditMax != null) {
+        this.creditMinValue = selectedScore.creditMin;
+        this.creditMaxValue = selectedScore.creditMax;
+        this.instMinValue = selectedScore.instMin;
+        this.instMaxValue = selectedScore.instMax;
+      }
+
+      // Set dates
+      if (this.isEditMode()) {
+        this.inputCreatedAt.setValue(selectedScore.creationAt);
+        this.inputUpdatedAt.setValue(selectedScore.updatedAt);
       }
 
     } 
@@ -105,6 +114,8 @@ export class AdminScoreFormComponent implements OnInit, OnDestroy, AfterContentI
     if (this.adminScoreFormMode == AdminScoreFormModeEnum.EDIT) {
       this.scoreForm.addControl('inputGoodType', this.inputGoodType);
       this.scoreForm.addControl('inputScore', this.inputScore);
+      this.scoreForm.addControl('inputCreatedAt', this.inputCreatedAt);
+      this.scoreForm.addControl('inputUpdatedAt', this.inputUpdatedAt);
     } else {
       this.scoreForm.setControl('inputGoodType', this.inputGoodType);
       this.scoreForm.setControl('inputScore', this.inputScore);
@@ -112,37 +123,9 @@ export class AdminScoreFormComponent implements OnInit, OnDestroy, AfterContentI
 
   }
 
-
-  // public get scoreForm() : NgForm {
-  //   return this._scoreForm;
-  // }
-  
-  // public get mode(): string {
-  //   return this._mode;
-  // }
-
   ngOnInit() {
-    // this.scoresList = [];
-    // this.score = new Score();
-    // this.score.goodType = "";
     console.log(`Mode: ${this.adminScoreFormMode}`);
     console.log(`FormValid: ${this.scoreForm.valid}`);
-    // this.setEditFormFields();
-    // this.indicationSubscription = this.indicationService.indicationSelectedEvent.subscribe(
-    //   indication => {
-    //       this.selectedIndication = indication;
-    //       this.setEditFormFields(indication.name, indication.email, indication.phone, false);
-    // });
-
-
-    // inputGoodType = new FormControl('');
-    // inputCreditRange = new FormControl('');
-    // inputInstRange = new FormControl('');
-    // inputScore = new FormControl('');
-    // inputBeginDate = new FormControl('');
-    // inputEndDate = new FormControl('');
-    // scoreForm = new FormGroup({});
-    
     this.setFormValues(null);
   }
 
@@ -155,38 +138,19 @@ export class AdminScoreFormComponent implements OnInit, OnDestroy, AfterContentI
   }
 
   ngOnDestroy() {
-    // this.indicationSubscription.unsubscribe();
+    // Ok, nothing here
   }
 
   onSubmit() {
-    // let authInfo = jwt_decode(this.authService.getToken());
-
-    // if (authInfo.clientId) {
-      
-    //   // Set indication fields
-    //   let client = new Client();
-    //   client.codCliente = authInfo.clientId;
-    //   this.selectedIndication.client = client;
-    //   this.selectedIndication.name = this.inputName.value;
-    //   this.selectedIndication.email = this.inputEmail.value;
-    //   this.selectedIndication.phone = this.inputPhone.value;
-
-    //   // Update indication
-    //   this.indicationService
-    //     .updateIndication(this.selectedIndication)
-    //     .subscribe( _ => {
-    //         this.messageService.showSuccessMessageToURL('/indications');
-    //         this.editForm.reset();
-    //       }
-    //     );
-    // } else {
-    //   this.messageService.showErrorMessage();
-    // }
-    
+    // Ok, nothing here
   }
 
   isListMode(): boolean {
     return this.adminScoreFormMode == AdminScoreFormModeEnum.LIST;
+  }
+
+  isEditMode(): boolean {
+    return this.adminScoreFormMode == AdminScoreFormModeEnum.EDIT;
   }
 
   get LIST(): number {
@@ -207,33 +171,45 @@ export class AdminScoreFormComponent implements OnInit, OnDestroy, AfterContentI
 
   onBtnSearch() {
     console.log("Form btnSearch");
-    this.onBtnSearchClicked.emit(this.scoreForm);
+    this.onBtnSearchClicked.emit(this.createScore());
   }
   
   onBtnNew() {
     console.log("Form onBtnNew");
-    this.onBtnNewClicked.emit(this.scoreForm);
+    this.onBtnNewClicked.emit(this.createScore());
   }
   
   onBtnClear() {
     console.log("Form onBtnClear");
-    this.onBtnClearClicked.emit(this.scoreForm);
+    this.onBtnClearClicked.emit(this.createScore());
   }
 
   onBtnBack() {
     console.log("Form onBtnBack");
     // this.router.navigate(["indications"]);
-    this.onBtnBackClicked.emit(this.scoreForm);
+    this.onBtnBackClicked.emit(this.createScore());
   }
 
   onBtnUpdate() {
     console.log("Form onBtnUpdate");
-    this.onBtnUpdateClicked.emit(this.scoreForm);
+    this.onBtnUpdateClicked.emit(this.createScore());
   }
   
   onBtnSave() {
     console.log("Form onBtnSave");
-    this.onBtnSaveClicked.emit(this.scoreForm);
+    this.onBtnSaveClicked.emit(this.createScore());
   }
+
+  private createScore(): Score {
+    let score: Score = new Score();
+    score.goodType = this.inputGoodType.value;
+    score.creditMin = this.creditMinValue;
+    score.creditMax = this.creditMaxValue;
+    score.instMin = this.instMinValue;
+    score.instMax = this.instMaxValue;
+    score.score = this.inputScore.value;
+    return score;
+  }
+
 }
 

@@ -13,17 +13,15 @@
                     <th >Credit Range</th>
                     <th >Installment Range</th>
                     <th >Score</th>
-                    <th >Created At</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let score of getScores(); let i = index" (click)="onSelectedRow(score)">
                     <td>{{i+1}}</td>
                     <td>{{score.goodType}}</td>
-                    <td>{{score.iniCredit}}&#32;/&#32;{{score.endCredit}}</td>
-                    <td>{{score.iniInst}}&#32;/&#32;{{score.endInst}}</td>
+                    <td>{{score.creditMin}}&#32;/&#32;{{score.creditMax}}</td>
+                    <td>{{score.instMin}}&#32;/&#32;{{score.instMax}}</td>
                     <td>{{score.score}}</td>
-                    <td>{{score.creationAt | slice:0:19 }}</td>
                 </tr>
             </tbody>
         </table>

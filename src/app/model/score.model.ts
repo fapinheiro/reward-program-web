@@ -5,10 +5,10 @@ export class Score {
     
     codScore: number; 
     goodType: string;
-    iniCredit: number;
-    endCredit: number;
-    iniInst: number;
-    endInst: number;
+    creditMin: number;
+    creditMax: number;
+    instMin: number;
+    instMax: number;
     score: number;
     creationAt: string;
     updatedAt: string;

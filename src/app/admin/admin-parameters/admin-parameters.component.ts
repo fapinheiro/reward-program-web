@@ -39,8 +39,10 @@ export class AdminParametersComponent implements OnInit, OnDestroy{
     this.setEditFormFields(null, true);
     this.parameterService.getParameters().subscribe(
       (params: Parameter[]) => {
-        this.parameterSelected = params[0];
-        this.setEditFormFields(this.parameterSelected, true);
+        if (params != null && params.length > 0) {
+          this.parameterSelected = params[0];
+          this.setEditFormFields(this.parameterSelected, true);
+        }
       }
     );
   }
@@ -99,11 +101,10 @@ export class AdminParametersComponent implements OnInit, OnDestroy{
 
   }
  
-  onBtnReset() {
-    if (this.parameterSelected != null) {
-      this.setEditFormFields(this.parameterSelected, true);
-    }
-    this.messageService.showSuccessMessage();
-  }
+  // onBtnReset() {
+  //   if (this.parameterSelected != null) {
+  //     this.setEditFormFields(this.parameterSelected, true);
+  //   }
+  // }
 
 }

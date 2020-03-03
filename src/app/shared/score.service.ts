@@ -24,72 +24,39 @@ export class ScoreService {
         // Ok, nothing here
     }
 
-    // getScores(codClient?: number, searchTerm?: string, startCreationAt?: string, endCreationAt?: string, 
-    //     offset: number = 0, limit: number = Constant.MAX_RECORDS): Observable<Score[]> {
+    getScores(): Observable<Score[]> {
 
-    //     let httpParams = new HttpParams();
+        return this.http.get(
+                `${environment.apiUrl}/scores`, 
+                {
+                    observe: 'response'
+                }
+            ).pipe(
+                map( (res: any) => {
+                    if (res.body) {
+                        return res.body as Score[];
+                    }
+                    const scoreArray: Score[] = [];
+                    return scoreArray;
+                }),
+                catchError(this.handleError('getScores', []))
+            );
 
-    //     if (codClient) {
-    //         httpParams = httpParams.set("codClient", codClient.toString());
-    //     }
+    }
 
-    //     if (searchTerm) {
-    //         httpParams = httpParams.set("searchTerm", searchTerm);
-    //     }
-
-    //     if (startCreationAt) {
-    //         httpParams = httpParams.set("startCreationAt", startCreationAt);
-    //     }
-
-    //     if (endCreationAt) {
-    //         httpParams = httpParams.set("endCreationAt", endCreationAt);
-    //     }
-
-    //     httpParams = httpParams.set("offset", offset.toString());
-    //     httpParams = httpParams.set("limit", limit.toString());
-
-    //     return this.http.get(
-    //             `${environment.apiUrl}/scores`, 
-    //             {
-    //                 observe: 'response',
-    //                 params: httpParams
-    //             }
-    //         ).pipe(
-    //             map( (res: any) => {
-    //                 if (res.body && res.body.content) {
-    //                     return res.body.content as Score[];
-    //                 }
-    //                 const indArray: Score[] = [];
-    //                 return indArray;
-    //             }),
-    //             catchError(this.handleError('getScores', []))
-    //         );
-
-    // }
-
-    // getScoreById(id: number): Observable<Score> {
-    //     return this.http
-    //         .get<Score>(`${environment.apiUrl}/scores/${id}`)
-    //         .pipe(
-    //             tap( _ => console.log(`fetched Score id=${id}`)),
-    //             catchError(this.handleError<Score>(`getScoreById id=${id}`)
-    //         )
-    //     );
-    // }
-
-    // updateScore(score: Score): Observable<any> {
-    //     // const httpOptions = {
-    //     //     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    //     // };
-    //     return this.http
-    //         // .put(`${environment.apiUrl}/Scores/${Score.codScoree}`, Score, httpOptions)
-    //         .put(`${environment.apiUrl}/scores/${score.codScore}`, score)
-    //         .pipe(
-    //             tap(_ => console.log(`Updated score id=${indication.codIndication}`)),
-    //             catchError(this.handleError<any>('updateIndication')
-    //         )
-    //     );
-    // }
+    updateScore(score: Score): Observable<any> {
+        // const httpOptions = {
+        //     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+        // };
+        return this.http
+            // .put(`${environment.apiUrl}/Scores/${Score.codScoree}`, Score, httpOptions)
+            .put(`${environment.apiUrl}/scores/${score.codScore}`, score)
+            .pipe(
+                tap(_ => console.log(`Updated score id=${score.codScore}`)),
+                catchError(this.handleError<any>('updateScore')
+            )
+        );
+    }
 
     // addIndication(indication: Indication): Observable<Indication> {
     //     // const httpOptions = {
