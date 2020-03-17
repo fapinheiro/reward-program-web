@@ -34,7 +34,7 @@ export class AdminScoreRequestComponent implements OnInit, OnDestroy, AfterConte
     private router: Router,
     private scoreService: ScoreService,
     private activatedRoute: ActivatedRoute) {
-      console.log('AdminScoreRequest constructor');
+      // console.log('AdminScoreRequest constructor');
   }
     
   ngOnInit() {
@@ -115,13 +115,16 @@ export class AdminScoreRequestComponent implements OnInit, OnDestroy, AfterConte
   //   console.log(`List btnSearch: ${form}`);
   // }
   
-  onBtnBack(form: FormGroup) {
-    console.log(`btnBack(): ${form}`)
+  onBtnBack(score: Score) {
+    // console.log(`btnBack(): ${score}`)
     this.router.navigate(["admin/scores"]);
   }
-  
-  onBtnNew(form: FormGroup) {
-    console.log(`btnNew(): ${form}`)
+
+  onBtnSave(score: Score) {
+    // console.log(`btnNew(): ${score}`)
+    if (score.codScore) {
+      this.messageService.showSuccessMessage();
+    }
   }
 
   // onSelectedRow(selectedScore: Score) {

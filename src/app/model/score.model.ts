@@ -11,6 +11,8 @@ export class Score {
     instMax: number;
     score: number;
     creationAt: string;
+    startCreationAt: string;
+    endCreationAt: string;
     updatedAt: string;
     
 }

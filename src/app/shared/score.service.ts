@@ -41,6 +41,58 @@ export class ScoreService {
                 }),
                 catchError(this.handleError('getScores', []))
             );
+    }
+
+    getScoresByParameters(score: Score): Observable<Score[]> {
+        let httpParams = new HttpParams();
+
+        // @RequestParam(required=false) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime startCreationAt,
+        // @RequestParam(required=false) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime endCreationAt
+        if (score.goodType) {
+            httpParams = httpParams.set("scoreType", score.goodType);
+        }
+
+        if (score.creditMin) {
+            httpParams = httpParams.set("creditMin", score.creditMin.toString());
+        }
+
+        if (score.creditMax) {
+            httpParams = httpParams.set("creditMax", score.creditMax.toString());
+        }
+
+        if (score.instMin) {
+            httpParams = httpParams.set("instMin", score.instMin.toString());
+        }
+
+        if (score.instMax) {
+            httpParams = httpParams.set("instMax", score.instMax.toString());
+        }
+
+        if (score.startCreationAt) {
+            httpParams = httpParams.set("startCreationAt", score.startCreationAt);
+        }
+
+        if (score.endCreationAt) {
+            httpParams = httpParams.set("endCreationAt", score.endCreationAt);
+        }
+        
+
+        return this.http.get(
+                `${environment.apiUrl}/scores`, 
+                {
+                    observe: 'response',
+                    params: httpParams
+                }
+            ).pipe(
+                map( (res: any) => {
+                    if (res.body) {
+                        return res.body as Score[];
+                    }
+                    const scoreArray: Score[] = [];
+                    return scoreArray;
+                }),
+                catchError(this.handleError('getScoresByParameters', []))
+            );
 
     }
 
@@ -58,19 +110,19 @@ export class ScoreService {
         );
     }
 
-    // addIndication(indication: Indication): Observable<Indication> {
-    //     // const httpOptions = {
-    //     //     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    //     // };
-    //     return this.http
-    //         // .post<Indication>(this.heroesUrl, hero, httpOptions)
-    //         .post<Indication>(`${environment.apiUrl}/indications`, indication)
-    //         .pipe(
-    //             tap((indication: Indication) => console.log(`Added Indication of id=${indication.codIndication}`)),
-    //             catchError(this.handleError<Indication>('addIndication')
-    //         )
-    //     );
-    // }
+    addScore(score: Score): Observable<Score> {
+        // const httpOptions = {
+        //     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+        // };
+        return this.http
+            // .post<Indication>(this.heroesUrl, hero, httpOptions)
+            .post<Score>(`${environment.apiUrl}/scores`, score)
+            .pipe(
+                tap((score: Score) => console.log(`Added score of id=${score.codScore}`)),
+                catchError(this.handleError<Score>('addScore')
+            )
+        );
+    }
 
     // deleteIndication(indication: Indication | number): Observable<Indication> {
     //     const id = typeof indication === 'number' ? indication : indication.codIndication;

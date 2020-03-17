@@ -1,17 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewChild, Input, AfterViewInit, AfterContentInit, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { Component, OnDestroy, OnInit, Input, AfterViewInit, AfterContentInit, Output, EventEmitter } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Options } from 'ng5-slider';
-import * as jwt_decode from 'jwt-decode';
 
-import { Indication } from '../../../model/indication.model';
-import { IndicationService } from '../../../shared/indication.service';
-import { MessageService } from '../../../shared/message/message.service';
-import { Client } from '../../../model/client.model';
-import { AuthService } from '../../../shared/auth.service';
-import { Subscription } from 'rxjs';
-import { Location } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Score } from 'src/app/model/score.model';
+import { ScoreService } from 'src/app/shared/score.service';
+import { MessageService } from 'src/app/shared/message/message.service';
 
 export enum AdminScoreFormModeEnum {
   LIST,
@@ -72,12 +65,13 @@ export class AdminScoreFormComponent implements OnInit, OnDestroy, AfterContentI
   };
 
   constructor(
-    // private indicationService: IndicationService,
+    private scoreService: ScoreService,
     private messageService: MessageService,
-    private authService: AuthService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute) {
-      console.log('AdminScoreForm constructor');
+    // private authService: AuthService,
+    // private router: Router,
+    // private activatedRoute: ActivatedRoute
+    ) {
+      // console.log('AdminScoreForm constructor');
   }
     
   setFormValues(selectedScore: Score) {
@@ -170,34 +164,40 @@ export class AdminScoreFormComponent implements OnInit, OnDestroy, AfterContentI
   }
 
   onBtnSearch() {
-    console.log("Form btnSearch");
-    this.onBtnSearchClicked.emit(this.createScore());
+    // console.log("Form btnSearch");
+    let score = this.createScore();
+    score.startCreationAt = this.inputBeginDate.value;
+    score.endCreationAt = this.inputEndDate.value;
+    this.onBtnSearchClicked.emit(score);
   }
   
   onBtnNew() {
-    console.log("Form onBtnNew");
+    // console.log("Form onBtnNew");
     this.onBtnNewClicked.emit(this.createScore());
   }
   
   onBtnClear() {
-    console.log("Form onBtnClear");
+    // console.log("Form onBtnClear");
     this.onBtnClearClicked.emit(this.createScore());
   }
 
   onBtnBack() {
-    console.log("Form onBtnBack");
+    // console.log("Form onBtnBack");
     // this.router.navigate(["indications"]);
     this.onBtnBackClicked.emit(this.createScore());
   }
 
   onBtnUpdate() {
-    console.log("Form onBtnUpdate");
+    // console.log("Form onBtnUpdate");
     this.onBtnUpdateClicked.emit(this.createScore());
   }
   
   onBtnSave() {
-    console.log("Form onBtnSave");
-    this.onBtnSaveClicked.emit(this.createScore());
+    // console.log("Form onBtnSave");
+    let score: Score = this.createScore();
+    this.scoreService.addScore(score).subscribe( (scoreNew: Score) => {
+      this.onBtnSaveClicked.emit(scoreNew);
+    });
   }
 
   private createScore(): Score {

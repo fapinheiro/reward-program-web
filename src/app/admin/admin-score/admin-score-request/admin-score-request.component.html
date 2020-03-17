@@ -3,7 +3,7 @@
         <h2>New Score</h2>
     </div>
     <app-admin-score-form [formMode]="modeNew" (onBtnBackClicked)="onBtnBack($event)"
-        onBtnNewClicked="onBtnNew($event)">
+        (onBtnSaveClicked)="onBtnSave($event)">
     </app-admin-score-form>
 
 </div>

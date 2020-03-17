@@ -24,13 +24,13 @@ export class AdminScoreListComponent implements OnInit {
     private scoreService: ScoreService,
     private router: Router,
     private activatedRoute: ActivatedRoute) {
-      console.log('AdminScoreList constructor');
+      // console.log('AdminScoreList constructor');
   }
     
   ngOnInit() {
     this.scoreService.getScores().subscribe(
           (scores: Score[]) => {
-            console.log("Fetched scores");
+            // console.log("Fetched scores");
             this.setScores(scores);
           }
     );
@@ -45,7 +45,9 @@ export class AdminScoreListComponent implements OnInit {
   }
  
   onBtnSearch(score: Score) {
-    console.log(`List btnSearch: ${score}`);
+    this.scoreService.getScoresByParameters(score).subscribe( (scoresList: Score[]) => {
+      this.setScores(scoresList);
+    });
   }
   
   onSelectedRow(score: Score) {
