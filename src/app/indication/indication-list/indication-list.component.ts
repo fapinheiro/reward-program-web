@@ -1,8 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import * as jwt_decode from 'jwt-decode';
-
 import { IndicationService } from '../../shared/indication.service';
 import { MessageService } from '../../shared/message/message.service';
 import { AuthService } from '../../shared/auth.service';
@@ -35,11 +33,10 @@ export class IndicationListComponent implements OnInit {
 
   ngOnInit() {
 
-    const token = this.authService.getToken();
+    let clientId = this.authService.getTokenId();
     try {
-      let authInfo = jwt_decode(token);
-      if (authInfo && authInfo.clientId) {
-        this.client.codCliente = authInfo.clientId;
+      if (clientId) {
+        this.client.codCliente = clientId;
         this.indicationService.getIndications(this.client.codCliente).subscribe(
           (indications: Indication[]) => {
             this.setIndications(indications);

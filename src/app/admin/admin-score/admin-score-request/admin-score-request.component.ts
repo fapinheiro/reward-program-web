@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild, AfterContentInit, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Options } from 'ng5-slider';
-import * as jwt_decode from 'jwt-decode';
+// import * as jwt_decode from 'jwt-decode';
 
 import { Indication } from '../../../model/indication.model';
 import { IndicationService } from '../../../shared/indication.service';

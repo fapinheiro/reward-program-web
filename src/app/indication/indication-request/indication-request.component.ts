@@ -1,8 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import * as jwt_decode from 'jwt-decode';
-
 import { Indication } from '../../model/indication.model';
 import { IndicationService } from '../../shared/indication.service';
 import { MessageService } from '../../shared/message/message.service';
@@ -29,11 +27,11 @@ export class IndicationRequestComponent {
   }
 
   onSubmit() {
-    let authInfo = jwt_decode(this.authService.getToken());
-    if (authInfo.clientId) {
+    let clientId = this.authService.getTokenId();
+    if (clientId) {
       const indication = new Indication();
       const client = new Client();
-      client.codCliente = authInfo.clientId;
+      client.codCliente = clientId;
       indication.client = client;
       indication.name = this.indicationForm.value.inputName;
       indication.email = this.indicationForm.value.inputEmail;

@@ -27,7 +27,7 @@
           <a class="dropdown-item" href="#"><i class="material-icons align-bottom">local_atm</i>Request Withdrawn</a>
         </div>
       </li>
-      <li class="nav-item dropdown" *ngIf="isAuthenticated()">
+      <li class="nav-item dropdown" *ngIf="isAuthenticated() && isAdmin()">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAdm" role="button" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
           <i class="material-icons align-bottom">apps</i>

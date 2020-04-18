@@ -78,11 +78,8 @@ export class AuthInterceptor implements HttpInterceptor {
         console.error('Authorization filter error', error); // log to console instead
 
         if (error instanceof HttpErrorResponse) {
-            if (error.status === 403) {
+            if (error.status === 401) {
                 this.messageService.showTokenExpirationMessage();
-            // } else if (error.status <= 200) {
-            //     this.messageService.showSuccessMessage();
-            // 
             } else if (error.status >= 400 && error.status < 500) {
                 this.messageService.showWarningMessage();
             } else {

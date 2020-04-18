@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
-import * as jwt_decode from 'jwt-decode';
+
 
 import { Indication } from '../../model/indication.model';
 import { IndicationService } from '../../shared/indication.service';
@@ -51,13 +51,12 @@ export class IndicationEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    let authInfo = jwt_decode(this.authService.getToken());
-
-    if (authInfo.clientId) {
+    let clientId = this.authService.getTokenId()
+    if (clientId) {
 
       // Set indication fields
       let client = new Client();
-      client.codCliente = authInfo.clientId;
+      client.codCliente = clientId;
       this.selectedIndication.client = client;
       this.selectedIndication.name = this.inputName.value;
       this.selectedIndication.email = this.inputEmail.value;

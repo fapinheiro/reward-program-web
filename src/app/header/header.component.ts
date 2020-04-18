@@ -25,6 +25,10 @@ export class HeaderComponent implements OnInit {
     return this.authService.isAuthenticated();
   }
 
+  isAdmin() {
+    return this.authService.isAdmin();
+  }
+
   onLogout() {
     this.authService.logout();
     this.router.navigate(['/login']);

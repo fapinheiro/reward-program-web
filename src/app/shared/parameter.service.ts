@@ -27,9 +27,9 @@ export class ParameterService {
 
     updateParameter(newParameter: Parameter): Observable<any> {
         return this.http
-            .put(`${environment.apiUrl}/parameters/${newParameter.codParam}`, newParameter)
+            .put(`${environment.apiUrl}/parameters/${newParameter.paramId}`, newParameter)
             .pipe(
-                tap(_ => console.log(`Updated parameter id=${newParameter.codParam}`)),
+                tap(_ => console.log(`Updated parameter id=${newParameter.paramId}`)),
                 catchError(this.handleError<any>('updateParameter')
             )
         );

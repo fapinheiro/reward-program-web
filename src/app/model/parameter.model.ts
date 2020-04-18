@@ -1,7 +1,7 @@
 
 export class Parameter {
 
-    codParam: number;
+    paramId: number;
     indicationExpiration: number;
     scoreExpiration: number;
     creationAt: string;
