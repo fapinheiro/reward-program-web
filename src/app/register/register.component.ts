@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
  
-import { debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, filter, map} from 'rxjs/operators';
 
 import { Client } from '../model/client.model';
 import { PostalCode } from '../model/postal-code.model';
@@ -46,38 +46,58 @@ export class RegisterComponent  {
   ngOnInit() {
     this.client = new Client();
     this.activatedRoute.queryParams
-      .subscribe(
-        (params: Params) => {
-          // Process indication token
-          if (params['indToken']) {
-           const indToken = +params['indToken'];
-            this.indicationService.getIndicationById(indToken)
-              .subscribe( 
-                (ind: Indication) => {
+      .pipe(
+        filter( params => params['indToken'] != null),
+        switchMap( params => {
+          const indToken = +params['indToken'];
+          return this.indicationService.getIndicationById(indToken);
+        })
+      )
+      .pipe(
+        filter( indication => 
+            indication.status == IndicationStatusEnum.CREATED || 
+            indication.status == IndicationStatusEnum.SENT || 
+            indication.status == IndicationStatusEnum.RESENT)
+      )
+      .subscribe( indication => {
+        this.client.email = indication.email;
+        this.client.name = indication.name;
+        this.client.phone = indication.phone;
+      });
+
+    // this.activatedRoute.queryParams
+    //   .subscribe(
+    //     (params: Params) => {
+    //       // Process indication token
+    //       if (params['indToken']) {
+    //        const indToken = +params['indToken'];
+    //         this.indicationService.getIndicationById(indToken)
+    //           .subscribe( 
+    //             (ind: Indication) => {
                   
-                  // Check indication status
-                  if (ind.status == IndicationStatusEnum.CREATED || 
-                      ind.status == IndicationStatusEnum.SENT || 
-                      ind.status == IndicationStatusEnum.RESENT) {
-                      this.client.email = ind.email;
-                      this.client.name = ind.name;
-                      this.client.phone = ind.phone;
-                  }
+    //               // Check indication status
+    //               if (ind.status == IndicationStatusEnum.CREATED || 
+    //                   ind.status == IndicationStatusEnum.SENT || 
+    //                   ind.status == IndicationStatusEnum.RESENT) {
+    //                   this.client.email = ind.email;
+    //                   this.client.name = ind.name;
+    //                   this.client.phone = ind.phone;
+    //               }
                   
-            });
-          }
-      }
-    );
+    //         });
+    //       }
+    //   }
+    // );
 
     // Create asynch search pipe for postal code
     this.postalCodeSelected = new PostalCode();
-    this.postalCodesList$ = this.searchTerms.pipe(
-      debounceTime(2000),
-      distinctUntilChanged(),
-      switchMap((code: string) => 
-        this.postalCodeService.getPostalCodesByCodeNumber(code)),
-    );
-
+    this.postalCodesList$ = this.searchTerms
+      .pipe(
+        debounceTime(2000),
+        distinctUntilChanged(),
+        switchMap((code: string) => 
+          this.postalCodeService.getPostalCodesByCodeNumber(code)),
+      );
     console.log(this.inputAddressValue);
   }
 
@@ -106,11 +126,9 @@ export class RegisterComponent  {
     this.client.nif = this.registerForm.value.inputNIF;
     this.client.password = this.registerForm.value.inputPassword;
     this.clientService.addClient(this.client)
-    .subscribe(
-      _ => {
+    .subscribe( _ => {
         this.messageService.showSuccessMessageToURL('/');
-      }
-    );
+    });
   }
 
   isFormValid(): boolean {

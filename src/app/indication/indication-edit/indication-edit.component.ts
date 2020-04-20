@@ -39,11 +39,12 @@ export class IndicationEditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.setEditFormFields();
-    this.indicationSubscription = this.indicationService.getIndicationSelectedEvent().subscribe(
-      indication => {
-        this.selectedIndication = indication;
-        this.setEditFormFields(indication.name, indication.email, indication.phone, false);
-    });
+    this.indicationSubscription = this.indicationService.getIndicationSelectedEvent()
+      .subscribe(
+        indication => {
+          this.selectedIndication = indication;
+          this.setEditFormFields(indication.name, indication.email, indication.phone, false);
+      });
   }
 
   ngOnDestroy() {
@@ -68,8 +69,7 @@ export class IndicationEditComponent implements OnInit, OnDestroy {
         .subscribe(_ => {
           this.messageService.showSuccessMessageToURL('/indications');
           this.editForm.reset();
-        }
-        );
+        });
     } else {
       this.messageService.showErrorMessage();
     }

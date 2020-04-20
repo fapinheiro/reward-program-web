@@ -8,6 +8,7 @@ import { ParameterService } from 'src/app/shared/parameter.service';
 import { Parameter } from 'src/app/model/parameter.model';
 
 import { environment } from '../../../environments/environment';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-parameters',
@@ -32,19 +33,28 @@ export class AdminParametersComponent implements OnInit, OnDestroy{
     private authService: AuthService,
     private router: Router) {
     // Ok, nothing here
-    console.log('edit');
+    console.log('Admin edit');
   }
 
   ngOnInit() {
     this.setEditFormFields(null, true);
-    this.parameterService.getParameters().subscribe(
-      (params: Parameter[]) => {
-        if (params != null && params.length > 0) {
-          this.parameterSelected = params[0];
+    this.parameterService.getParameters()
+      .pipe(
+        filter( params => params != null && params.length > 0),
+        map( params => params[0] as Parameter)
+      )
+      .subscribe( param => {
+          this.parameterSelected = param;
           this.setEditFormFields(this.parameterSelected, true);
-        }
-      }
-    );
+      });
+    // this.parameterService.getParameters().subscribe(
+    //   (params: Parameter[]) => {
+    //     if (params != null && params.length > 0) {
+    //       this.parameterSelected = params[0];
+    //       this.setEditFormFields(this.parameterSelected, true);
+    //     }
+    //   }
+    // );
   }
 
   ngOnDestroy() {
@@ -64,8 +74,7 @@ export class AdminParametersComponent implements OnInit, OnDestroy{
             this.parameterSelected = param
             this.setEditFormFields(this.parameterSelected, false);
             this.messageService.showSuccessMessageToURL('/admin/parameters');
-          }
-        );
+        });
     
   }
 

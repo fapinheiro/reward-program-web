@@ -33,12 +33,11 @@ export class MessageService {
             }
         );
       
-        dialogRef.afterClosed().subscribe(
-            result => {
+        dialogRef.afterClosed()
+            .subscribe( result => {
                 this.authService.logout();
                 this.router.navigate(['/login']);
-            }
-        );
+            });
     }
 
     showSuccessMessage(): void {
@@ -69,11 +68,10 @@ export class MessageService {
         );
 
         if (url != null) {
-            dialogRef.afterClosed().subscribe(
-                result => {
+            dialogRef.afterClosed()
+                .subscribe( result => {
                     this.router.navigate([url]);
-                }
-            );
+                });
         }
     }
 

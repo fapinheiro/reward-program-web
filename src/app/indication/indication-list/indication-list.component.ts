@@ -37,11 +37,11 @@ export class IndicationListComponent implements OnInit {
     try {
       if (clientId) {
         this.client.codCliente = clientId;
-        this.indicationService.getIndications(this.client.codCliente).subscribe(
-          (indications: Indication[]) => {
+        this.indicationService
+          .getIndications(this.client.codCliente)
+          .subscribe( indications => {
             this.setIndications(indications);
-          }
-        );
+          });
       }
     } catch(err) {
       console.error('Unable to process token', err);

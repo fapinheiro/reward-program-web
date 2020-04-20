@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, filter } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 import * as jwt_decode from 'jwt-decode';
@@ -47,21 +47,17 @@ export class AuthService implements OnDestroy {
                 headers: new HttpHeaders({ 'Content-Type': 'application/json' })
             },
         ).pipe(
+            filter( (resp: HttpResponse<any>) => resp.body != null && resp.body.token != null),
             tap((resp: HttpResponse<any>) => {
+                localStorage.setItem('token', resp.body.token);
 
-                if (resp.body.token) {
-                    localStorage.setItem('token', resp.body.token);
+                // Create refresh token when token is near to expire (10 seconds before)
+                // let expiresAt (this.getTokenExpiration() * 1000) - new Date().getTime() - (10 * 1000);
+                // console.log(expiresAt);
+                // let refreshTokenWorker = setTimeout( () => {
+                //     console.log('Token is near to expire, sending refresh token request.')
+                // }, expiresAt);
 
-                    // Create refresh token when token is near to expire (10 seconds before)
-                    let expiresAt (this.getTokenExpiration() * 1000) - new Date().getTime() - (10 * 1000);
-                    console.log(expiresAt);
-                    let refreshTokenWorker = setTimeout( () => {
-                        console.log('Token is near to expire, sending refresh token request.')
-                    }, expiresAt);
-
-                } else {
-                    console.log('Not found field `token` in the response body');
-                }
             }),
             catchError(this.handleError<any>('loginUser'))
         );

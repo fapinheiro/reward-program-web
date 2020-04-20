@@ -4,6 +4,7 @@ import { User } from '../model/user.model';
 import { AuthService } from '../shared/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -31,15 +32,24 @@ export class LoginComponent implements OnInit {
       this.loginForm.value.login,
       this.loginForm.value.password);
 
-    this.authService.loginUser(user).subscribe(
-      (data) => {
-        if (this.authService.isAuthenticated()) {
+    this.authService.loginUser(user)
+      .pipe(
+        filter( _ => this.authService.isAuthenticated() )
+      )
+      .subscribe( _ => {
           this.router.navigate(['/']);
-        } else {
-          console.log('Invalid user or password');
-        }
-      }
-    );
+      });
+  
+    // this.authService.loginUser(user)
+    // .subscribe(
+    //   (data) => {
+    //     if (this.authService.isAuthenticated()) {
+    //       this.router.navigate(['/']);
+    //     } else {
+    //       console.log('Invalid user or password');
+    //     }
+    //   }
+    // );
   }
 
   isFormValid(): boolean {

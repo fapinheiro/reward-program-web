@@ -38,9 +38,8 @@ export class AdminScoreEditComponent implements OnDestroy, AfterViewInit {
     setTimeout(() => {
       this.scoreSelectedSubscription = this.scoreService
         .getScoreSelectedEvent()
-        .subscribe(
-          score => {
-            console.log(score);
+        .subscribe( score => {
+            // console.log(score);
             this.selectedScore = score;
             this.scoreFormComponent.setFormValues(this.selectedScore);
           }
@@ -63,8 +62,8 @@ export class AdminScoreEditComponent implements OnDestroy, AfterViewInit {
   onBtnUpdate(newScore: Score) {
     console.log(`btnUpdate(): ${newScore}`)
     newScore.codScore = this.selectedScore.codScore;
-    this.scoreService.updateScore(newScore).subscribe( 
-      updatedScore => {
+    this.scoreService.updateScore(newScore)
+      .subscribe( updatedScore => {
         this.scoreFormComponent.setFormValues(updatedScore);
         this.messageService.showSuccessMessage();
       }

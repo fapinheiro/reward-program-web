@@ -33,11 +33,9 @@ export class HomeComponent implements OnInit {
     const apiUrl = `${environment.apiUrl}/users`;
 
     this.http.get<User[]>(apiUrl)
-    .subscribe(
-      (users: User[]) => {
+      .subscribe( users => {
         this.setUsers(users);
-      }
-    );
+      });
 
     // this.http.get<User[]>(
     //         apiUrl,

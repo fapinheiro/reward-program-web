@@ -195,7 +195,8 @@ export class AdminScoreFormComponent implements OnInit, OnDestroy, AfterContentI
   onBtnSave() {
     // console.log("Form onBtnSave");
     let score: Score = this.createScore();
-    this.scoreService.addScore(score).subscribe( (scoreNew: Score) => {
+    this.scoreService.addScore(score)
+      .subscribe( scoreNew => {
       this.onBtnSaveClicked.emit(scoreNew);
     });
   }
