@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar fixed-top navbar-expand-md navbar-light bg-light">
   <a class="navbar-brand" href="#">Reward</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
     aria-expanded="false" aria-label="Toggle navigation">
@@ -7,10 +7,10 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">
+      <li class="nav-item active" data-toggle="collapse" data-target=".navbar-collapse.show">
+        <a class="nav-link" routerLink="/">
           <i class="material-icons align-bottom">house</i>
-          Home
+          <span class="rw-orange">Home</span>
           <span class="sr-only">(current)</span>
         </a>
       </li>
@@ -48,11 +48,17 @@
     </ul>
     <ul class="navbar-nav">
       <ng-template [ngIf]="!isAuthenticated()">
-        <li class="nav-item">
-          <a class="nav-link active" routerLink="login"><i class="material-icons align-bottom">input</i>Login</a>
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+          <a class="nav-link active" routerLink="login" >
+            <i class="material-icons align-bottom">input</i>
+            <span class="rw-orange">&nbsp;Login</span>
+          </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="register"><i class="material-icons align-bottom">assignment_ind</i>Register</a>
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+          <a class="nav-link" routerLink="register" >
+            <i class="material-icons align-bottom">assignment_ind</i>
+            <span class="rw-orange">&nbsp;Register</span>
+          </a>
         </li>
       </ng-template>
       <ng-template [ngIf]="isAuthenticated()">

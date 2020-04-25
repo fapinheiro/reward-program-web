@@ -1,44 +1,42 @@
-.my-card {
-    width: 400px;
-    height: 250px;
+.rw-container {
+    margin-top: 70px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
-.login-container {
-    display: flex;
-    flex-direction: column;
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 10px;
+    /* grid-template-areas: 
+        "inputLogin inputLogin"
+        "inputPassword inputPassword"
+        "inputRemember linkForgotPasswd"
+        "btnLogin btnLogin"; */
 }
 
-.login-container > * {
-    width: 100%;
-}
-  
-button {
-    margin-left: 5px;
+.login {
+    grid-column: span 2;
+    /* grid-area: inputLogin; */
 }
 
-.center {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    margin-left: -200px;
-    margin-top: -125px; 
+.password {
+    grid-column: span 2;
 }
 
-.my-card-title {
-    margin-left: -20px;
+#remember {
+    grid-column: 1;
 }
 
-/* Small Devices */
-@media only screen and (max-width: 700px) {
-    .my-card {
-        width: 300px !important;
-    }
+#forgot {
+    grid-column: 2;
+    text-align: right;
+}
 
-    /* .center {
-        position: relative;
-        top: 0%;
-        left: 0%;
-        margin: 0;
-    } */
+#btnLogin {
+    grid-column: span 2;
+}
 
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+    background-color: orange !important;
 }
