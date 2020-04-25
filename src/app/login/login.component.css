@@ -1,9 +1,3 @@
-.rw-container {
-    margin-top: 70px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -37,6 +31,7 @@
     grid-column: span 2;
 }
 
+/* Only works in the component level */
 ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
     background-color: orange !important;
 }
