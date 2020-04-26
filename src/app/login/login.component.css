@@ -1,37 +1,99 @@
-.grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    row-gap: 10px;
-    /* grid-template-areas: 
-        "inputLogin inputLogin"
-        "inputPassword inputPassword"
-        "inputRemember linkForgotPasswd"
-        "btnLogin btnLogin"; */
-}
 
 .login {
-    grid-column: span 2;
-    /* grid-area: inputLogin; */
-}
+    width: 100%;
+ } 
 
 .password {
-    grid-column: span 2;
-}
-
-#remember {
-    grid-column: 1;
+    width: 100%;
 }
 
 #forgot {
-    grid-column: 2;
-    text-align: right;
+    position: relative;
+    top: -2px;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    float: right;
 }
 
 #btnLogin {
-    grid-column: span 2;
-}
+    width: 100%;
+} 
 
 /* Only works in the component level */
 ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
     background-color: orange !important;
+}
+
+@supports (display: grid) {
+
+    /* Middle screen */
+    @media only screen and (min-width: 768px) {
+
+       .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            row-gap: 10px; 
+        }
+
+        .login {
+            grid-column: 2/4;
+        }
+
+        .password {
+            grid-row: 2;
+            grid-column: 2/4;
+        } 
+
+        #remember {
+            grid-row: 3;
+            grid-column: 2;
+        }
+
+        #forgot {
+            grid-row: 3;
+            grid-column: 3;
+            text-align: right;
+        }
+
+        #btnLogin {
+            grid-row: 4;
+            grid-column: 2/4;
+        }
+
+    }
+    
+    /* Large screen */
+    @media only screen and (min-width: 1280px) {
+
+        .grid-container {
+             display: grid;
+             grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+             row-gap: 10px; 
+         }
+ 
+         .login {
+             grid-column: 3/5;
+         }
+ 
+         .password {
+             grid-row: 2;
+             grid-column: 3/5;
+         } 
+ 
+         #remember {
+             grid-row: 3;
+             grid-column: 3;
+         }
+ 
+         #forgot {
+             grid-row: 3;
+             grid-column: 4;
+             text-align: right;
+         }
+ 
+         #btnLogin {
+             grid-row: 4;
+             grid-column: 3/5;
+         }
+ 
+     }
 }
