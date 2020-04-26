@@ -2,7 +2,9 @@
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
         <div class="grid-container">
             <mat-form-field class="login">
-                <input matInput placeholder="Login" id="login" name="login" type="email" ngModel required>
+                <input matInput placeholder="Login" id="login" name="login"
+                    pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+                    ngModel required >
                 <mat-error *ngIf="!isFormValid()">
                     Login is
                     <strong>required</strong>
