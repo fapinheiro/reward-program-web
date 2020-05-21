@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { User } from '../model/user.model';
 import { AuthService } from '../shared/auth.service';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -39,7 +38,8 @@ export class LoginComponent implements OnInit {
       .subscribe( _ => {
           this.router.navigate(['/']);
       });
-  
+    
+    
     // this.authService.loginUser(user)
     // .subscribe(
     //   (data) => {

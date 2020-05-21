@@ -58,7 +58,7 @@ export class RegisterComponent  {
             indication.status == IndicationStatusEnum.CREATED || 
             indication.status == IndicationStatusEnum.SENT || 
             indication.status == IndicationStatusEnum.RESENT)
-      )
+      ) 
       .subscribe( indication => {
         this.client.email = indication.email;
         this.client.name = indication.name;

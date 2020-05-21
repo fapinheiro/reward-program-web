@@ -46,6 +46,8 @@ export class AuthInterceptor implements HttpInterceptor {
         
         return next.handle(request).pipe(
             map( resp => {
+
+                // TODO user filter instead of if statements
                 if (resp instanceof HttpResponse) {
                     // return  resp.clone({ body: [{title: 'Replaced data in interceptor'}] });
                     // resp = resp.clone({ 

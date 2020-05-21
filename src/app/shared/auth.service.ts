@@ -1,8 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, tap, filter } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { catchError, tap, filter, switchMap, takeUntil } from 'rxjs/operators';
+import { Observable, of, interval, Subject } from 'rxjs';
 
 import * as jwt_decode from 'jwt-decode';
 
@@ -21,7 +21,7 @@ export enum RoleEnum {
 @Injectable()
 export class AuthService implements OnDestroy {
 
-    private refreshTokenWorker: any;
+    private unsubscribe$ = new Subject;
 
     constructor(
         private router: Router,
@@ -31,9 +31,7 @@ export class AuthService implements OnDestroy {
     }
 
     ngOnDestroy() {
-        if (this.refreshTokenWorker) {
-            clearTimeout(this.refreshTokenWorker);
-        }
+        this.destroySubscriptions();
     }
 
     loginUser(user: User): Observable<any> {
@@ -49,18 +47,64 @@ export class AuthService implements OnDestroy {
         ).pipe(
             filter( (resp: HttpResponse<any>) => resp.body != null && resp.body.token != null),
             tap((resp: HttpResponse<any>) => {
+                console.log(resp);
                 localStorage.setItem('token', resp.body.token);
-
-                // Create refresh token when token is near to expire (10 seconds before)
-                // let expiresAt (this.getTokenExpiration() * 1000) - new Date().getTime() - (10 * 1000);
-                // console.log(expiresAt);
-                // let refreshTokenWorker = setTimeout( () => {
-                //     console.log('Token is near to expire, sending refresh token request.')
-                // }, expiresAt);
-
+                this.createRefreshTokenWorker();
             }),
             catchError(this.handleError<any>('loginUser'))
         );
+    }
+
+    // Create refresh token when token is near to expire (~10 seconds before)
+    // Refresh token only once
+    createRefreshTokenWorker() {
+
+        // Get expire time from the token
+        let expiresAtMillis = (this.getTokenExpiration() * 1000) - new Date().getTime() - (10 * 1000);
+
+        // Creates an interval
+        interval(expiresAtMillis)
+        .pipe(
+            takeUntil(this.unsubscribe$),
+            switchMap( () =>  this.refreshToken()),
+            catchError(this.handleError<any>('createRefreshTokenWorker'))
+        )
+        .subscribe(
+            (resp: HttpResponse<any>) => {
+                this.logout();
+                localStorage.setItem('token', resp.body.token);
+                // this.destroySubscriptions(); // Disable to refresh token always
+                console.log("Refresh token granted.");
+            }
+        );
+
+
+    }
+
+    // Send refresh token request. 
+    // Not necessary to send token in header because auth.interceptor.ts already does this for every request 
+    refreshToken(): Observable<any> {
+        const apiUrl = `${environment.apiUrl}/auth/refresh_token`;
+        
+        // Dont mind about the user and passwd
+        // User is need to get response in the HttpResponse object format
+        let user = new User("grant_type", "xxxxxxxx"); 
+        return this.http.post(
+            apiUrl,
+            user,
+            {
+                observe: 'response',
+                headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+            },
+        ).pipe(
+            filter( (resp: HttpResponse<any>) => resp.body != null && resp.body.token != null),
+            catchError(this.handleError<any>('refreshToken'))
+        );
+    }
+
+    destroySubscriptions() {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
     }
 
     isAuthenticated() {
