@@ -63,11 +63,9 @@ export class AuthService implements OnDestroy {
         
         // Get expire time from the token
         let expirationTimeMillis = new Date(this.getTokenExpiration() * 1000).getTime();
-        console.log(expirationTimeMillis);
 
         // Extracts ~10 seconds before token expiration
         let expiresAtMillis = expirationTimeMillis - currentTimeMillis - environment.refreshTokenMillis;
-        console.log(expiresAtMillis);
 
         // Creates an interval
         this.subscription = interval(expiresAtMillis)
