@@ -36,13 +36,13 @@ export class AdminScoreFormComponent implements OnInit, OnDestroy, AfterContentI
   scoreForm = new FormGroup({});
 
   @Input('formMode') 
-  private adminScoreFormMode: AdminScoreFormModeEnum = AdminScoreFormModeEnum.LIST; // Default to LIST
+  adminScoreFormMode: AdminScoreFormModeEnum = AdminScoreFormModeEnum.LIST; // Default to LIST
 
   // private score: Score;
 
-  private creditMinValue: number = 100000;
-  private creditMaxValue: number = 348000;
-  private creditOptions: Options = {
+  creditMinValue: number = 100000;
+  creditMaxValue: number = 348000;
+  creditOptions: Options = {
     floor: 0,
     ceil: 500000,
     step: 1000,
@@ -51,9 +51,9 @@ export class AdminScoreFormComponent implements OnInit, OnDestroy, AfterContentI
     }
   };
 
-  private instMinValue: number = 24;
-  private instMaxValue: number = 84;
-  private instOptions: Options = {
+  instMinValue: number = 24;
+  instMaxValue: number = 84;
+  instOptions: Options = {
     floor: 0,
     ceil: 120,
     step: 12,

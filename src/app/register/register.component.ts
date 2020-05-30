@@ -22,10 +22,10 @@ export class RegisterComponent  {
 
   @ViewChild('registerForm', {static: true}) registerForm: NgForm;
   
-  private postalCodesList$: Observable<PostalCode[]>;
-  private searchTerms = new Subject<string>();
-  private isAddressSet: boolean;
-  private client: Client;
+  postalCodesList$: Observable<PostalCode[]>;
+  searchTerms = new Subject<string>();
+  isAddressSet: boolean;
+  client: Client;
   
   postalCodeSelected: PostalCode;
 

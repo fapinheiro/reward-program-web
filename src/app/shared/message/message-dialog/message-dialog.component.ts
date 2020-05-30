@@ -9,8 +9,8 @@ import { DialogData } from './dialog-data';
 export class MessageDialogComponent {
 
     constructor(
-        private dialogRef: MatDialogRef<MessageDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) private data: DialogData
+        public dialogRef: MatDialogRef<MessageDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: DialogData
     ) {
         // Ok, nothing here
     }
