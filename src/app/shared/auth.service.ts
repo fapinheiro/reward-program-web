@@ -2,14 +2,13 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, tap, filter, switchMap, takeUntil } from 'rxjs/operators';
-import { Observable, of, interval, Subject } from 'rxjs';
+import { Observable, of, interval, Subject, Subscription } from 'rxjs';
 
 import * as jwt_decode from 'jwt-decode';
 
 import { environment } from '../../environments/environment';
 
 import { User } from '../model/user.model';
-import { MessageService } from './message/message.service';
 
 export enum RoleEnum {
     ADMIN = "ROLE_ADMIN",
@@ -21,7 +20,8 @@ export enum RoleEnum {
 @Injectable()
 export class AuthService implements OnDestroy {
 
-    private unsubscribe$ = new Subject;
+    // private unsubscribe$ = new Subject;
+    private subscription: Subscription;
 
     constructor(
         private router: Router,
@@ -47,33 +47,37 @@ export class AuthService implements OnDestroy {
         ).pipe(
             filter( (resp: HttpResponse<any>) => resp.body != null && resp.body.token != null),
             tap((resp: HttpResponse<any>) => {
-                console.log(resp);
-                localStorage.setItem('token', resp.body.token);
+                this.setToken(resp.body.token);
                 this.createRefreshTokenWorker();
             }),
             catchError(this.handleError<any>('loginUser'))
         );
     }
 
-    // Create refresh token when token is near to expire (~10 seconds before)
+    // Create refresh token when token is near to expire
     // Refresh token only once
     createRefreshTokenWorker() {
 
+        // Current time
+        let currentTimeMillis = new Date().getTime();
+        
         // Get expire time from the token
-        let expiresAtMillis = (this.getTokenExpiration() * 1000) - new Date().getTime() - (10 * 1000);
+        let expirationTimeMillis = new Date(this.getTokenExpiration() * 1000).getTime();
+
+        // Extracts ~10 seconds before token expiration
+        let expiresAtMillis = expirationTimeMillis - currentTimeMillis - environment.refreshTokenMillis;
 
         // Creates an interval
-        interval(expiresAtMillis)
+        this.subscription = interval(expiresAtMillis)
         .pipe(
-            takeUntil(this.unsubscribe$),
+            // takeUntil(this.unsubscribe$),
             switchMap( () =>  this.refreshToken()),
             catchError(this.handleError<any>('createRefreshTokenWorker'))
         )
         .subscribe(
             (resp: HttpResponse<any>) => {
                 this.logout();
-                localStorage.setItem('token', resp.body.token);
-                // this.destroySubscriptions(); // Disable to refresh token always
+                this.setToken(resp.body.token);
                 console.log("Refresh token granted.");
             }
         );
@@ -87,7 +91,8 @@ export class AuthService implements OnDestroy {
         const apiUrl = `${environment.apiUrl}/auth/refresh_token`;
         
         // Dont mind about the user and passwd
-        // User is need to get response in the HttpResponse object format
+        // User is need to get response with the HttpResponse object format, otherwise
+        // Response comes in other format
         let user = new User("grant_type", "xxxxxxxx"); 
         return this.http.post(
             apiUrl,
@@ -103,8 +108,11 @@ export class AuthService implements OnDestroy {
     }
 
     destroySubscriptions() {
-        this.unsubscribe$.next();
-        this.unsubscribe$.complete();
+        // this.unsubscribe$.next();
+        // this.unsubscribe$.complete();
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 
     isAuthenticated() {
@@ -113,6 +121,11 @@ export class AuthService implements OnDestroy {
 
     logout() {
         localStorage.removeItem('token');
+        this.destroySubscriptions();
+    }
+
+    setToken(token: string) {
+        localStorage.setItem('token', token);
     }
 
     getToken(): string {
