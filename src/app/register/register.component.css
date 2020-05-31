@@ -1,12 +1,8 @@
-.register-container {
-    display: flex;
-    flex-direction: column;
-}
-  
-.register-container > * {
-    width: 100%;
+
+h2 {
+    margin-bottom: 20px;
 }
 
-.form-full-width {
-    width:100%;
+#btnSignIn {
+    margin-bottom: 5px;
 }

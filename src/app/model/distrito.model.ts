@@ -1,7 +1,8 @@
 export class Distrito {
     
-    codDistrito: number;
-    nomeDistrito: string;
+    districtId: number;
+    districtCode: string;
+    description: string;
     creationAt: string;
     updatedAt: string;
     

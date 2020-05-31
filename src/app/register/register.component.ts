@@ -65,30 +65,6 @@ export class RegisterComponent  {
         this.client.phone = indication.phone;
       });
 
-    // this.activatedRoute.queryParams
-    //   .subscribe(
-    //     (params: Params) => {
-    //       // Process indication token
-    //       if (params['indToken']) {
-    //        const indToken = +params['indToken'];
-    //         this.indicationService.getIndicationById(indToken)
-    //           .subscribe( 
-    //             (ind: Indication) => {
-                  
-    //               // Check indication status
-    //               if (ind.status == IndicationStatusEnum.CREATED || 
-    //                   ind.status == IndicationStatusEnum.SENT || 
-    //                   ind.status == IndicationStatusEnum.RESENT) {
-    //                   this.client.email = ind.email;
-    //                   this.client.name = ind.name;
-    //                   this.client.phone = ind.phone;
-    //               }
-                  
-    //         });
-    //       }
-    //   }
-    // );
-
     // Create asynch search pipe for postal code
     this.postalCodeSelected = new PostalCode();
     this.postalCodesList$ = this.searchTerms
@@ -112,10 +88,9 @@ export class RegisterComponent  {
   onPostalCodeSelected(selected: PostalCode) {
     this.postalCodeSelected = selected;
     this.isAddressSet = true;
-    this.inputDistrictValue = selected.concelho.distrito.nomeDistrito;
-    this.inputCountyValue = selected.concelho.nomeConcelho;
-    this.inputCodeValue = selected.codigoPostal;
-    // this.inputAddressValue = selected.localidade;
+    this.inputDistrictValue = selected.county.district.description;
+    this.inputCountyValue = selected.county.description;
+    this.inputCodeValue = selected.postalCode;
   }
 
   onSubmit() {
@@ -132,11 +107,11 @@ export class RegisterComponent  {
   }
 
   isFormValid(): boolean {
-    // console.log(this.registerForm.value.inputAddress);
     return this.registerForm.valid && this.isAddressSet;
   }
 
   onBtnClear(): void {
     this.inputAddressValue = "";
   }
+
 }

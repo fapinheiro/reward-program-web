@@ -14,3 +14,7 @@ a:hover {
 .rw-orange:hover {
     color: orange;
 }
+
+.rw-100w {
+    width: 100%;
+}

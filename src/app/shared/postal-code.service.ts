@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, tap } from 'rxjs/operators';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, tap, filter, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
 import { PostalCode } from '../model/postal-code.model';
+import { Pageable } from '../model/Pageable';
 
 @Injectable()
 export class PostalCodeService {
@@ -15,17 +16,27 @@ export class PostalCodeService {
     }
 
     getPostalCodesByCodeNumber(code: string): Observable<PostalCode[]> {
-        console.log(`Searching hero: ${code}`);
+        console.log(`Searching PostalCode: ${code}`);
         if (!code.trim()) {
             // if not search term, return empty hero array.
             return of([]);
         }
         return this.http
-            .get<PostalCode[]>(`${environment.apiUrl}/postal-codes?code=${code}&offset=0&limit=10`)
+            .get<PostalCode[]>(
+                `${environment.apiUrl}/postal-codes?code=${code}&offset=0&limit=10`, 
+                {
+                    observe: 'response'
+                })
             .pipe(
-                tap( _ => console.log('PostalCodeService: returned postal codes'),
+                filter( (resp: HttpResponse<any>) => resp.body != null && resp.body.content != null),
+                tap( _ => console.log('PostalCode fetched!'),
                     catchError(this.handleError('getPostalCodesByCodeNumber', [])) 
-                )
+                ),
+                switchMap( (resp: HttpResponse<any>) => {
+                    let postalCode: PostalCode[] = resp.body.content as PostalCode[];
+                    console.log(postalCode);
+                    return of(postalCode);
+                })
             );
     }
 
