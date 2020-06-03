@@ -49,6 +49,7 @@ export class RegisterComponent  {
   identTypeList$: Observable<string[]>;
   searchIdentTypes = new Subject<string>();
   identTypeSelected: string;
+  inputIdentType: string;
   inputIdentInfo: string;
 
   // Client
