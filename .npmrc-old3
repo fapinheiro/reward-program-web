@@ -1,6 +1,6 @@
 proxy=null
 https-proxy=null
 http-proxy=null
-registry = "https://nexus.alm.gsnetcloud.corp/repository/npm-group/"
+registry = "https://nexus.alm.europe.cloudcenter.corp/repository/npm-group/"
 strict-ssl = false
 no-proxy = ".corp"
