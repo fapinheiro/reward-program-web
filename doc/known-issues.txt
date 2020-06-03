@@ -1,0 +1,5 @@
+Error:
+Uncaught DOMException: Failed to execute 'setSelectionRange' on 'HTMLInputElement': The input element's type ('email') does not support selection.
+
+Explanation:
+https://github.com/angular/components/issues/8516

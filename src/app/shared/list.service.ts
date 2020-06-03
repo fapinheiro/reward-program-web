@@ -9,33 +9,18 @@ import { PostalCode } from '../model/postal-code.model';
 import { Pageable } from '../model/Pageable';
 
 @Injectable()
-export class PostalCodeService {
+export class ListService {
 
     constructor(private http: HttpClient) {
         // Ok, nothing here
     }
 
-    getPostalCodesByCodeNumber(code: string): Observable<PostalCode[]> {
-        console.log(`Searching PostalCode: ${code}`);
-        if (!code.trim()) {
-            // if not search term, return empty hero array.
-            return of([]);
-        }
+    getIdentificationType(): Observable<string[]> {
         return this.http
-            .get<PostalCode[]>(
-                `${environment.apiUrl}/postal-codes?code=${code}&offset=0&limit=10`, 
-                {
-                    observe: 'response'
-                })
+            .get<string[]>(`${environment.apiUrl}/identifications`)
             .pipe(
-                filter( (resp: HttpResponse<any>) => resp.body != null && resp.body.content != null),
-                tap( _ => console.log('PostalCode fetched!')),
-                switchMap( (resp: HttpResponse<any>) => {
-                    let postalCode: PostalCode[] = resp.body.content as PostalCode[];
-                    console.log(postalCode);
-                    return of(postalCode);
-                }),
-                catchError(this.handleError('getPostalCodesByCodeNumber', [])),
+                tap( _ => console.log('IdentificationType fetched!')),
+                catchError(this.handleError('getIdentificationType', [])) 
             );
     }
 

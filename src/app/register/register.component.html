@@ -1,9 +1,9 @@
 <div class="rw-container">
-    <p>Join Reward Program</p>
-    <h2>Create Your Account</h2>
     <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
         <div class="grid-container">
-            <mat-form-field class="rw-100w">
+            <p>Join Reward Program</p>
+            <h2>Create Your Account</h2>        
+            <mat-form-field class="rw-100w email">
                 <input matInput type="email"  id="inputEmail" name="inputEmail" maxlength="100"
                     [(ngModel)]="client.email" required autofocus cdkFocusInitial placeholder="Email">
                 <mat-error *ngIf="!isFormValid()">
@@ -11,7 +11,7 @@
                     <strong>required</strong>
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="rw-100w">
+            <mat-form-field class="rw-100w password">
                 <input matInput type="password"  id="inputPassword" name="inputPassword"
                     placeholder="Password" maxlength="10" [(ngModel)]="client.password" required>
                 <mat-error *ngIf="!isFormValid()">
@@ -19,45 +19,48 @@
                     <strong>required</strong>
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="rw-100w">
+            <mat-form-field class="rw-100w name">
                 <input matInput type="text"  id="inputName" name="inputName" maxlength="100"
-                    pattern="[a-zA-Z\s]+" [(ngModel)]="client.name" required placeholder="Name">
+                    [(ngModel)]="client.name" required placeholder="Name">
                 <mat-error *ngIf="!isFormValid()">
                     Name is
                     <strong>required. </strong>
-                    Numbers is not permited.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="rw-100w">
-                <span matPrefix>+351 &nbsp;</span>
+            <mat-form-field class="rw-100w birthDate">
+                <mat-label>Birth Date</mat-label>
+                <input matInput 
+                    id="inputBirthDate" 
+                    name="inputBirthDate" 
+                    type="text"
+                    [matDatepicker]="inputBirthDate" 
+                    placeholder="Choose your birth date"
+                    ngModel
+                    required>
+                <mat-datepicker-toggle matSuffix [for]="inputBirthDate"></mat-datepicker-toggle>
+                <mat-datepicker #inputBirthDate></mat-datepicker>
+                <mat-error *ngIf="!isFormValid()">
+                    Birt Date is
+                    <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="rw-100w phone">
+                <span matPrefix>{{contactPrefix}} &nbsp;</span>
                 <mat-label>Phone</mat-label>
                 <!-- maxLength does not work with type=number 
                     https://stackoverflow.com/questions/18510845/maxlength-ignored-for-input-type-number-in-chrome
                 -->
                 <input matInput type="number"  id="inputPhone" name="inputPhone"
-                    maxlength="11" pattern="[0-9]+" [(ngModel)]="client.phone" required placeholder="Ex.: 964 806 795">
+                    maxlength="11" pattern="[0-9]+" [(ngModel)]="inputPhone" required placeholder="Ex.: 964 806 795">
                 <mat-error *ngIf="!isFormValid()">
                     Phone is
                     <strong>required. </strong>
                     Only numbers is permited.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="rw-100w">
-                <mat-label>NIF</mat-label>
-                <!-- maxLength does not work with type=number 
-                    https://stackoverflow.com/questions/18510845/maxlength-ignored-for-input-type-number-in-chrome
-                -->
-                <input matInput type="number"  id="inputNIF" name="inputNIF" maxlength="11"
-                    pattern="[0-9]+" [(ngModel)]="client.nif" required placeholder="Ex.: 298 973 537">
-                <mat-error *ngIf="!isFormValid()">
-                    NIF is
-                    <strong>required. </strong>
-                    Only numbers is permited.
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field class="rw-100w">
+            <mat-form-field class="rw-100w postalCode">
                 <mat-label>PostalCode</mat-label>
-                <input #searchPostalCode matInput type="text"  id="inputCode" name="inputCode"
+                <input #searchPostalCode matInput type="number"  id="inputCode" name="inputCode"
                     maxlength="10" pattern="[0-9]+" (keyup)="onPostalCodeKeyUp(searchPostalCode.value)"
                     [(ngModel)]="inputCodeValue" required placeholder="Ex.: 2825-846">
                 <mat-error *ngIf="!isFormValid()">
@@ -66,7 +69,7 @@
                     Only numbers is permited.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="rw-100w">
+            <mat-form-field class="rw-100w address">
                 <mat-label>Address</mat-label>
                 <mat-select id="inputAddress"  name="inputAddress" required
                     [(ngModel)]="inputAddressValue">
@@ -79,7 +82,16 @@
                     <strong>required</strong>
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="rw-100w">
+            <mat-form-field class="rw-100w addressInfo">
+                <mat-label>Address Info</mat-label>
+                <input matInput type="text"  id="inputLocaleInfo" name="inputLocaleInfo" maxlength="100"
+                    [(ngModel)]="inputLocaleInfo" required placeholder="Ex: N44 3ESQ">
+                <mat-error *ngIf="!isFormValid()">
+                    Local info is
+                    <strong>required. </strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="rw-100w district">
                 <input matInput type="text"  id="inputDistrict" name="inputDistrict" disabled
                     [(ngModel)]="inputDistrictValue" required placeholder="District">
                 <mat-error *ngIf="!isFormValid()">
@@ -87,7 +99,7 @@
                     <strong>required</strong>
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="rw-100w">
+            <mat-form-field class="rw-100w county">
                 <input matInput type="text"  id="inputCounty" name="inputCounty" disabled
                     [(ngModel)]="inputCountyValue" required placeholder="County">
                 <mat-error *ngIf="!isFormValid()">
@@ -95,9 +107,65 @@
                     <strong>required</strong>
                 </mat-error>
             </mat-form-field>
+            <mat-form-field class="rw-100w identType">
+                <mat-label>Identification</mat-label>
+                <mat-select id="inputIdentType"  name="inputIdentType" required
+                    [(ngModel)]="inputIdentType">
+                    <mat-option value="">Choose...</mat-option>
+                    <mat-option *ngFor="let ident of identTypeList$ | async" value="ident"
+                        (click)="onIdentTypeSelected(ident)">{{ident}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="!isFormValid()">
+                    Identification is
+                    <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="rw-100w identInfo">
+                <mat-label>Ident. Info</mat-label>
+                <input matInput type="text"  id="inputIdentInfo" name="inputIdentInfo" maxlength="100"
+                    [(ngModel)]="inputIdentInfo" required placeholder="Ex: The number/code of your identification">
+                <mat-error *ngIf="!isFormValid()">
+                    Local info is
+                    <strong>required. </strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="rw-100w emissionDate">
+                <mat-label>Ident. Emission Date</mat-label>
+                <input matInput 
+                    id="inputEmissionDate" 
+                    name="inputEmissionDate" 
+                    type="text"
+                    [matDatepicker]="inputEmissionDate" 
+                    placeholder="Choose your birth date"
+                    ngModel
+                    required>
+                <mat-datepicker-toggle matSuffix [for]="inputEmissionDate"></mat-datepicker-toggle>
+                <mat-datepicker #inputEmissionDate></mat-datepicker>
+                <mat-error *ngIf="!isFormValid()">
+                    Birt Date is
+                    <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="rw-100w validDate">
+                <mat-label>Ident. Valid Date</mat-label>
+                <input matInput 
+                    id="inputValidDate" 
+                    name="inputValidDate" 
+                    type="text"
+                    [matDatepicker]="inputValidDate" 
+                    placeholder="Choose your birth date"
+                    ngModel
+                    required>
+                <mat-datepicker-toggle matSuffix [for]="inputValidDate"></mat-datepicker-toggle>
+                <mat-datepicker #inputValidDate></mat-datepicker>
+                <mat-error *ngIf="!isFormValid()">
+                    Birt Date is
+                    <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
             <button id="btnSignIn" type="submit" class="btn btn-primary rw-100w" [disabled]="!isFormValid()"><i
                     class="material-icons align-bottom">input</i>Sign in</button>
-            <button type="reset" mat-button class="btn btn-secondary rw-100w" (click)="onBtnClear()"><i
+            <button id="btnReset" type="reset" mat-button class="btn btn-secondary rw-100w" (click)="onBtnClear()"><i
                     class="material-icons align-bottom">clear</i>Clear</button>
         </div>
     </form>

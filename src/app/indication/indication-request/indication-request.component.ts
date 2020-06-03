@@ -31,7 +31,7 @@ export class IndicationRequestComponent {
     if (clientId) {
       const indication = new Indication();
       const client = new Client();
-      client.codCliente = clientId;
+      client.clientId = clientId;
       indication.client = client;
       indication.name = this.indicationForm.value.inputName;
       indication.email = this.indicationForm.value.inputEmail;

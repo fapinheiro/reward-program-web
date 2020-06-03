@@ -41,9 +41,9 @@ export class ClientService {
         // };
         return this.http
             // .put(`${environment.apiUrl}/clients/${client.codCliente}`, client, httpOptions)
-            .put(`${environment.apiUrl}/clients/${client.codCliente}`, client)
+            .put(`${environment.apiUrl}/clients/${client.clientId}`, client)
             .pipe(
-                tap(_ => console.log(`Updated client id=${client.codCliente}`)),
+                tap(_ => console.log(`Updated client id=${client.clientId}`)),
                 catchError(this.handleError<any>('updateClient')
             )
         );
@@ -57,14 +57,14 @@ export class ClientService {
             // .post<Client>(this.heroesUrl, hero, httpOptions)
             .post<Client>(`${environment.apiUrl}/clients`, client)
             .pipe(
-                tap((client: Client) => console.log(`Added client of id=${client.codCliente}`)),
+                tap((client: Client) => console.log(`Added client of id=${client.clientId}`)),
                 catchError(this.handleError<Client>('addClient')
             )
         );
     }
 
     deleteClient(client: Client | number): Observable<Client> {
-        const id = typeof client === 'number' ? client : client.codCliente;
+        const id = typeof client === 'number' ? client : client.clientId;
         // const httpOptions = {
         //   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
         // };

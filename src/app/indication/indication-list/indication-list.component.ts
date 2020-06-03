@@ -36,9 +36,9 @@ export class IndicationListComponent implements OnInit {
     let clientId = this.authService.getTokenId();
     try {
       if (clientId) {
-        this.client.codCliente = clientId;
+        this.client.clientId = clientId;
         this.indicationService
-          .getIndications(this.client.codCliente)
+          .getIndications(this.client.clientId)
           .subscribe( indications => {
             this.setIndications(indications);
           });
@@ -69,7 +69,7 @@ export class IndicationListComponent implements OnInit {
 
   onBtnSearch() {
 
-    if (this.client.codCliente) {
+    if (this.client.clientId) {
 
       let searchTerm: string = this.searchForm.value.inputSearch;
       
@@ -87,7 +87,7 @@ export class IndicationListComponent implements OnInit {
   
       if (searchTerm != null && startCreationAt != null && endCreationAt != null) {
         
-        this.indicationService.getIndications(this.client.codCliente, searchTerm, 
+        this.indicationService.getIndications(this.client.clientId, searchTerm, 
           startCreationAt, endCreationAt).subscribe(
           (indications: Indication[]) => {
             this.setIndications(indications);
@@ -96,7 +96,7 @@ export class IndicationListComponent implements OnInit {
 
       } else if (searchTerm != null) {
 
-        this.indicationService.getIndications(this.client.codCliente, searchTerm).subscribe(
+        this.indicationService.getIndications(this.client.clientId, searchTerm).subscribe(
           (indications: Indication[]) => {
             this.setIndications(indications);
           }
@@ -105,7 +105,7 @@ export class IndicationListComponent implements OnInit {
       } else if (startCreationAt != null && endCreationAt != null) {
 
         this.indicationService.getIndications(
-            this.client.codCliente, 
+            this.client.clientId, 
             startCreationAt, 
             endCreationAt).subscribe(
           (indications: Indication[]) => {

@@ -27,6 +27,7 @@ import { MessageDialogComponent } from './shared/message/message-dialog/message-
 import { IndicationService } from './shared/indication.service';
 import { ScoreService } from './shared/score.service';
 import { ParameterService } from './shared/parameter.service';
+import { ListService } from './shared/list.service';
 
 @NgModule({
 
@@ -60,6 +61,7 @@ import { ParameterService } from './shared/parameter.service';
     IndicationService,
     ScoreService,
     ParameterService,
+    ListService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
   ],
   

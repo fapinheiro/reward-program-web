@@ -57,7 +57,7 @@ export class IndicationEditComponent implements OnInit, OnDestroy {
 
       // Set indication fields
       let client = new Client();
-      client.codCliente = clientId;
+      client.clientId = clientId;
       this.selectedIndication.client = client;
       this.selectedIndication.name = this.inputName.value;
       this.selectedIndication.email = this.inputEmail.value;
