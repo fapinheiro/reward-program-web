@@ -18,28 +18,55 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownInd" role="button" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
           <i class="material-icons align-bottom">how_to_reg</i>
-          Indications
+          <span class="rw-orange">Indications</span>
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownInd">
-          <a class="dropdown-item" routerLink="indications/new"><i class="material-icons align-bottom">assignment</i>Indication Form</a>
-          <a class="dropdown-item" routerLink="indications"><i class="material-icons align-bottom">toc</i>My Indications</a>
-          <a class="dropdown-item" href="#"><i class="material-icons align-bottom">score</i>My Scores</a>
-          <a class="dropdown-item" href="#"><i class="material-icons align-bottom">local_atm</i>Request Withdrawn</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownInd" data-toggle="collapse" data-target=".navbar-collapse.show">
+          <a class="dropdown-item" routerLink="indications/new">
+            <i class="material-icons align-bottom">assignment</i>
+            <span class="rw-orange">Indication Form</span>
+          </a>
+          <a class="dropdown-item" routerLink="indications">
+            <i class="material-icons align-bottom">toc</i>
+            <span class="rw-orange">My Indications</span>
+          </a>
+          <a class="dropdown-item" href="#">
+            <i class="material-icons align-bottom">score</i>
+            <span class="rw-orange">My Scores</span>
+          </a>
+          <a class="dropdown-item" href="#">
+            <i class="material-icons align-bottom">local_atm</i>
+            <span class="rw-orange">Request Withdraw</span>
+          </a>
         </div>
       </li>
       <li class="nav-item dropdown" *ngIf="isAuthenticated() && isAdmin()">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAdm" role="button" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
           <i class="material-icons align-bottom">apps</i>
-          Admin
+          <span class="rw-orange">Admin</span>
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownAdm">
-          <a class="dropdown-item" routerLink="admin/parameters"><i class="material-icons align-bottom">tune</i>Manage Parameters</a>
-          <a class="dropdown-item" routerLink="admin/scores"><i class="material-icons align-bottom">account_balance</i>Manage Score</a>
-          <a class="dropdown-item" href="#"><i class="material-icons align-bottom">card_giftcard</i>Manage Reward</a>
-          <a class="dropdown-item" href="#"><i class="material-icons align-bottom">perm_identity</i>Manage Clients</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownAdm" data-toggle="collapse" data-target=".navbar-collapse.show">
+          <a class="dropdown-item" routerLink="admin/parameters">
+            <i class="material-icons align-bottom">tune</i>
+            <span class="rw-orange">Manage Parameters</span>
+          </a>
+          <a class="dropdown-item" routerLink="admin/scores">
+            <i class="material-icons align-bottom">account_balance</i>
+            <span class="rw-orange">Manage Score</span>
+          </a>
+          <a class="dropdown-item" href="#">
+            <i class="material-icons align-bottom">card_giftcard</i>
+            <span class="rw-orange">Manage Reward</span>
+          </a>
+          <a class="dropdown-item" href="#">
+            <i class="material-icons align-bottom">perm_identity</i>
+            <span class="rw-orange">Manage Clients</span>
+          </a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#"><i class="material-icons align-bottom">insert_chart_outlined</i>Indications Monitor</a>
+          <a class="dropdown-item" href="#">
+            <i class="material-icons align-bottom">insert_chart_outlined</i>
+            <span class="rw-orange">Indications Monitor</span>
+          </a>
         </div>
       </li>
       <!-- <li class="nav-item">
@@ -62,16 +89,13 @@
         </li>
       </ng-template>
       <ng-template [ngIf]="isAuthenticated()">
-        <li class="nav-item">
-          <a class="nav-link" (click)="onLogout()"><i class="material-icons align-bottom">exit_to_app</i>Logout</a>
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+          <a class="nav-link" (click)="onLogout()">
+            <i class="material-icons align-bottom">exit_to_app</i>
+            <span class="rw-orange">Logout</span>
+          </a>
         </li>
       </ng-template>
-      <!-- <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </li> -->
     </ul>
   </div>
 </nav>

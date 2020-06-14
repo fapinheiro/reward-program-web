@@ -16,6 +16,8 @@ export class IndicationRequestComponent {
 
   @ViewChild('indicationForm', {static: true}) indicationForm: NgForm;
 
+  contactPrefix: string = "+351";
+  
   constructor(
     private indicationService: IndicationService,
     private messageService: MessageService,

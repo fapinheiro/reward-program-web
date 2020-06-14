@@ -1,72 +1,55 @@
-<div class="container">
-    <div class="row justify-content-center">
-        <h2>Indication Form</h2>
-    </div>
+<div class="rw-container">
     <form (ngSubmit)="onSubmit()" #indicationForm="ngForm">
-        <div class="form-row justify-content-center">
-            <div class="form-group col-md-6">
-                <mat-form-field class="form-full-width">
-                    <!-- <label for="inputName">Name</label> -->
-                    <input matInput type="text" 
-                        class="form-control" 
-                        id="inputName" 
-                        name="inputName" 
-                        maxlength="100" 
-                        pattern="[a-zA-Z\s]+" 
-                        ngModel
-                        required
-                        autofocus
-                        cdkFocusInitial
-                        placeholder="Name">
-                    <mat-error *ngIf="!isFormValid()">
-                        Name is
-                        <strong>required. </strong>
-                        Only text is permited.
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="form-row justify-content-center">
-            <div class="form-group col-md-6">
-                <mat-form-field class="form-full-width">
-                    <!-- <label for="inputEmail">Email</label> -->
-                    <input matInput type="email" class="form-control" id="inputEmail" name="inputEmail" 
-                        maxlength="100" 
-                        ngModel
-                        required
-                        email
-                        placeholder="Email">
-                    <mat-error *ngIf="!isFormValid()">
-                        Email is
-                        <strong>required</strong>
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="form-row justify-content-center">
-            <div class="form-group col-md-6">
-                <mat-form-field class="form-full-width">
-                    <!-- <label for="inputPhone">Cellphone</label> -->
-                    <span matPrefix>+351 &nbsp;</span>
-                    <input matInput type="text" class="form-control" id="inputPhone" name="inputPhone" 
-                        maxlength="10" 
-                        pattern="[0-9]+" 
-                        ngModel
-                        required
-                        placeholder="Phone">
-                    <mat-error *ngIf="!isFormValid()">
-                        Phone is
-                        <strong>required. </strong>
-                        Only numbers is permited.
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="form-row justify-content-center">
-            <div class="form-group col-md-6">
-                <button type="submit" class="btn btn-primary" [disabled]="!isFormValid()"><i class="material-icons align-bottom">done</i>Send</button>
-                <button type="reset" mat-button class="btn btn-secondary ml-1"><i class="material-icons align-bottom">clear</i>Clear</button>
-            </div>
+        <div class="grid-container">
+            <p>Indication Form</p>
+            <h2>Invite a Friend</h2>        
+            <mat-form-field class="rw-100w name">
+                <input matInput type="text" 
+                    id="inputName" 
+                    name="inputName" 
+                    maxlength="100" 
+                    ngModel
+                    required
+                    autofocus
+                    cdkFocusInitial
+                    placeholder="Name">
+                <mat-error *ngIf="!isFormValid()">
+                    Name is
+                    <strong>required. </strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="rw-100w email">
+                <input matInput type="email" id="inputEmail" name="inputEmail" 
+                    maxlength="100" 
+                    ngModel
+                    required
+                    email
+                    placeholder="Email">
+                <mat-error *ngIf="!isFormValid()">
+                    Email is
+                    <strong>required. </strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="rw-100w">
+                <span matPrefix>{{contactPrefix}} &nbsp;</span>
+                <mat-label>Phone</mat-label>
+                <!-- maxLength does not work with type=number 
+                    https://stackoverflow.com/questions/18510845/maxlength-ignored-for-input-type-number-in-chrome
+                -->
+                <input matInput type="number" id="inputPhone" name="inputPhone" 
+                    maxlength="11" 
+                    pattern="[0-9]+" 
+                    ngModel
+                    required
+                    placeholder="Ex.: 964 806 795">
+                <mat-error *ngIf="!isFormValid()">
+                    Phone is
+                    <strong>required. </strong>
+                    Only numbers is permited.
+                </mat-error>
+            </mat-form-field>
+            <button type="submit" class="btn btn-primary rw-100w" [disabled]="!isFormValid()"><i class="material-icons align-bottom">done</i>Send</button>
+            <button type="reset" mat-button class="btn btn-secondary rw-100w"><i class="material-icons align-bottom">clear</i>Clear</button>
         </div>
     </form>
 </div>
