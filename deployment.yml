@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+ name: reward-program-web
+spec:
+ containers:
+ - name: reward-program-web
+   image: fapinheiro/reward-program-web:1.0.2
