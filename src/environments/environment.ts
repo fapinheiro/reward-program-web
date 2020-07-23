@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8089/reward-program/api/v1',
+  apiUrl: 'http://localhost:8089/reward-program-dev/api/v1',
   refreshTokenMillis: 10,
   locale: "pt-PT"
 };

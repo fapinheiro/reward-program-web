@@ -6,7 +6,7 @@ This is the front end of the Reward Program using Angular 8, Docker and Kubernat
 docker image build -t fapinheiro/reward-program-web:x.x.x .
 
 # Docker Run
-docker pull fapinheiro/reward-program-api:x.x.x
+docker pull fapinheiro/reward-program-web:x.x.x
 
 docker container run --rm -p 80:80 --name reward-program-web fapinheiro/reward-program-web:x.x.x
 
