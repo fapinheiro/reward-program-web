@@ -1,6 +1,9 @@
+import { version } from '../../package.json';
+
 export const environment = {
   production: true,
-  apiUrl: 'http://192.168.99.100:8089/reward-program-dev/api/v1',
+  apiUrl: 'http://backend-dev-local:30089/reward-program/api/v1',
   refreshTokenMillis: 10,
-  locale: "pt-PT"
+  locale: "pt-PT",
+  appVersion: version
 };

@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+ name: frontend-dev-local
+  
+spec:
+ # This defines which pods are going to be represented by this Service
+ # The service becomes a network endpoint for either other services or 
+ # maybe external users to connect to (eg browser)
+ selector:
+  app: reward-program-web
+  # release: "1.0.5"
+ ports:
+  - name: http
+    port: 80
+    # K8s by default only enable port greater than 30000
+    nodePort: 30080
+
+ # ClusterIP makes service only accessble inside k8s cluster
+ # NodePort expose you service outside the k8s cluster
+ type: NodePort
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: reward-program-web
+spec:
+ selector:
+  matchLabels:
+   app: reward-program-web
+ replicas: 2
+ template: # template for the pods
+  metadata:
+  #  name: reward-program-web
+   labels:
+    app: reward-program-web
+    # release: "1.0.5"
+  spec:
+   containers:
+   - name: reward-program-web
+     image: fapinheiro/reward-program-web:1.0.9
+
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#  name: reward-program-web-1.0.5
+#  labels:
+#   app: reward-program-web
+#   release: "1.0.5"
+# spec:
+#  containers:
+#  - name: reward-program-web
+#    image: fapinheiro/reward-program-web:1.0.5
+
+# ---
+
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#  name: reward-program-web-1.0.3
+#  labels:
+#   app: reward-program-web
+#   release: "1.0.3"
+# spec:
+#  containers:
+#  - name: reward-program-web
+#    image: fapinheiro/reward-program-web:1.0.3

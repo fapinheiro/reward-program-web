@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../shared/auth.service';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment'
 
 @Component({
   selector: 'app-header',
@@ -8,6 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
+  appVersion: string = `v${environment.appVersion}`
 
   constructor(
     private authService: AuthService,
