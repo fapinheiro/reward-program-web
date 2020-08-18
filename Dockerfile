@@ -4,6 +4,8 @@ LABEL maintainerName="Filipe Pinheiro"
 
 LABEL maintainerEmail="filipe.alves.pinheiro@gmail.com"
 
+ENV ENVIRONMENT dev
+
 RUN rm /usr/share/nginx/html/*
 
 COPY /dist /usr/share/nginx/html/
