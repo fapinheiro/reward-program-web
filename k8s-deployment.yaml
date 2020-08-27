@@ -1,7 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
- name: frontend-dev-local
+ # This will be the namespace. We can ping this by simply "reward-program-web.default.svc.cluster.local' inside k8s cluster
+ # K8s automatically creates dns in /etc/resolv.conf
+ name: reward-program-web
   
 spec:
  # This defines which pods are going to be represented by this Service
@@ -39,7 +41,7 @@ spec:
   spec:
    containers:
    - name: reward-program-web
-     image: fapinheiro/reward-program-web:1.0.9
+     image: fapinheiro/reward-program-web:1.0.10
      env:
      - name: ENVIRONMENT
        value: prod
